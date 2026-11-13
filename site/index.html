@@ -88,7 +88,7 @@ footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 0 40px;colo
   <div class="card wide"><h3>1. Who is on the other side of a NEAR stablecoin transfer?</h3><p class="take" id="t1"></p><div class="cv" style="height:220px"><canvas id="c1"></canvas></div>
   <div class="src">Source: NEP-141 <code>ft_transfer</code> events from sampled blocks (FASTNEAR neardata.xyz). Counterparty types: <a href="__REPO__/blob/main/labels/known_accounts.json">labels/known_accounts.json</a> + contract-code check via NEAR RPC. Script: <a href="__REPO__/blob/main/scripts/analyze.py">analyze.py</a></div></div>
 
-  <div class="card wide"><div class="tog" data-chart="c2"><button class="on" data-m="v">Volume</button><button data-m="n">Count</button></div><h3>2. Weekly stablecoin transfers by counterparty</h3><p class="take" id="t2"></p><div class="cv tall"><canvas id="c2"></canvas></div>
+  <div class="card wide"><div class="tog" data-chart="c2"><button class="on" data-m="n">Count</button><button data-m="v">Volume</button></div><h3>2. Weekly stablecoin transfers by counterparty</h3><p class="take" id="t2"></p><div class="cv tall"><canvas id="c2"></canvas></div>
   <div class="src">Source: sampled blocks, expanded to full weeks; complete weeks only. Data: <a href="__REPO__/blob/main/data/processed/daily_estimates.csv">daily_estimates.csv</a></div></div>
 
   <div class="card"><h3>3. Transfer size: wallet-to-wallet vs DEX</h3><p class="take" id="t3"></p><div class="cv"><canvas id="c3"></canvas></div>
@@ -166,15 +166,15 @@ $('asof').textContent=`Window ${S.window.start} to ${S.window.end} (UTC) · ${fm
 $('testgrid').innerHTML=S.tests.map(t=>`<div class="test"><span class="pill ${t.pass?'pass':'fail'}">${t.pass?'PASS':'FAIL'}</span><div class="id">${t.id}</div><div class="nm">${t.name}</div><div class="rule">${t.rule}</div><div class="val">${t.value}</div></div>`).join('');
 $('gen').textContent=S.generated_at;$('lim-rate').textContent=pct(S.sample.sample_rate,2);$('lim-win').textContent=S.window.start+' to '+S.window.end+' UTC';
 Chart.defaults.color='#8b98a9';Chart.defaults.borderColor='#243041';Chart.defaults.font.family='Inter,system-ui,sans-serif';Chart.defaults.plugins.legend.labels.boxWidth=12;
-const small=innerWidth<600;
+const small=innerWidth<600;const MODE={c2:'n',c8:'v'};
 // 1
 new Chart($('c1'),{type:'bar',data:{labels:['Share of transfers','Share of volume'],datasets:C.map(c=>({label:N[c],data:[S.share_of_transfers[c]*100,S.share_of_volume[c]*100],backgroundColor:COL[c]}))},
  options:{indexAxis:'y',maintainAspectRatio:false,scales:{x:{stacked:true,max:100,ticks:{callback:v=>v+'%'}},y:{stacked:true}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw.toFixed(1)+'%'}},legend:{position:small?'bottom':'top'}}}});
 $('t1').innerHTML=__T1__;
 // 2
 const W=D.weekly;
-const CH2=new Chart($('c2'),{type:'bar',data:{labels:W.map(w=>w.week.slice(5)),datasets:C.map(c=>({label:N[c],key:c,data:W.map(w=>w['v_'+c]),backgroundColor:COL[c]}))},
- options:{maintainAspectRatio:false,scales:{x:{stacked:true,title:{display:!small,text:'week starting (2026)'}},y:{stacked:true,ticks:{callback:v=>CH2&&CH2.$m==='n'?fmt(v):usd(v)}}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+(CH2.$m==='n'?fmt(c.raw):usd(c.raw))}},legend:{position:small?'bottom':'top'}}}});CH2.$m='v';CH2.$rows=W;
+const CH2=new Chart($('c2'),{type:'bar',data:{labels:W.map(w=>w.week.slice(5)),datasets:C.map(c=>({label:N[c],key:c,data:W.map(w=>w['n_'+c]),backgroundColor:COL[c]}))},
+ options:{maintainAspectRatio:false,scales:{x:{stacked:true,title:{display:!small,text:'week starting (2026)'}},y:{stacked:true,ticks:{callback:v=>MODE.c2==='n'?fmt(v):usd(v)}}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+(MODE.c2==='n'?fmt(c.raw):usd(c.raw))}},legend:{position:small?'bottom':'top'}}}});CH2.$m='n';CH2.$rows=W;
 $('t2').innerHTML=__T2__;
 // 3
 const tot=a=>a.reduce((x,y)=>x+y,0);
@@ -217,8 +217,8 @@ $('ikpis').innerHTML=[
  [Object.keys(IS.chain_volume_share).length+' chains','of stablecoins observed','top: '+Object.keys(IS.chain_volume_share)[0]]
 ].map(k=>`<div class="kpi"><div class="v">${k[0]}</div><div class="k">${k[1]}</div><div class="ci">${k[2]}</div></div>`).join('');
 const CH8=new Chart($('c8'),{type:'bar',data:{labels:I.weekly.map(w=>w.week.slice(5)),datasets:I.types.map(t=>({label:I.names[t],key:t,data:I.weekly.map(w=>w['v_'+t]),backgroundColor:ICOL[t]}))},
- options:{maintainAspectRatio:false,scales:{x:{stacked:true,title:{display:!small,text:'week starting (2026)'}},y:{stacked:true,ticks:{callback:v=>CH8&&CH8.$m==='n'?fmt(v):usd(v)}}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+(CH8.$m==='n'?fmt(c.raw):usd(c.raw))}},legend:{position:small?'bottom':'top'}}}});CH8.$m='v';CH8.$rows=I.weekly;
-const CHS={c2:CH2,c8:CH8};document.querySelectorAll('.tog').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ch=CHS[g.dataset.chart];ch.$m=b.dataset.m;g.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));ch.data.datasets.forEach(ds=>ds.data=ch.$rows.map(w=>w[ch.$m+'_'+ds.key]));ch.update();}));
+ options:{maintainAspectRatio:false,scales:{x:{stacked:true,title:{display:!small,text:'week starting (2026)'}},y:{stacked:true,ticks:{callback:v=>MODE.c8==='n'?fmt(v):usd(v)}}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+(MODE.c8==='n'?fmt(c.raw):usd(c.raw))}},legend:{position:small?'bottom':'top'}}}});CH8.$m='v';CH8.$rows=I.weekly;
+const CHS={c2:CH2,c8:CH8};document.querySelectorAll('.tog').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ch=CHS[g.dataset.chart];ch.$m=b.dataset.m;MODE[g.dataset.chart]=b.dataset.m;g.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));ch.data.datasets.forEach(ds=>ds.data=ch.$rows.map(w=>w[ch.$m+'_'+ds.key]));ch.update();}));
 $('t8').innerHTML=__T8__;
 const CH=Object.entries(IS.chain_volume_share).slice(0,8);
 new Chart($('c9'),{type:'bar',data:{labels:CH.map(c=>c[0]),datasets:[{data:CH.map(c=>c[1]*100),backgroundColor:['#2775ca','#627eea','#9945ff','#ff060a','#f3ba2f','#8247e5','#28a0f0','#4da2ff']}]},

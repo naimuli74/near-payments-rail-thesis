@@ -24,7 +24,7 @@ const c = S.correlations;
 const sup = S.supply;
 const T = {
   T1: `<b>${pct(sn.dex)}</b> of transfers and <b>${pct(sv.dex)}</b> of volume involve a DEX. Wallet-to-wallet is <b>${pct(sn.p2p)}</b> of transfers but only <b>${pct(sv.p2p, 1)}</b> of the dollars.`,
-  T2: `Volume is estimated at <b>${usd(S.estimates.avg_daily_volume_usd)}</b> a day on average (95% CI ${usd(S.estimates.avg_daily_volume_ci95[0])} to ${usd(S.estimates.avg_daily_volume_ci95[1])}). The red band, DEX flow, is most of every week.`,
+  T2: `Volume is estimated at <b>${usd(S.estimates.avg_daily_volume_usd)}</b> a day on average (95% CI ${usd(S.estimates.avg_daily_volume_ci95[0])} to ${usd(S.estimates.avg_daily_volume_ci95[1])}). Counted by transfers, DEX flow (red) is most of every week. Switch to Volume to see how a single large transfer can dominate a week.`,
   T3: `Wallet-to-wallet transfers have a median of <b>$${fmt(S.median_p2p_transfer_usd, 2)}</b>, and <b>${pct(S.p2p_under_100_share)}</b> are under $100. That is what consumer payments look like. ${pct(share(dexSize, 4))} of DEX legs are $1K or more.`,
   T4: `<b>${pct(rd.p2p ?? 0)}</b> of wallet-to-wallet transfers are whole-dollar amounts, against <b>${pct(rd.dex ?? 0, 1)}</b> for DEX legs. Humans paying humans leave a different fingerprint than bots.`,
   T5: `Spearman correlation with NEAR's absolute daily return: all volume <b>${c.v_all.vs_abs_return.toFixed(2)}</b>, DEX volume <b>${c.v_dex.vs_abs_return.toFixed(2)}</b>, wallet-to-wallet volume <b>${c.v_p2p.vs_abs_return.toFixed(2)}</b>. With price level: wallet-to-wallet count <b>${c.n_p2p.vs_price.toFixed(2)}</b>.`,

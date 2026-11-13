@@ -6,18 +6,18 @@ An evidence-first investment thesis for NEAR, built at **NEAR HACKATHON** (Inves
 
 ## Thesis and verdict
 
-If NEAR is turning into money infrastructure, the stablecoins on it should move like payments: many small transfers between ordinary wallets, a steady daily rhythm, and no dependence on NEAR's price swings. If it is mostly a trading venue, stablecoin flow will run through DEXs and bots and follow volatility. We sampled 6,748 NEAR mainnet blocks at random over 57 days, pulled every USDC and USDT transfer in them straight from the chain, and scored the flow against six tests that were [committed before the analysis ran](PREREGISTRATION.md).
+If NEAR is turning into money infrastructure, the stablecoins on it should move like payments: many small transfers between ordinary wallets, a steady daily rhythm, and no dependence on NEAR's price swings. If it is mostly a trading venue, stablecoin flow will run through DEXs and bots and follow volatility. We sampled 7,007 NEAR mainnet blocks at random over 59 days, pulled every USDC and USDT transfer in them straight from the chain, and scored the flow against six tests that were [committed before the analysis ran](PREREGISTRATION.md).
 
 **Verdict: Not yet. NEAR stablecoins mostly move like a trading venue, not a payments network.** 2 of 6 tests pass. The native-token layer is dominated by DEX and bot flow. The payment-shaped activity that does exist is small, and a growing share of NEAR's stablecoin role is happening inside NEAR Intents, where dollars from other chains are deposited, swapped and withdrawn. Full argument in [THESIS.md](THESIS.md).
 
 ## Headline numbers
 
-- 2,344 USDC/USDT transfers observed in 6,748 randomly sampled mainnet blocks (0.08% of all blocks), 2026-08-15 to 2026-10-10 UTC.
-- About **48,855 stablecoin transfers a day** on NEAR (95% CI 45,590 to 52,544), moving about **$74.2M a day** (95% CI $16.5M to $180.7M).
-- **93% of transfers involve a DEX** (Rhea/Ref). DEX + NEAR Intents + lending carry 23% of sampled volume (81% excluding the single largest transfer, see robustness below).
-- **Wallet-to-wallet transfers are 2.2% of transfers and 5.3% of volume**, but they look like payments: median $49.98, 59% under $100.
-- Daily volume vs NEAR's absolute daily return: Spearman rho = 0.28 overall, 0.32 for DEX flow, 0.09 for wallet-to-wallet flow.
-- Exploratory: inside NEAR Intents, about **$66.3M a day of stablecoins is deposited and $49.1M withdrawn**, mostly dollars from other chains (eth 47%, tron 20%, base 12%, arb 10%). Stablecoin peer transfers inside Intents: about 3,652 a day, median $10.00. Cross-check: our stablecoin swap-leg estimate ($49.2M a day) is 35% of DefiLlama's all-asset NEAR Intents volume ($141.6M a day) over the same days.
+- 2,390 USDC/USDT transfers observed in 7,007 randomly sampled mainnet blocks (0.08% of all blocks), 2026-08-15 to 2026-10-12 UTC.
+- About **48,117 stablecoin transfers a day** on NEAR (95% CI 44,849 to 52,166), moving about **$71.9M a day** (95% CI $15.9M to $177.6M).
+- **93% of transfers involve a DEX** (Rhea/Ref). DEX + NEAR Intents + lending carry 24% of sampled volume (81% excluding the single largest transfer, see robustness below).
+- **Wallet-to-wallet transfers are 2.2% of transfers and 5.3% of volume**, but they look like payments: median $49.98, 58% under $100.
+- Daily volume vs NEAR's absolute daily return: Spearman rho = 0.24 overall, 0.28 for DEX flow, 0.10 for wallet-to-wallet flow.
+- Exploratory: inside NEAR Intents, about **$67.4M a day of stablecoins is deposited and $48.4M withdrawn**, mostly dollars from other chains (eth 47%, tron 19%, base 12%, arb 10%). Stablecoin peer transfers inside Intents: about 3,554 a day, median $9.95. Cross-check: our stablecoin swap-leg estimate ($48.4M a day) is 34% of DefiLlama's all-asset NEAR Intents volume ($141.3M a day) over the same days.
 - Robustness: a single sampled transfer of $2.5M (to `nfendowment02.near`, [tx](https://nearblocks.io/txns/D6MKuMtaNLvoK4vuJyMQWBhEqR5uSc8cnQxpMkq6abZQ)) is 71% of all sampled dollars. Without it, DEX + Intents + lending carry 81% of volume and wallet-to-wallet 18%. Dollar shares are fragile in a block sample; transfer counts are the robust signal.
 - Result: **2 of 6 pre-registered tests pass.**
 
@@ -87,7 +87,7 @@ scripts/build_site.mjs      dashboard + Cloudflare Worker bundle -> dist/
 scripts/render_docs.py      README.md + THESIS.md from summary.json
 scripts/spot_check.py       re-verify random sampled transfers on chain
 labels/                     documented account labels and stablecoin asset ids, with sources
-data/raw/                   snapshot: sampled blocks, events, market data (generated 2026-11-13T20:44:41Z)
+data/raw/                   snapshot: sampled blocks, events, market data (generated 2026-11-13T20:46:20Z)
 data/processed/             summary.json, daily_estimates.csv, intents_daily_estimates.csv, transfers_sample.csv
 site/                       dashboard template and Chart.js (MIT)
 ```
