@@ -37,6 +37,8 @@ const topChain = Object.entries(IS.chain_volume_share)[0] || ['n/a', 0];
 T.T8 = `About <b>${usd(iv.deposit)}</b> a day of stablecoins enters Intents and <b>${usd(iv.withdrawal)}</b> leaves, against <b>${usd(iv.swap)}</b> of swap flow. Most stablecoin activity at NEAR's edge is cross-chain movement, not native-token trading.`;
 T.T9 = `<b>${pct(topChain[1])}</b> of the sampled stablecoin flow is ${topChain[0]} dollars. NEAR is settling other chains' stablecoins, which is a different role from issuing its own.`;
 T.T10 = `An estimated <b>${fmt(ic.peer_transfer)}</b> stablecoin peer transfers a day happen inside Intents (median $${fmt(IS.peer_median_usd ?? 0, 2)}, ${pct(IS.peer_under_100_share ?? 0)} under $100). Small, but this is the payment-shaped flow to watch.`;
+const SB = S.sensitivity.largest;
+T.SENS = `<b>Robustness check (not a test):</b> one sampled transfer, <a href="https://nearblocks.io/txns/${SB.largest_transfer_tx}">${usd(SB.largest_transfer_usd)} to ${SB.largest_transfer_to.length > 30 ? SB.largest_transfer_to.slice(0, 12) + '…' : SB.largest_transfer_to}</a>, is ${pct(SB.largest_transfer_share_of_sampled_volume)} of all sampled dollars. Without it, DEX + Intents + lending carry <b>${pct(SB.trading_share_excl_largest)}</b> of volume and wallet-to-wallet <b>${pct(SB.share_of_volume_excl_largest.p2p)}</b>. Volume shares in a block sample are fragile; transfer counts are not.`;
 const change = `We would call NEAR a payments rail when these move, measured with the same script:`;
 const changelist = [
   `Wallet-to-wallet share of volume rises from ${pct(sv.p2p, 1)} to above 25% for a full quarter.`,

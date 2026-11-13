@@ -21,6 +21,7 @@ def usd(x):
 pct = lambda x, d=0: "n/a" if x is None else f"{x * 100:.{d}f}%"
 E, I, sv, sn = S["estimates"], S["intents"], S["share_of_volume"], S["share_of_transfers"]
 c = S["correlations"]
+SB = S["sensitivity"]["largest"]
 win = S["window"]; smp = S["sample"]
 tests_md = "\n".join(f"| {t['id']} | {t['name']} | {t['rule']} | {t['value']} | **{'PASS' if t['pass'] else 'FAIL'}** |" for t in S["tests"])
 top_chain = list(I["chain_volume_share"].items())[:4]
@@ -35,6 +36,7 @@ headline = f"""- {smp['transfers_observed']:,} USDC/USDT transfers observed in {
 - **Wallet-to-wallet transfers are {pct(sn['p2p'], 1)} of transfers and {pct(sv['p2p'], 1)} of volume**, but they look like payments: median {usd(S['median_p2p_transfer_usd'])}, {pct(S['p2p_under_100_share'])} under $100.
 - Daily volume vs NEAR's absolute daily return: Spearman rho = {c['v_all']['vs_abs_return']:.2f} overall, {c['v_dex']['vs_abs_return']:.2f} for DEX flow, {c['v_p2p']['vs_abs_return']:.2f} for wallet-to-wallet flow.
 - Exploratory: inside NEAR Intents, about **{usd(iv['deposit'])} a day of stablecoins is deposited and {usd(iv['withdrawal'])} withdrawn**, mostly dollars from other chains ({chains_txt}). Stablecoin peer transfers inside Intents: about {ic['peer_transfer']:,.0f} a day, median {usd(I['peer_median_usd'])}.
+- Robustness: a single sampled transfer of {usd(SB['largest_transfer_usd'])} (to `{SB['largest_transfer_to']}`, [tx](https://nearblocks.io/txns/{SB['largest_transfer_tx']})) is {pct(SB['largest_transfer_share_of_sampled_volume'])} of all sampled dollars. Without it, DEX + Intents + lending carry {pct(SB['trading_share_excl_largest'])} of volume and wallet-to-wallet {pct(SB['share_of_volume_excl_largest']['p2p'])}. Dollar shares are fragile in a block sample; transfer counts are the robust signal.
 - Result: **{S['passed']} of 6 pre-registered tests pass.**"""
 
 readme = f"""# Is NEAR already a payments rail?
@@ -151,6 +153,8 @@ The six tests below were committed in [PREREGISTRATION.md](PREREGISTRATION.md) b
 {tests_md}
 
 **Score: {S['passed']} / 6. Verdict: {verdict}**
+
+Robustness check (reported, not re-scored): one sampled transfer of {usd(SB['largest_transfer_usd'])} to `{SB['largest_transfer_to']}` is {pct(SB['largest_transfer_share_of_sampled_volume'])} of sampled volume. Excluding it, DEX + Intents + lending carry {pct(SB['trading_share_excl_largest'])} of volume (T3 would read {'PASS' if SB['trading_share_excl_largest'] < 0.5 else 'FAIL'}). We keep the pre-registered scoring as computed and show this so readers can judge it.
 
 ## 3. Evidence for the thesis
 

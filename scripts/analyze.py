@@ -309,7 +309,13 @@ def main():
             if ca == "user": wcount[a] += 1
     hubs = {a for a, k in wcount.items() if k >= 10}
     p2p_strict = [t for t in tx if t["cat"] == "p2p" and t["from"] not in hubs and t["to"] not in hubs]
-    sensitivity = {"high_frequency_wallets": len(hubs),
+    big = max(tx, key=lambda t: t["usd"])
+    rest = [t for t in tx if t is not big]; rest_v = sum(t["usd"] for t in rest)
+    sensitivity_big = {"largest_transfer_usd": big["usd"], "largest_transfer_from": big["from"], "largest_transfer_to": big["to"],
+                       "largest_transfer_tx": big["tx"], "largest_transfer_share_of_sampled_volume": big["usd"] / tot_vol,
+                       "share_of_volume_excl_largest": {c: sum(t["usd"] for t in rest if t["cat"] == c) / rest_v for c in CATS},
+                       "trading_share_excl_largest": sum(t["usd"] for t in rest if t["cat"] in TRADING) / rest_v}
+    sensitivity = {"largest": sensitivity_big, "high_frequency_wallets": len(hubs),
                    "p2p_strict_share_of_transfers": len(p2p_strict) / n,
                    "p2p_strict_share_of_volume": sum(t["usd"] for t in p2p_strict) / tot_vol,
                    "rule": "wallet-to-wallet transfers where neither wallet appears in 10+ sampled transfers"}

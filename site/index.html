@@ -81,7 +81,7 @@ footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 0 40px;colo
 
 <section id="tests"><h2>Six tests, fixed before the data was pulled</h2>
 <p class="sub">Each test is a yes-or-no rule. If NEAR's stablecoin flow were a payments network, all six should pass. The thresholds live in <a href="__REPO__/blob/main/THESIS.md">THESIS.md</a> and the code that scores them is <a href="__REPO__/blob/main/scripts/analyze.py">scripts/analyze.py</a>.</p>
-<div class="tests" id="testgrid"></div></section>
+<div class="tests" id="testgrid"></div><p class="sub" id="sens" style="margin-top:14px"></p></section>
 
 <section id="evidence"><h2>The evidence</h2><p class="sub">Every number is an estimate from a seeded random sample of whole mainnet blocks, scaled up by the number of blocks in each day. 95% intervals come from resampling blocks.</p>
 <div class="grid">
@@ -228,6 +228,7 @@ const ID=I.daily,ima=k=>ID.map((r,i)=>{const s=ID.slice(Math.max(0,i-6),i+1);ret
 new Chart($('c10'),{type:'line',data:{labels:ID.map(r=>r.day.slice(5)),datasets:[{label:'Peer transfers / day (7d avg)',data:ima('n_peer_transfer'),borderColor:ICOL.peer_transfer,backgroundColor:'rgba(0,236,151,.15)',fill:true,pointRadius:0,tension:.3}]},
  options:{maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>fmt(v)}}},plugins:{legend:{display:false}}}});
 $('t10').innerHTML=__T10__;
+$('sens').innerHTML=__SENS__;
 $('change').innerHTML=__CHANGE__;
 $('changelist').innerHTML=__CHANGELIST__;
 $('impl').innerHTML=__IMPL__;
