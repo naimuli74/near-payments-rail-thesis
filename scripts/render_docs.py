@@ -32,7 +32,7 @@ verdict = N["verdict"]
 
 headline = f"""- {smp['transfers_observed']:,} USDC/USDT transfers observed in {smp['blocks_sampled']:,} randomly sampled mainnet blocks ({pct(smp['sample_rate'], 2)} of all blocks), {win['start']} to {win['end']} UTC.
 - About **{E['avg_daily_transfers']:,.0f} stablecoin transfers a day** on NEAR (95% CI {E['avg_daily_transfers_ci95'][0]:,.0f} to {E['avg_daily_transfers_ci95'][1]:,.0f}), moving about **{usd(E['avg_daily_volume_usd'])} a day** (95% CI {usd(E['avg_daily_volume_ci95'][0])} to {usd(E['avg_daily_volume_ci95'][1])}).
-- **{pct(sn['dex'])} of transfers involve a DEX** (Rhea/Ref). DEX + NEAR Intents + lending carry **{pct(S['trading_share_of_volume'])} of volume**.
+- **{pct(sn['dex'])} of transfers involve a DEX** (Rhea/Ref). DEX + NEAR Intents + lending carry {pct(S['trading_share_of_volume'])} of sampled volume ({pct(SB['trading_share_excl_largest'])} excluding the single largest transfer, see robustness below).
 - **Wallet-to-wallet transfers are {pct(sn['p2p'], 1)} of transfers and {pct(sv['p2p'], 1)} of volume**, but they look like payments: median {usd(S['median_p2p_transfer_usd'])}, {pct(S['p2p_under_100_share'])} under $100.
 - Daily volume vs NEAR's absolute daily return: Spearman rho = {c['v_all']['vs_abs_return']:.2f} overall, {c['v_dex']['vs_abs_return']:.2f} for DEX flow, {c['v_p2p']['vs_abs_return']:.2f} for wallet-to-wallet flow.
 - Exploratory: inside NEAR Intents, about **{usd(iv['deposit'])} a day of stablecoins is deposited and {usd(iv['withdrawal'])} withdrawn**, mostly dollars from other chains ({chains_txt}). Stablecoin peer transfers inside Intents: about {ic['peer_transfer']:,.0f} a day, median {usd(I['peer_median_usd'])}.
@@ -166,7 +166,7 @@ Robustness check (reported, not re-scored): one sampled transfer of {usd(SB['lar
 
 ## 4. Evidence against the thesis
 
-- {pct(sn['dex'])} of stablecoin transfers touch a DEX; DEX + Intents + lending carry {pct(S['trading_share_of_volume'])} of volume. This is a trading venue's profile.
+- {pct(sn['dex'])} of stablecoin transfers touch a DEX, which is a trading venue's profile. By dollars, DEX + Intents + lending carry {pct(S['trading_share_of_volume'])} of sampled volume, or {pct(SB['trading_share_excl_largest'])} once the single largest transfer is set aside.
 - Wallet-to-wallet transfers are only {pct(sn['p2p'], 1)} of transfers and {pct(sv['p2p'], 1)} of dollars.
 - The overall median transfer is {usd(S['median_transfer_usd'])}; only {pct(S['under_100_share'])} of transfers are under $100.
 - Value is concentrated: the largest 1% of transfers carry {pct(S['top1pct_transfer_volume_share'])} of volume (top 10%: {pct(S['top10pct_transfer_volume_share'])}).

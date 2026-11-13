@@ -6,19 +6,19 @@ An evidence-first investment thesis for NEAR, built at **NEAR HACKATHON** (Inves
 
 ## Thesis and verdict
 
-If NEAR is turning into money infrastructure, the stablecoins on it should move like payments: many small transfers between ordinary wallets, a steady daily rhythm, and no dependence on NEAR's price swings. If it is mostly a trading venue, stablecoin flow will run through DEXs and bots and follow volatility. We sampled 6,418 NEAR mainnet blocks at random over 54 days, pulled every USDC and USDT transfer in them straight from the chain, and scored the flow against six tests that were [committed before the analysis ran](PREREGISTRATION.md).
+If NEAR is turning into money infrastructure, the stablecoins on it should move like payments: many small transfers between ordinary wallets, a steady daily rhythm, and no dependence on NEAR's price swings. If it is mostly a trading venue, stablecoin flow will run through DEXs and bots and follow volatility. We sampled 6,581 NEAR mainnet blocks at random over 55 days, pulled every USDC and USDT transfer in them straight from the chain, and scored the flow against six tests that were [committed before the analysis ran](PREREGISTRATION.md).
 
 **Verdict: Not yet. NEAR stablecoins mostly move like a trading venue, not a payments network.** 1 of 6 tests pass. The native-token layer is dominated by DEX and bot flow. The payment-shaped activity that does exist is small, and a growing share of NEAR's stablecoin role is happening inside NEAR Intents, where dollars from other chains are deposited, swapped and withdrawn. Full argument in [THESIS.md](THESIS.md).
 
 ## Headline numbers
 
-- 2,138 USDC/USDT transfers observed in 6,418 randomly sampled mainnet blocks (0.08% of all blocks), 2026-08-15 to 2026-10-07 UTC.
-- About **47,558 stablecoin transfers a day** on NEAR (95% CI 44,920 to 50,594), moving about **$76.8M a day** (95% CI $16.5M to $191.4M).
-- **93% of transfers involve a DEX** (Rhea/Ref). DEX + NEAR Intents + lending carry **22% of volume**.
-- **Wallet-to-wallet transfers are 2.2% of transfers and 5.4% of volume**, but they look like payments: median $50.32, 56% under $100.
+- 2,261 USDC/USDT transfers observed in 6,581 randomly sampled mainnet blocks (0.08% of all blocks), 2026-08-15 to 2026-10-08 UTC.
+- About **49,074 stablecoin transfers a day** on NEAR (95% CI 46,040 to 52,435), moving about **$76.0M a day** (95% CI $17.6M to $235.3M).
+- **93% of transfers involve a DEX** (Rhea/Ref). DEX + NEAR Intents + lending carry 22% of sampled volume (80% excluding the single largest transfer, see robustness below).
+- **Wallet-to-wallet transfers are 2.2% of transfers and 5.3% of volume**, but they look like payments: median $50.00, 57% under $100.
 - Daily volume vs NEAR's absolute daily return: Spearman rho = 0.31 overall, 0.34 for DEX flow, 0.10 for wallet-to-wallet flow.
-- Exploratory: inside NEAR Intents, about **$67.0M a day of stablecoins is deposited and $47.2M withdrawn**, mostly dollars from other chains (eth 47%, tron 19%, base 12%, arb 11%). Stablecoin peer transfers inside Intents: about 3,599 a day, median $7.55.
-- Robustness: a single sampled transfer of $2.5M (to `nfendowment02.near`, [tx](https://nearblocks.io/txns/D6MKuMtaNLvoK4vuJyMQWBhEqR5uSc8cnQxpMkq6abZQ)) is 73% of all sampled dollars. Without it, DEX + Intents + lending carry 80% of volume and wallet-to-wallet 20%. Dollar shares are fragile in a block sample; transfer counts are the robust signal.
+- Exploratory: inside NEAR Intents, about **$66.7M a day of stablecoins is deposited and $47.7M withdrawn**, mostly dollars from other chains (eth 47%, tron 19%, base 12%, arb 10%). Stablecoin peer transfers inside Intents: about 3,560 a day, median $8.72.
+- Robustness: a single sampled transfer of $2.5M (to `nfendowment02.near`, [tx](https://nearblocks.io/txns/D6MKuMtaNLvoK4vuJyMQWBhEqR5uSc8cnQxpMkq6abZQ)) is 72% of all sampled dollars. Without it, DEX + Intents + lending carry 80% of volume and wallet-to-wallet 19%. Dollar shares are fragile in a block sample; transfer counts are the robust signal.
 - Result: **1 of 6 pre-registered tests pass.**
 
 All numbers are produced by `scripts/analyze.py` and stored in [`data/processed/summary.json`](data/processed/summary.json). The docs are generated from that file by `scripts/render_docs.py`, so they cannot drift from the data.
@@ -86,7 +86,7 @@ scripts/build_site.mjs      dashboard + Cloudflare Worker bundle -> dist/
 scripts/render_docs.py      README.md + THESIS.md from summary.json
 scripts/spot_check.py       re-verify random sampled transfers on chain
 labels/                     documented account labels and stablecoin asset ids, with sources
-data/raw/                   snapshot: sampled blocks, events, market data (generated 2026-11-13T20:42:34Z)
+data/raw/                   snapshot: sampled blocks, events, market data (generated 2026-11-13T20:43:36Z)
 data/processed/             summary.json, daily_estimates.csv, intents_daily_estimates.csv, transfers_sample.csv
 site/                       dashboard template and Chart.js (MIT)
 ```

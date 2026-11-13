@@ -16,7 +16,7 @@ const failed = S.tests.filter(t => !t.pass).map(t => t.name.toLowerCase());
 const verdict = passed >= 5 ? 'Yes. NEAR stablecoin flow already behaves like a payments rail.'
   : passed >= 3 ? 'Partly. A real payments layer exists, but trading still sets the pace.'
   : 'Not yet. NEAR stablecoins mostly move like a trading venue, not a payments network.';
-const vsub = `${passed} of ${total} tests pass. ${pct(S.trading_share_of_volume)} of stablecoin volume touches a DEX, NEAR Intents or a lending market, while wallet-to-wallet transfers are ${pct(sn.p2p)} of transfers and ${pct(sv.p2p, 1)} of volume.` + (failed.length ? ` Failed: ${failed.join(', ')}.` : '');
+const vsub = `${passed} of ${total} tests pass. ${pct(sn.dex)} of USDC/USDT transfers on NEAR go through a DEX, and wallet-to-wallet transfers are only ${pct(sn.p2p, 1)} of transfers.` + (failed.length ? ` Failed: ${failed.join(', ')}.` : '');
 const p2pSize = D.size.p2p, dexSize = D.size.dex;
 const share = (arr, from) => { const t = arr.reduce((a, b) => a + b, 0); return t ? arr.slice(from).reduce((a, b) => a + b, 0) / t : 0; };
 const rd = S.round_dollar_share;

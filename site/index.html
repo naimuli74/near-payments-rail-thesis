@@ -159,7 +159,7 @@ $('kpis').innerHTML=[
  [fmt(E.avg_daily_transfers),'stablecoin transfers per day (est.)','95% CI '+fmt(E.avg_daily_transfers_ci95[0])+' to '+fmt(E.avg_daily_transfers_ci95[1])],
  [usd(E.avg_daily_volume_usd),'transferred per day (est.)','95% CI '+usd(E.avg_daily_volume_ci95[0])+' to '+usd(E.avg_daily_volume_ci95[1])],
  [pct(S.share_of_transfers.p2p),'of transfers are wallet-to-wallet',pct(S.share_of_volume.p2p,1)+' of volume'],
- [pct(tradeShare),'of volume touches DEX / Intents / lending','DEX alone '+pct(S.share_of_volume.dex)],
+ [pct(S.share_of_transfers.dex),'of transfers go through a DEX','trading venues: '+pct(tradeShare)+' of volume ('+pct(S.sensitivity.largest.trading_share_excl_largest)+' ex. largest)'],
  [usd(S.supply.latest.total),'stablecoins on NEAR today','DefiLlama, '+S.supply.latest.day]
 ].map(k=>`<div class="kpi"><div class="v">${k[0]}</div><div class="k">${k[1]}</div><div class="ci">${k[2]}</div></div>`).join('');
 $('asof').textContent=`Window ${S.window.start} to ${S.window.end} (UTC) · ${fmt(S.sample.blocks_sampled)} of ${fmt(S.sample.blocks_in_window)} blocks sampled (${pct(S.sample.sample_rate,2)}) · generated ${S.generated_at}`;

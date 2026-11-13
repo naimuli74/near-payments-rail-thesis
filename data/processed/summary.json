@@ -1,156 +1,156 @@
 {
- "generated_at": "2026-11-13T20:42:34Z",
+ "generated_at": "2026-11-13T20:43:36Z",
  "window": {
   "start": "2026-08-15",
-  "end": "2026-10-07",
-  "days": 54
+  "end": "2026-10-08",
+  "days": 55
  },
  "sample": {
-  "blocks_sampled": 6418,
-  "blocks_in_window": 7638953,
-  "sample_rate": 0.0008401674941579036,
-  "transfers_observed": 2138,
+  "blocks_sampled": 6581,
+  "blocks_in_window": 7785666,
+  "sample_rate": 0.0008452712972788712,
+  "transfers_observed": 2261,
   "mints_burns_observed": 1,
-  "accounts_observed": 226,
-  "volume_observed_usd": 3447666.763713
+  "accounts_observed": 235,
+  "volume_observed_usd": 3473057.350593
  },
  "estimates": {
-  "avg_daily_transfers": 47558.012398893145,
+  "avg_daily_transfers": 49073.73937443744,
   "avg_daily_transfers_ci95": [
-   44919.8018731373,
-   50594.43957535112
+   46039.79777077708,
+   52435.4119246925
   ],
-  "avg_daily_volume_usd": 76845794.22753541,
+  "avg_daily_volume_usd": 75966149.04367785,
   "avg_daily_volume_ci95": [
-   16529625.30070288,
-   191400070.51806274
+   17594093.178895522,
+   235320961.98562774
   ],
-  "avg_daily_p2p_transfers": 1047.2461419753085,
+  "avg_daily_p2p_transfers": 1054.6162841284129,
   "avg_daily_p2p_transfers_ci95": [
-   761.3712962962962,
-   1373.6126543209882
+   755.7596174617463,
+   1349.8408295829581
   ],
-  "avg_daily_p2p_volume_usd": 4098209.5193567425,
+  "avg_daily_p2p_volume_usd": 4023936.6790292165,
   "avg_daily_p2p_volume_ci95": [
-   1050279.4906753895,
-   8534679.475211969
+   1080950.5318167682,
+   7874297.841961083
   ]
  },
  "share_of_transfers": {
-  "dex": 0.9275023386342376,
-  "intents": 0.01824134705332086,
-  "defi": 0.007015902712815715,
-  "bridge": 0.0018709073900841909,
+  "dex": 0.929234851835471,
+  "intents": 0.018575851393188854,
+  "defi": 0.006634232640424591,
+  "bridge": 0.0017691287041132243,
   "cex": 0.0,
-  "other_contract": 0.022918615528531337,
-  "p2p": 0.02245088868101029
+  "other_contract": 0.022114108801415303,
+  "p2p": 0.021671826625386997
  },
  "share_of_volume": {
-  "dex": 0.17490820933272733,
-  "intents": 0.0056307225536766,
-  "defi": 0.03873741941119854,
-  "bridge": 4.728774303709695e-05,
+  "dex": 0.18088966133995238,
+  "intents": 0.00563590929031388,
+  "defi": 0.038454220571162365,
+  "bridge": 4.6942035083919174e-05,
   "cex": 0.0,
-  "other_contract": 0.7269238192521634,
-  "p2p": 0.05375254170719702
+  "other_contract": 0.7216110782930448,
+  "p2p": 0.05336218847044268
  },
- "trading_share_of_volume": 0.21927635129760248,
- "median_transfer_usd": 148.9696275,
- "median_p2p_transfer_usd": 50.3232145,
- "under_100_share": 0.37184284377923293,
- "p2p_under_100_share": 0.5625,
- "top1pct_transfer_volume_share": 0.8547167590557495,
- "top10pct_transfer_volume_share": 0.9239080973442252,
- "gini_transfer_size": 0.9388168451605441,
+ "trading_share_of_volume": 0.22497979120142864,
+ "median_transfer_usd": 141.982962,
+ "median_p2p_transfer_usd": 50.0,
+ "under_100_share": 0.3936311366651924,
+ "p2p_under_100_share": 0.5714285714285714,
+ "top1pct_transfer_volume_share": 0.849754643473738,
+ "top10pct_transfer_volume_share": 0.9231723356110312,
+ "gini_transfer_size": 0.9386556312851617,
  "top_senders": [
   {
    "account": "4a432082cc1cd551b14d6f075e9345087d64f57c2660400ef33cac5a0bb263b0",
    "usd": 2500000.0,
-   "share": 0.725128085554185,
+   "share": 0.7198268694218777,
    "type": "user"
   },
   {
    "account": "dclv2.ref-labs.near",
-   "usd": 174784.41254900032,
-   "share": 0.05069643458254778,
+   "usd": 177934.94929900032,
+   "share": 0.05123294300585597,
    "type": "dex"
   },
   {
    "account": "contract.main.burrow.near",
    "usd": 120070.475378,
-   "share": 0.03482658957697202,
+   "share": 0.034571981760536954,
    "type": "defi"
   },
   {
    "account": "c7f30234b645491fcd2b70a27bfef7b8dba5743ed0feb4e1ca4de08239b7f1c1",
    "usd": 119465.8,
-   "share": 0.03465120273727966,
-   "type": "user"
-  },
-  {
-   "account": "closemeat6237.near",
-   "usd": 89607.20146900004,
-   "share": 0.02599067938123366,
+   "share": 0.03439787712679206,
    "type": "user"
   },
   {
    "account": "v2.ref-finance.near",
-   "usd": 80447.554698,
-   "share": 0.023333912530270527,
+   "usd": 97347.555637,
+   "share": 0.028029354488021508,
    "type": "dex"
+  },
+  {
+   "account": "closemeat6237.near",
+   "usd": 91096.20929200003,
+   "share": 0.026229399660344217,
+   "type": "user"
   },
   {
    "account": "aggregatedex.near",
    "usd": 34438.392803,
-   "share": 0.009988898337120964,
+   "share": 0.009915872191721766,
    "type": "other_contract"
   },
   {
    "account": "bulkinbulkout.near",
    "usd": 31800.0,
-   "share": 0.009223629248249232,
+   "share": 0.009156197779046284,
+   "type": "user"
+  },
+  {
+   "account": "safenode8556.near",
+   "usd": 24878.712765999997,
+   "share": 0.007163346370238352,
    "type": "user"
   },
   {
    "account": "00000000012.near",
-   "usd": 24351.717387,
-   "share": 0.007063245683516748,
+   "usd": 24635.597182,
+   "share": 0.007093345918342997,
    "type": "user"
   },
   {
    "account": "034fb44ea688fc49b43111077e58f85b71270434fface509467c0487661c64eb",
    "usd": 24185.0,
-   "share": 0.007014889099651185,
-   "type": "user"
-  },
-  {
-   "account": "safenode8556.near",
-   "usd": 24116.186781999997,
-   "share": 0.006994929740839519,
+   "share": 0.006963605134787245,
    "type": "user"
   },
   {
    "account": "c409f94145ac6f8b2a8e916cc8218d800b6a438c21e640ab6774c16a7a7e64f3",
    "usd": 21999.5,
-   "share": 0.006380982127259716,
+   "share": 0.0063343324855386395,
    "type": "user"
   },
   {
    "account": "freshgarden2689.near",
-   "usd": 21479.679231999995,
-   "share": 0.006230207471927257,
+   "usd": 21822.171696999998,
+   "share": 0.006283274214655285,
    "type": "user"
   },
   {
    "account": "d5c4cb1ed65be96831c754c1be7f340a5097fc6ef80fd5da23b3d7b6e6535ca4",
    "usd": 17232.7,
-   "share": 0.004998365903971841,
+   "share": 0.004961824197074556,
    "type": "user"
   },
   {
    "account": "youngibis2137.near",
    "usd": 17172.622288000002,
-   "share": 0.0049809402894570275,
+   "share": 0.004944525976534162,
    "type": "user"
   }
  ],
@@ -158,227 +158,227 @@
   {
    "account": "4a432082cc1cd551b14d6f075e9345087d64f57c2660400ef33cac5a0bb263b0",
    "usd": 2500000.0,
-   "share_of_transfers_volume": 0.725128085554185,
+   "share_of_transfers_volume": 0.7198268694218777,
    "type": "user"
   },
   {
    "account": "nfendowment02.near",
    "usd": 2500000.0,
-   "share_of_transfers_volume": 0.725128085554185,
+   "share_of_transfers_volume": 0.7198268694218777,
    "type": "other_contract"
   },
   {
    "account": "dclv2.ref-labs.near",
-   "usd": 346985.832527,
-   "share_of_transfers_volume": 0.10064366898189141,
+   "usd": 353857.1349280002,
+   "share_of_transfers_volume": 0.10188634946312694,
    "type": "dex"
   },
   {
    "account": "v2.ref-finance.near",
-   "usd": 256039.38749,
-   "share_of_transfers_volume": 0.07426454035083593,
+   "usd": 274383.033035,
+   "share_of_transfers_volume": 0.07900331187682547,
    "type": "dex"
   },
   {
    "account": "closemeat6237.near",
-   "usd": 156810.20748000013,
-   "share_of_transfers_volume": 0.04548299421813081,
+   "usd": 173998.6012690001,
+   "share_of_transfers_volume": 0.050099547374099954,
    "type": "user"
   },
   {
    "account": "contract.main.burrow.near",
    "usd": 133553.713416,
-   "share_of_transfers_volume": 0.03873741941119854,
+   "share_of_transfers_volume": 0.038454220571162365,
    "type": "defi"
   },
   {
    "account": "c7f30234b645491fcd2b70a27bfef7b8dba5743ed0feb4e1ca4de08239b7f1c1",
    "usd": 120087.09057500001,
-   "share_of_transfers_volume": 0.034831408835368706,
+   "share_of_transfers_volume": 0.03457676578663349,
    "type": "user"
   },
   {
    "account": "jayzcash.near",
    "usd": 100000.0,
-   "share_of_transfers_volume": 0.029005123422167396,
+   "share_of_transfers_volume": 0.028793074776875108,
    "type": "user"
   },
   {
    "account": "e3b1cd1be9c4da03ffd2f1afc2d22827d81cf62850ffdbfe3804215e51c86c65",
    "usd": 70807.0,
-   "share_of_transfers_volume": 0.020537657741534068,
+   "share_of_transfers_volume": 0.020387512457261957,
    "type": "user"
   },
   {
    "account": "aggregatedex.near",
    "usd": 61445.721275,
-   "share_of_transfers_volume": 0.01782240729345472,
+   "share_of_transfers_volume": 0.017692112473901008,
    "type": "other_contract"
   },
   {
    "account": "5c33c6218d47e00ef229f60da78d0897e1ee9665312550b8afd5f9c7bc6957d2",
    "usd": 59489.903382000004,
-   "share_of_transfers_volume": 0.01725511989967724,
+   "share_of_transfers_volume": 0.017128972365470015,
    "type": "user"
   },
   {
    "account": "00000000012.near",
-   "usd": 56488.57507500001,
-   "share_of_transfers_volume": 0.016384580919927443,
+   "usd": 56772.45487000001,
+   "share_of_transfers_volume": 0.016346535383386776,
    "type": "user"
   },
   {
    "account": "safenode8556.near",
-   "usd": 47409.082879,
-   "share_of_transfers_volume": 0.013751063002371583,
+   "usd": 48591.10591000001,
+   "share_of_transfers_volume": 0.013990873459576883,
    "type": "user"
   },
   {
    "account": "freshgarden2689.near",
-   "usd": 34776.825401999995,
-   "share_of_transfers_volume": 0.010087061130161761,
+   "usd": 35598.531407999995,
+   "share_of_transfers_volume": 0.01024991176777481,
    "type": "user"
   },
   {
    "account": "0x97e1e6c70fe9f2209792640336534bfc9f93aa7a",
    "usd": 33437.826044,
-   "share_of_transfers_volume": 0.009698682713751834,
+   "share_of_transfers_volume": 0.00962777825661034,
    "type": "other_contract"
   },
   {
    "account": "bulkinbulkout.near",
    "usd": 31800.0,
-   "share_of_transfers_volume": 0.009223629248249232,
+   "share_of_transfers_volume": 0.009156197779046284,
    "type": "user"
   },
   {
    "account": "b444fa4c0d956ac4d611b7e7f88a771fab0ef8ce20c74872d76e513e6787dc34",
    "usd": 31800.0,
-   "share_of_transfers_volume": 0.009223629248249232,
+   "share_of_transfers_volume": 0.009156197779046284,
    "type": "user"
   },
   {
    "account": "youngibis2137.near",
    "usd": 30832.759812999997,
-   "share_of_transfers_volume": 0.008943080038221078,
+   "share_of_transfers_volume": 0.008877699588731386,
    "type": "user"
   },
   {
    "account": "silentxml7180.near",
    "usd": 26440.661411000012,
-   "share_of_transfers_volume": 0.007669146475897941,
+   "share_of_transfers_volume": 0.007613079411569594,
    "type": "user"
   },
   {
    "account": "greentie5780.near",
    "usd": 25481.16024999999,
-   "share_of_transfers_volume": 0.0073908419799127555,
+   "share_of_transfers_volume": 0.007336809524797873,
    "type": "user"
   },
   {
    "account": "034fb44ea688fc49b43111077e58f85b71270434fface509467c0487661c64eb",
    "usd": 24185.0,
-   "share_of_transfers_volume": 0.007014889099651185,
+   "share_of_transfers_volume": 0.006963605134787245,
    "type": "user"
   },
   {
    "account": "intents.near",
-   "usd": 22140.580787999996,
-   "share_of_transfers_volume": 0.006421902783944082,
+   "usd": 22414.884125999997,
+   "share_of_transfers_volume": 0.006453934347549087,
    "type": "intents"
   },
   {
    "account": "c409f94145ac6f8b2a8e916cc8218d800b6a438c21e640ab6774c16a7a7e64f3",
    "usd": 21999.5,
-   "share_of_transfers_volume": 0.006380982127259716,
+   "share_of_transfers_volume": 0.0063343324855386395,
    "type": "user"
   },
   {
    "account": "wx-cruce.near",
-   "usd": 17286.432527999994,
-   "share_of_transfers_volume": 0.00501395109003609,
+   "usd": 19229.003788999977,
+   "share_of_transfers_volume": 0.005536621439814911,
    "type": "user"
   },
   {
    "account": "d5c4cb1ed65be96831c754c1be7f340a5097fc6ef80fd5da23b3d7b6e6535ca4",
    "usd": 17232.7,
-   "share_of_transfers_volume": 0.004998365903971841,
+   "share_of_transfers_volume": 0.004961824197074556,
    "type": "user"
   }
  ],
  "round_dollar_share": {
-  "dex": 0.025523226135783564,
-  "intents": 0.17647058823529413,
+  "dex": 0.024566473988439308,
+  "intents": 0.16216216216216217,
   "defi": 0.21428571428571427,
   "bridge": 0.0,
   "cex": null,
-  "other_contract": 0.14705882352941177,
-  "p2p": 0.3170731707317073,
-  "all": 0.03691275167785235
+  "other_contract": 0.14285714285714285,
+  "p2p": 0.30952380952380953,
+  "all": 0.035326086956521736
  },
  "weekend_to_weekday": {
-  "n_all": 0.8160095300985376,
-  "n_p2p": 0.7965322824081508,
-  "n_dex": 0.783354492870522,
-  "n_intents": 1.846011777267473
+  "n_all": 0.7837967970444656,
+  "n_p2p": 0.7903825325283017,
+  "n_dex": 0.752113966282466,
+  "n_intents": 1.6216902329649652
  },
- "cv_daily_transfers": 0.7384726107364704,
- "cv_daily_p2p": 0.9097077693967109,
+ "cv_daily_transfers": 0.7415535731313722,
+ "cv_daily_p2p": 0.8965723333186737,
  "correlations": {
   "n_all": {
-   "vs_abs_return": 0.3864684581665714,
-   "vs_price": 0.7377549075662283
+   "vs_abs_return": 0.3782106782106783,
+   "vs_price": 0.7515873015873017
   },
   "v_all": {
-   "vs_abs_return": 0.30566037735849055,
-   "vs_price": 0.5477034495902421
+   "vs_abs_return": 0.3057720057720058,
+   "vs_price": 0.5505050505050506
   },
   "n_p2p": {
-   "vs_abs_return": 0.11599543299515155,
-   "vs_price": 0.13935100584442828
+   "vs_abs_return": 0.11953343407655237,
+   "vs_price": 0.16382698620266115
   },
   "v_p2p": {
-   "vs_abs_return": 0.09753005546607516,
-   "vs_price": 0.0964737732769119
+   "vs_abs_return": 0.09720179343868116,
+   "vs_price": 0.09919833084670275
   },
   "n_dex": {
-   "vs_abs_return": 0.37922622450924337,
-   "vs_price": 0.7307413760243949
+   "vs_abs_return": 0.37460317460317466,
+   "vs_price": 0.7434343434343436
   },
   "v_dex": {
-   "vs_abs_return": 0.33905088622069757,
-   "vs_price": 0.5482370878597294
+   "vs_abs_return": 0.33982683982683987,
+   "vs_price": 0.5624098124098125
   },
   "n_intents": {
-   "vs_abs_return": 0.12766237240913184,
-   "vs_price": 0.19834777848172053
+   "vs_abs_return": 0.1333499185253089,
+   "vs_price": 0.23706228364839665
   },
   "v_intents": {
-   "vs_abs_return": -0.04662487025268578,
-   "vs_price": 0.12119231235672098
+   "vs_abs_return": -0.039974460702094886,
+   "vs_price": 0.14940836123101686
   }
  },
  "tokens": {
   "USDC": {
-   "transfers": 0.8840037418147801,
-   "volume": 0.9082686468742689
+   "transfers": 0.8841220698805838,
+   "volume": 0.9067111783905087
   },
   "USDT": {
-   "transfers": 0.09681945743685688,
-   "volume": 0.08107918907625308
+   "transfers": 0.09685979655019902,
+   "volume": 0.08271272083455554
   },
   "USDC.e": {
-   "transfers": 0.013564078578110383,
-   "volume": 0.007872328689554104
+   "transfers": 0.013268465280849183,
+   "volume": 0.007816013555999904
   },
   "USDT.e": {
-   "transfers": 0.005612722170252572,
-   "volume": 0.0027798353599228
+   "transfers": 0.005749668288367979,
+   "volume": 0.0027600872189350025
   }
  },
  "supply": {
   "start": 126207262,
-  "end": 127994139,
+  "end": 132056197,
   "latest": {
    "day": "2026-11-13",
    "total": 132032130.65,
@@ -389,15 +389,15 @@
  },
  "price": {
   "start": 1.6395488858428195,
-  "end": 5.0667957396624255
+  "end": 5.334629329884487
  },
- "velocity_daily": 0.7614243685683887,
+ "velocity_daily": 0.748510306107705,
  "tests": [
   {
    "id": "T1",
    "name": "Small tickets",
    "rule": "Median transfer under $100 and at least half of transfers under $100",
-   "value": "median $148.97; 37% under $100",
+   "value": "median $141.98; 39% under $100",
    "pass": false
   },
   {
@@ -411,7 +411,7 @@
    "id": "T3",
    "name": "Not trading-dominated",
    "rule": "DEX + Intents + lending/perps carry under 50% of volume",
-   "value": "21.9% of volume",
+   "value": "22.5% of volume",
    "pass": true
   },
   {
@@ -425,7 +425,7 @@
    "id": "T5",
    "name": "Broad-based value",
    "rule": "Largest 1% of transfers carry under 50% of volume",
-   "value": "85.5% of volume",
+   "value": "85.0% of volume",
    "pass": false
   },
   {
@@ -443,21 +443,21 @@
    "largest_transfer_from": "4a432082cc1cd551b14d6f075e9345087d64f57c2660400ef33cac5a0bb263b0",
    "largest_transfer_to": "nfendowment02.near",
    "largest_transfer_tx": "D6MKuMtaNLvoK4vuJyMQWBhEqR5uSc8cnQxpMkq6abZQ",
-   "largest_transfer_share_of_sampled_volume": 0.725128085554185,
+   "largest_transfer_share_of_sampled_volume": 0.7198268694218777,
    "share_of_volume_excl_largest": {
-    "dex": 0.6363262310206181,
-    "intents": 0.020484895901529333,
-    "defi": 0.14092898319313288,
-    "bridge": 0.00017203555747933162,
+    "dex": 0.6456352933155876,
+    "intents": 0.020115809387875574,
+    "defi": 0.13725163612875418,
+    "bridge": 0.00016754652734563374,
     "cex": 0.0,
-    "other_contract": 0.006532983559266163,
-    "p2p": 0.19555487076797415
+    "other_contract": 0.006368236909390424,
+    "p2p": 0.19046147773104674
    },
-   "trading_share_excl_largest": 0.7977401101152803
+   "trading_share_excl_largest": 0.8030027388322172
   },
   "high_frequency_wallets": 14,
-  "p2p_strict_share_of_transfers": 0.021047708138447148,
-  "p2p_strict_share_of_volume": 0.053752541706326866,
+  "p2p_strict_share_of_transfers": 0.019902697921273773,
+  "p2p_strict_share_of_volume": 0.05335957135126426,
   "rule": "wallet-to-wallet transfers where neither wallet appears in 10+ sampled transfers"
  },
  "intents": {
@@ -475,67 +475,67 @@
    "deposit": "Deposits into Intents",
    "withdrawal": "Withdrawals out of Intents"
   },
-  "receipts_observed": 2296,
+  "receipts_observed": 2388,
   "flows_observed": {
-   "swap": 3513,
-   "to_solver": 1355,
-   "peer_transfer": 165,
-   "deposit": 552,
-   "withdrawal": 509
+   "swap": 3593,
+   "to_solver": 1411,
+   "peer_transfer": 166,
+   "deposit": 582,
+   "withdrawal": 528
   },
   "volume_share": {
-   "swap": 0.22595473709119954,
-   "to_solver": 0.234982460527061,
-   "peer_transfer": 0.0149985780284292,
-   "deposit": 0.30769758387945606,
-   "withdrawal": 0.21636664047385426
+   "swap": 0.2265598814241228,
+   "to_solver": 0.23471602111584822,
+   "peer_transfer": 0.014836860716726406,
+   "deposit": 0.3060521384084666,
+   "withdrawal": 0.21783509833483589
   },
   "avg_daily_volume": {
-   "swap": 49281459.49604331,
-   "to_solver": 55198496.455414474,
-   "peer_transfer": 3250513.1946905255,
-   "deposit": 66951677.55406947,
-   "withdrawal": 47192510.6977137
+   "swap": 49517812.37607314,
+   "to_solver": 51451677.57248747,
+   "peer_transfer": 3217823.935885171,
+   "deposit": 66693016.60869374,
+   "withdrawal": 47658865.98862785
   },
   "avg_daily_count": {
-   "swap": 76722.02471264369,
-   "to_solver": 30059.373238612177,
-   "peer_transfer": 3599.318209876543,
-   "deposit": 12330.625074499787,
-   "withdrawal": 11162.320221370795
+   "swap": 77053.22585058505,
+   "to_solver": 30437.327244224423,
+   "peer_transfer": 3560.2870417041704,
+   "deposit": 12561.333777377737,
+   "withdrawal": 11377.368121812182
   },
   "chain_volume_share": {
-   "eth": 0.46746118617255,
-   "tron": 0.19161090979802395,
-   "base": 0.12379284365479748,
-   "arb": 0.10614117925178414,
-   "sol": 0.049364841604275234,
-   "bsc": 0.044167282646139366,
-   "pol": 0.008552917975211186,
-   "near": 0.00571672185521444,
-   "gnosis": 0.0014920771796024365,
-   "sui": 0.0005621665426565931,
-   "op": 0.00035846702274007063,
-   "hood": 0.00024746341828360313,
-   "aleo": 0.000164146613839915,
-   "ton": 0.00015350429249768105,
-   "monad": 0.0001362566808049574,
-   "stellar": 2.7502899265596584e-05,
-   "aptos": 2.4785141550830997e-05,
-   "plasma": 1.6018487379382954e-05,
-   "avax": 9.728763383118582e-06
+   "eth": 0.4682947413183062,
+   "tron": 0.19175072853902647,
+   "base": 0.12186000494621459,
+   "arb": 0.10451438878204296,
+   "sol": 0.04962990710144457,
+   "bsc": 0.04337625647071403,
+   "near": 0.00903670708372257,
+   "pol": 0.008402337809105726,
+   "gnosis": 0.001465345534477951,
+   "sui": 0.0005520949212119443,
+   "op": 0.0003520448259718903,
+   "hood": 0.00024302993161864927,
+   "aleo": 0.00016120580817011466,
+   "ton": 0.0001507541517353737,
+   "monad": 0.00013381554351868852,
+   "stellar": 2.701016487282322e-05,
+   "aptos": 2.434109775915965e-05,
+   "plasma": 1.573150455710642e-05,
+   "avax": 9.554465529218753e-06
   },
-  "peer_median_usd": 7.548508,
-  "peer_under_100_share": 0.7090909090909091,
-  "peer_round_share": 0.21359223300970873,
-  "peer_unique_senders": 160,
-  "peer_unique_receivers": 122,
+  "peer_median_usd": 8.724254,
+  "peer_under_100_share": 0.7048192771084337,
+  "peer_round_share": 0.22115384615384615,
+  "peer_unique_senders": 161,
+  "peer_unique_receivers": 123,
   "solver_accounts_detected": 36,
   "hub_rule": "solver-* name, 5+ token_diff without referral, or 10+ sampled Intents stablecoin events",
   "corr_vs_abs_return": {
-   "all": 0.13177053554412044,
-   "peer_transfer": 0.034654975848835395,
-   "swap": -0.0012578616352201257
+   "all": 0.13694083694083695,
+   "peer_transfer": 0.039148476191835424,
+   "swap": 0.008152958152958153
   }
  }
 }
