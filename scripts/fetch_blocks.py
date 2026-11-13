@@ -176,14 +176,9 @@ def main():
                 if h not in done:
                     jobs.append((day, h))
     print(f"{len(jobs)} blocks to fetch ({len(done)} cached)", flush=True)
-    bucket, lock = Bucket(args.rate), threading.Lock()
-    fd, fe = open(done_path, "a"), open(ev_path, "a")
-    fi = open(os.path.join(RAW, "intents_events.jsonl"), "a")
-    stats = {"n": 0, "ev": 0}
-
-    # neardata.xyz answers archival heights with a 302 to an archive host. Each hop counts against
-    # the per-IP rate limit, so learn the archive host once and call it directly.
-    import urllib.request as ur
+    # Download with parallel curl processes (xargs), ingest finished files as they land.
+    # Each worker sleeps between requests so the total stays under the documented 180 req/min.
+    import subprocess, glob as G, urllib.request as ur
     base = NEARDATA
     try:
         with ur.urlopen(ur.Request(f"{NEARDATA}/v0/block/{jobs[0][1]}/headers", headers={"User-Agent": "near-payments-rail-thesis"}), timeout=30) as r:
@@ -191,33 +186,45 @@ def main():
     except Exception:
         pass
     print("archive host", base, flush=True)
+    tmp = os.path.join(RAW, "_dl"); os.makedirs(tmp, exist_ok=True)
+    dayof = dict((h, d) for d, h in jobs)
+    with open(os.path.join(tmp, "_jobs.txt"), "w") as f:
+        for d, h in jobs:
+            f.write(f"{h}\n")
+    workers = max(1, int(args.rate * 3))  # ~1 s per request + 2 s pause per worker
+    cmd = (f"xargs -P {workers} -I@ sh -c 'curl -sL --compressed --max-time 40 -A near-payments-rail-thesis "
+           f"-o {tmp}/@.part -w \"%{{http_code}}\" {base}/v0/block/@ > {tmp}/@.code; "
+           f"[ \"$(cat {tmp}/@.code)\" = 200 ] && mv {tmp}/@.part {tmp}/@.json; rm -f {tmp}/@.code {tmp}/@.part; sleep 2' < {tmp}/_jobs.txt")
+    proc = subprocess.Popen(cmd, shell=True)
+    fd, fe = open(done_path, "a"), open(ev_path, "a")
+    fi = open(os.path.join(RAW, "intents_events.jsonl"), "a")
+    stats = {"n": 0, "ev": 0}
 
-    def work(job):
-        day, h = job
-        bucket.take()
-        blk = fetch_block(f"{base}/v0/block/{h}")
-        if blk is None:
-            rec, evs, ins = {"h": h, "day": day, "missing": True, "v": VERSION}, [], []
-        else:
-            ts, evs, ins = extract(h, blk)
-            rec = {"h": h, "day": day, "ts": ts, "n": len(evs), "ni": len(ins), "v": VERSION}
-        with lock:
-            for e in evs:
-                fe.write(json.dumps(e) + "\n")
-            for e in ins:
-                fi.write(json.dumps(e) + "\n")
+    def ingest():
+        for fpath in G.glob(os.path.join(tmp, "*.json")):
+            h = int(os.path.basename(fpath)[:-5])
+            try:
+                blk = json.load(open(fpath))
+            except Exception:
+                os.remove(fpath); continue
+            day = dayof.get(h)
+            if blk is None:
+                rec, evs, ins = {"h": h, "day": day, "missing": True, "v": VERSION}, [], []
+            else:
+                ts, evs, ins = extract(h, blk)
+                rec = {"h": h, "day": day, "ts": ts, "n": len(evs), "ni": len(ins), "v": VERSION}
+            for e in evs: fe.write(json.dumps(e) + "\n")
+            for e in ins: fi.write(json.dumps(e) + "\n")
             fd.write(json.dumps(rec) + "\n")
-            stats["n"] += 1; stats["ev"] += len(evs)
             fd.flush(); fe.flush(); fi.flush()
+            os.remove(fpath)
+            stats["n"] += 1; stats["ev"] += len(evs)
             if stats["n"] % 200 == 0:
                 print(time.strftime("%H:%M:%S"), stats, flush=True)
 
-    with ThreadPoolExecutor(max_workers=24) as ex:
-        for f in [ex.submit(work, j) for j in jobs]:
-            try:
-                f.result()
-            except Exception as e:
-                print("error", e, flush=True)
+    while proc.poll() is None:
+        ingest(); time.sleep(5)
+    ingest()
     fd.close(); fe.close(); fi.close()
     print("done", stats)
 
