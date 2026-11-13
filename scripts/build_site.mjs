@@ -34,7 +34,7 @@ const T = {
 const IS = S.intents;
 const iv = IS.avg_daily_volume, ic = IS.avg_daily_count;
 const topChain = Object.entries(IS.chain_volume_share)[0] || ['n/a', 0];
-T.T8 = `About <b>${usd(iv.deposit)}</b> a day of stablecoins enters Intents and <b>${usd(iv.withdrawal)}</b> leaves, against <b>${usd(iv.swap)}</b> of swap flow. Most stablecoin activity at NEAR's edge is cross-chain movement, not native-token trading.`;
+T.T8 = `About <b>${usd(iv.deposit)}</b> a day of stablecoins enters Intents and <b>${usd(iv.withdrawal)}</b> leaves, against <b>${usd(iv.swap)}</b> of swap flow. Most stablecoin activity at NEAR's edge is cross-chain movement, not native-token trading.` + (IS.defillama_avg_daily_volume ? ` Cross-check: DefiLlama puts all NEAR Intents volume (every asset) at ${usd(IS.defillama_avg_daily_volume)} a day over the same days.` : '');
 T.T9 = `<b>${pct(topChain[1])}</b> of the sampled stablecoin flow is ${topChain[0]} dollars. NEAR is settling other chains' stablecoins, which is a different role from issuing its own.`;
 T.T10 = `An estimated <b>${fmt(ic.peer_transfer)}</b> stablecoin peer transfers a day happen inside Intents (median $${fmt(IS.peer_median_usd ?? 0, 2)}, ${pct(IS.peer_under_100_share ?? 0)} under $100). Small, but this is the payment-shaped flow to watch.`;
 const SB = S.sensitivity.largest;

@@ -371,6 +371,14 @@ def main():
             "all": spearman([tot_i(r) for r in xs], [absret[r["day"]] for r in xs]),
             "peer_transfer": spearman([r["v_peer_transfer"] for r in xs], [absret[r["day"]] for r in xs]),
             "swap": spearman([r["v_swap"] for r in xs], [absret[r["day"]] for r in xs])}
+    try:
+        ll = json.load(open(os.path.join(RAW, "intents_volume_defillama.json")))["data"]["totalDataChart"]
+        llv = {dt.datetime.fromtimestamp(t, dt.timezone.utc).strftime("%Y-%m-%d"): v for t, v in ll}
+        xs = [llv[d] for d in days if d in llv]
+        intents["defillama_avg_daily_volume"] = statistics.fmean(xs) if xs else None
+        intents["swap_vs_defillama"] = intents["avg_daily_volume"]["swap"] / intents["defillama_avg_daily_volume"] if xs else None
+    except FileNotFoundError:
+        intents["defillama_avg_daily_volume"] = None
     summary["intents"] = {k: v for k, v in intents.items() if k not in ("daily", "weekly")}
     os.makedirs(PROC, exist_ok=True)
     with open(os.path.join(PROC, "intents_daily_estimates.csv"), "w", newline="") as f:

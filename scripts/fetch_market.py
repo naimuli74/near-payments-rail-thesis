@@ -9,6 +9,7 @@ SOURCES = {
     "stable_supply_total": "https://stablecoins.llama.fi/stablecoincharts/Near",
     "stable_supply_usdt": "https://stablecoins.llama.fi/stablecoincharts/Near?stablecoin=1",
     "stable_supply_usdc": "https://stablecoins.llama.fi/stablecoincharts/Near?stablecoin=2",
+    "intents_volume_defillama": "https://api.llama.fi/summary/dexs/near-intents?excludeTotalDataChart=false&excludeTotalDataChartBreakdown=true",
 }
 
 if __name__ == "__main__":

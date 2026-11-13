@@ -35,7 +35,7 @@ headline = f"""- {smp['transfers_observed']:,} USDC/USDT transfers observed in {
 - **{pct(sn['dex'])} of transfers involve a DEX** (Rhea/Ref). DEX + NEAR Intents + lending carry {pct(S['trading_share_of_volume'])} of sampled volume ({pct(SB['trading_share_excl_largest'])} excluding the single largest transfer, see robustness below).
 - **Wallet-to-wallet transfers are {pct(sn['p2p'], 1)} of transfers and {pct(sv['p2p'], 1)} of volume**, but they look like payments: median {usd(S['median_p2p_transfer_usd'])}, {pct(S['p2p_under_100_share'])} under $100.
 - Daily volume vs NEAR's absolute daily return: Spearman rho = {c['v_all']['vs_abs_return']:.2f} overall, {c['v_dex']['vs_abs_return']:.2f} for DEX flow, {c['v_p2p']['vs_abs_return']:.2f} for wallet-to-wallet flow.
-- Exploratory: inside NEAR Intents, about **{usd(iv['deposit'])} a day of stablecoins is deposited and {usd(iv['withdrawal'])} withdrawn**, mostly dollars from other chains ({chains_txt}). Stablecoin peer transfers inside Intents: about {ic['peer_transfer']:,.0f} a day, median {usd(I['peer_median_usd'])}.
+- Exploratory: inside NEAR Intents, about **{usd(iv['deposit'])} a day of stablecoins is deposited and {usd(iv['withdrawal'])} withdrawn**, mostly dollars from other chains ({chains_txt}). Stablecoin peer transfers inside Intents: about {ic['peer_transfer']:,.0f} a day, median {usd(I['peer_median_usd'])}. Cross-check: our stablecoin swap-leg estimate ({usd(iv['swap'])} a day) is {pct(I.get('swap_vs_defillama') or 0)} of DefiLlama's all-asset NEAR Intents volume ({usd(I.get('defillama_avg_daily_volume'))} a day) over the same days.
 - Robustness: a single sampled transfer of {usd(SB['largest_transfer_usd'])} (to `{SB['largest_transfer_to']}`, [tx](https://nearblocks.io/txns/{SB['largest_transfer_tx']})) is {pct(SB['largest_transfer_share_of_sampled_volume'])} of all sampled dollars. Without it, DEX + Intents + lending carry {pct(SB['trading_share_excl_largest'])} of volume and wallet-to-wallet {pct(SB['share_of_volume_excl_largest']['p2p'])}. Dollar shares are fragile in a block sample; transfer counts are the robust signal.
 - Result: **{S['passed']} of 6 pre-registered tests pass.**"""
 
@@ -89,6 +89,7 @@ All numbers are produced by `scripts/analyze.py` and stored in [`data/processed/
 | DEX / lending contract ids | [Rhea Finance contracts](https://guide.rhea.finance/developers/contracts) | `labels/known_accounts.json` |
 | NEAR Intents stablecoin asset ids | [NEAR Intents 1Click token list](https://1click.chaindefuser.com/v0/tokens) | `labels/intents_stablecoins.json` |
 | NEAR price | [CoinGecko](https://www.coingecko.com/en/api) `/coins/near/market_chart` | `scripts/fetch_market.py` |
+| NEAR Intents total volume (cross-check only) | [DefiLlama](https://defillama.com/protocol/near-intents) `/summary/dexs/near-intents` | `scripts/fetch_market.py` |
 | Stablecoin supply on NEAR | [DefiLlama stablecoins](https://defillama.com/stablecoins/Near) `/stablecoincharts/Near` | `scripts/fetch_market.py` |
 
 ## Method
