@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+data/raw/fetch.log
+dist/
+node_modules/
+.env

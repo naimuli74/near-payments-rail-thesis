@@ -1,0 +1,16 @@
+{
+  "note": "Documented labels only. Every entry cites a public source. Accounts not listed here are classified by whether contract code is deployed (NEAR RPC view_account code_hash).",
+  "accounts": [
+    {"account": "v2.ref-finance.near", "category": "dex", "name": "Rhea (Ref) AMM exchange", "source": "https://guide.rhea.finance/developers/contracts"},
+    {"account": "dclv2.ref-labs.near", "category": "dex", "name": "Rhea (Ref) concentrated liquidity DEX", "source": "https://guide.rhea.finance/developers/contracts"},
+    {"account": "ref-finance.near", "category": "dex", "name": "Ref Finance v1 exchange (legacy)", "source": "https://guide.rhea.finance/developers/contracts"},
+    {"account": "boostfarm.ref-labs.near", "category": "dex", "name": "Rhea farming", "source": "https://guide.rhea.finance/developers/contracts"},
+    {"account": "contract.main.burrow.near", "category": "defi", "name": "Rhea Lending (Burrow)", "source": "https://guide.rhea.finance/developers/contracts"},
+    {"account": "lsd-usdt.rhealab.near", "category": "defi", "name": "Rhea USDT yield (nrUSDT)", "source": "https://guide.rhea.finance/developers/contracts"},
+    {"account": "multica.near", "category": "defi", "name": "Rhea multi-chain lending account manager", "source": "https://guide.rhea.finance/developers/contracts"},
+    {"account": "intents.near", "category": "intents", "name": "NEAR Intents verifier", "source": "https://docs.near-intents.org/near-intents/market-makers/verifier/introduction"},
+    {"account": "factory.bridge.near", "category": "bridge", "name": "Rainbow Bridge token factory", "source": "https://github.com/aurora-is-near/rainbow-token-connector"},
+    {"suffix": ".factory.bridge.near", "category": "bridge", "name": "Rainbow Bridge bridged token contracts", "source": "https://github.com/aurora-is-near/rainbow-token-connector"},
+    {"account": "aurora", "category": "bridge", "name": "Aurora EVM engine (NEAR <-> Aurora)", "source": "https://doc.aurora.dev/"}
+  ]
+}

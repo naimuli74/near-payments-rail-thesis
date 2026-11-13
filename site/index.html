@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Is NEAR already a payments rail? | Stablecoin evidence dashboard</title>
+<meta name="description" content="An evidence-first investment thesis for NEAR: 90 days of USDC and USDT transfers on NEAR mainnet, sampled straight from the chain, tested against six pre-registered payments-rail criteria.">
+<meta property="og:title" content="Is NEAR already a payments rail?">
+<meta property="og:description" content="90 days of on-chain USDC/USDT transfers on NEAR, tested against six pre-registered criteria. Built at NEAR HACKATHON.">
+<meta name="theme-color" content="#0b0f14">
+<style>
+:root{--bg:#0b0f14;--panel:#121821;--panel2:#18202b;--line:#243041;--text:#e8edf3;--mute:#8b98a9;--near:#00ec97;--red:#ff6b6b;--amber:#ffb547;--blue:#5aa9ff;--violet:#a78bfa}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--near);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,15,20,.85);backdrop-filter:blur(10px);z-index:5}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:12px}
+.brand{font-weight:700;letter-spacing:.2px;white-space:nowrap}.brand span{color:var(--near)}
+nav a{color:var(--mute);margin-left:18px;font-size:14px}nav a:hover{color:var(--text)}
+.hero{padding:56px 0 28px}
+.kicker{color:var(--near);font-weight:600;font-size:13px;letter-spacing:1.4px;text-transform:uppercase}
+h1{font-size:clamp(32px,5vw,54px);line-height:1.05;margin:12px 0 16px;letter-spacing:-1px}
+.lede{color:#c3ccd8;font-size:clamp(16px,2vw,19px);max-width:820px}
+.verdict{margin-top:26px;display:flex;gap:18px;align-items:stretch;flex-wrap:wrap}
+.vbox{background:linear-gradient(135deg,#1a1f14 0%,#121821 60%);border:1px solid #3a3a1e;border-radius:16px;padding:20px 22px;flex:1 1 420px}
+.vbox .lab{font-size:12px;color:var(--amber);font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
+.vbox .big{font-size:26px;font-weight:700;margin:6px 0 6px;line-height:1.2}
+.vbox p{margin:0;color:#c3ccd8}
+.score{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px;min-width:220px;text-align:center;flex:0 1 240px}
+.score .n{font-size:56px;font-weight:800;line-height:1}.score .n small{font-size:24px;color:var(--mute)}
+.score .t{color:var(--mute);font-size:13px;margin-top:6px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:26px 0 8px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.kpi .v{font-size:24px;font-weight:700}.kpi .k{color:var(--mute);font-size:12.5px;margin-top:2px}.kpi .ci{color:#6f7d8f;font-size:11.5px;margin-top:4px}
+section{padding:26px 0}
+h2{font-size:24px;margin:0 0 6px;letter-spacing:-.3px}.sub{color:var(--mute);margin:0 0 18px;max-width:860px}
+.tests{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.test{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;position:relative}
+.test .id{font-size:12px;color:var(--mute);font-weight:700}.test .nm{font-weight:700;margin:2px 0 6px}
+.test .rule{color:var(--mute);font-size:13px}.test .val{margin-top:10px;font-weight:600}
+.pill{position:absolute;top:14px;right:14px;font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:999px;letter-spacing:.6px}
+.pass{background:rgba(0,236,151,.12);color:var(--near);border:1px solid rgba(0,236,151,.35)}
+.fail{background:rgba(255,107,107,.1);color:var(--red);border:1px solid rgba(255,107,107,.35)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 18px 12px;min-width:0}
+.card.wide{grid-column:1/-1}
+.card h3{margin:0;font-size:16.5px}.card .take{color:#c3ccd8;margin:6px 0 12px;font-size:14px}
+.card .take b{color:var(--text)}
+.cv{position:relative;height:300px}.cv.tall{height:340px}
+.src{color:#6f7d8f;font-size:11.5px;margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+.src a{color:#8fb7a6}
+table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}th{color:var(--mute);font-weight:600;font-size:12px}
+td.num{text-align:right;font-variant-numeric:tabular-nums}th.num{text-align:right}
+.acct{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;word-break:break-all}
+.tag{font-size:11px;padding:2px 7px;border-radius:6px;background:var(--panel2);border:1px solid var(--line);color:#c3ccd8;white-space:nowrap}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.prose{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+.prose h3{margin:0 0 8px;font-size:16px}.prose ul{margin:6px 0 0;padding-left:18px;color:#c3ccd8}.prose li{margin:4px 0}
+.prose p{color:#c3ccd8;margin:6px 0}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 0 40px;color:var(--mute);font-size:13px}
+.legend-note{font-size:12px;color:var(--mute)}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.tests{grid-template-columns:1fr 1fr}.grid,.two{grid-template-columns:1fr}nav{display:none}.cv{height:260px}}
+@media (max-width:560px){.tests{grid-template-columns:1fr}.hero{padding-top:34px}.kpi .v{font-size:20px}.score{flex:1 1 100%}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><div class="brand">NEAR <span>Payments Rail</span> Thesis</div>
+<nav><a href="#tests">Tests</a><a href="#evidence">Evidence</a><a href="#method">Method</a><a href="__REPO__">GitHub</a></nav></div></header>
+<main class="wrap">
+<div class="hero">
+  <div class="kicker">Investment thesis · NEAR HACKATHON</div>
+  <h1>Is NEAR already a payments rail?</h1>
+  <p class="lede">If NEAR is becoming money infrastructure, its stablecoins should move like payments: lots of small transfers between ordinary wallets, a steady daily rhythm, and no dependence on NEAR's price swings. If it is mostly a trading venue, the flow will run through DEXs and bots and follow volatility. We pulled <b id="h-n"></b> USDC and USDT transfers straight from NEAR mainnet blocks over <b id="h-days"></b> days and checked them against six tests we wrote down first.</p>
+  <div class="verdict">
+    <div class="vbox"><div class="lab">Verdict</div><div class="big" id="verdict"></div><p id="verdict-sub"></p></div>
+    <div class="score"><div class="n" id="score"></div><div class="t">pre-registered tests passed</div></div>
+  </div>
+  <div class="kpis" id="kpis"></div>
+  <div class="legend-note" id="asof"></div>
+</div>
+
+<section id="tests"><h2>Six tests, fixed before the data was pulled</h2>
+<p class="sub">Each test is a yes-or-no rule. If NEAR's stablecoin flow were a payments network, all six should pass. The thresholds live in <a href="__REPO__/blob/main/THESIS.md">THESIS.md</a> and the code that scores them is <a href="__REPO__/blob/main/scripts/analyze.py">scripts/analyze.py</a>.</p>
+<div class="tests" id="testgrid"></div></section>
+
+<section id="evidence"><h2>The evidence</h2><p class="sub">Every number is an estimate from a seeded random sample of whole mainnet blocks, scaled up by the number of blocks in each day. 95% intervals come from resampling blocks.</p>
+<div class="grid">
+  <div class="card wide"><h3>1. Who is on the other side of a NEAR stablecoin transfer?</h3><p class="take" id="t1"></p><div class="cv" style="height:220px"><canvas id="c1"></canvas></div>
+  <div class="src">Source: NEP-141 <code>ft_transfer</code> events from sampled blocks (FASTNEAR neardata.xyz). Counterparty types: <a href="__REPO__/blob/main/labels/known_accounts.json">labels/known_accounts.json</a> + contract-code check via NEAR RPC. Script: <a href="__REPO__/blob/main/scripts/analyze.py">analyze.py</a></div></div>
+
+  <div class="card wide"><h3>2. Weekly stablecoin volume by counterparty</h3><p class="take" id="t2"></p><div class="cv tall"><canvas id="c2"></canvas></div>
+  <div class="src">Source: sampled blocks, expanded to full weeks; complete weeks only. Data: <a href="__REPO__/blob/main/data/processed/daily_estimates.csv">daily_estimates.csv</a></div></div>
+
+  <div class="card"><h3>3. Transfer size: wallet-to-wallet vs DEX</h3><p class="take" id="t3"></p><div class="cv"><canvas id="c3"></canvas></div>
+  <div class="src">Source: sampled <code>ft_transfer</code> events, share of transfer count per size bucket. Script: analyze.py</div></div>
+
+  <div class="card"><h3>4. Payments fingerprint: round-dollar amounts</h3><p class="take" id="t4"></p><div class="cv"><canvas id="c4"></canvas></div>
+  <div class="src">Share of transfers of $1 or more whose amount is a whole dollar (no cents). Invoices, payroll and remittances tend to be round; swap legs almost never are.</div></div>
+
+  <div class="card wide"><h3>5. Daily transfers vs NEAR price</h3><p class="take" id="t5"></p><div class="cv tall"><canvas id="c5"></canvas></div>
+  <div class="src">Transfers: sampled blocks, 7-day average. Price: <a href="https://www.coingecko.com/en/coins/near">CoinGecko</a> daily close (<code>/coins/near/market_chart</code>). Spearman correlations in summary.json.</div></div>
+
+  <div class="card"><h3>6. Stablecoins parked on NEAR keep growing</h3><p class="take" id="t6"></p><div class="cv"><canvas id="c6"></canvas></div>
+  <div class="src">Source: <a href="https://defillama.com/stablecoins/Near">DefiLlama stablecoins API</a> (<code>/stablecoincharts/Near</code>), circulating USD, all stablecoins incl. bridged. Price: CoinGecko.</div></div>
+
+  <div class="card"><h3>7. Biggest counterparties in the sample</h3><p class="take" id="t7"></p><div style="max-height:340px;overflow:auto"><table id="toptable"></table></div>
+  <div class="src">Share = sampled volume sent or received by the account / total sampled volume (each transfer counted on both sides, so shares add to 200%).</div></div>
+</div></section>
+
+<section id="method"><div class="two">
+  <div class="prose"><h3>What would make this a payments rail</h3><p id="change"></p><ul id="changelist"></ul></div>
+  <div class="prose"><h3>Investment implication</h3><p id="impl"></p></div>
+</div>
+<div class="two" style="margin-top:16px">
+  <div class="prose"><h3>Method</h3><ul>
+    <li>Tokens: native USDC (<span class="acct">17208628…33a1</span>, Circle), native USDT (<span class="acct">usdt.tether-token.near</span>, Tether) and the Rainbow Bridge versions USDC.e / USDT.e.</li>
+    <li>Sample: for each UTC day we draw a fixed number of block heights at random (seed 20261114) and download the full block from <a href="https://github.com/fastnear/neardata-server">neardata.xyz</a>. Every successful NEP-141 transfer, mint and burn from these contracts is kept.</li>
+    <li>Estimates: day total = sample total × blocks in day ÷ sampled blocks. 95% intervals: 300 block-level bootstrap resamples.</li>
+    <li>Counterparty type: documented labels first, then a code check (does the account have a contract deployed?). Wallet-to-wallet means neither side has code.</li>
+    <li>Rebuild everything: <code>make all</code> (Python 3 standard library only, no API keys).</li>
+  </ul></div>
+  <div class="prose"><h3>Limitations</h3><ul>
+    <li>It is a sample (<span id="lim-rate"></span> of blocks), not a census. Unique-user counts are not estimated because a block sample cannot measure them.</li>
+    <li>Exchange hot wallets are not labeled unless documented; they show up as wallets or contracts. A wallet-to-wallet transfer can still be a trader moving funds.</li>
+    <li>Transfers into NEAR Intents can be cross-chain payments, not only swaps. We count them as trading-venue flow, which is the conservative choice for this thesis.</li>
+    <li>Amounts are taken at $1 per token. Window: <span id="lim-win"></span>.</li>
+  </ul></div>
+</div></section>
+</main>
+<footer><div class="wrap">Built at NEAR HACKATHON for the Investment Thesis track. Code, data snapshot and THESIS.md: <a href="__REPO__">__REPO_SHORT__</a>. Data generated <span id="gen"></span>. MIT licensed. Not investment advice.</div></footer>
+<script src="/chart.js"></script>
+<script>
+const D=__DATA__;
+const S=D.summary, C=D.cats, N=D.cat_names;
+const COL={dex:'#ff6b6b',intents:'#ffb547',defi:'#a78bfa',bridge:'#5aa9ff',cex:'#f472b6',other_contract:'#64748b',p2p:'#00ec97'};
+const fmt=(x,d=0)=>x==null?'n/a':x.toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d});
+const usd=x=>x>=1e9?'$'+fmt(x/1e9,2)+'B':x>=1e6?'$'+fmt(x/1e6,1)+'M':x>=1e3?'$'+fmt(x/1e3,1)+'K':'$'+fmt(x,2);
+const pct=(x,d=0)=>x==null?'n/a':(x*100).toFixed(d)+'%';
+const $=id=>document.getElementById(id);
+const tradeShare=S.trading_share_of_volume;
+$('h-n').textContent=fmt(S.sample.transfers_observed);$('h-days').textContent=S.window.days;
+$('score').innerHTML=S.passed+'<small>/'+S.tests.length+'</small>';
+$('verdict').textContent=__VERDICT__;
+$('verdict-sub').textContent=__VERDICT_SUB__;
+const E=S.estimates;
+$('kpis').innerHTML=[
+ [fmt(E.avg_daily_transfers),'stablecoin transfers per day (est.)','95% CI '+fmt(E.avg_daily_transfers_ci95[0])+' to '+fmt(E.avg_daily_transfers_ci95[1])],
+ [usd(E.avg_daily_volume_usd),'transferred per day (est.)','95% CI '+usd(E.avg_daily_volume_ci95[0])+' to '+usd(E.avg_daily_volume_ci95[1])],
+ [pct(S.share_of_transfers.p2p),'of transfers are wallet-to-wallet',pct(S.share_of_volume.p2p,1)+' of volume'],
+ [pct(tradeShare),'of volume touches DEX / Intents / lending','DEX alone '+pct(S.share_of_volume.dex)],
+ [usd(S.supply.latest.total),'stablecoins on NEAR today','DefiLlama, '+S.supply.latest.day]
+].map(k=>`<div class="kpi"><div class="v">${k[0]}</div><div class="k">${k[1]}</div><div class="ci">${k[2]}</div></div>`).join('');
+$('asof').textContent=`Window ${S.window.start} to ${S.window.end} (UTC) · ${fmt(S.sample.blocks_sampled)} of ${fmt(S.sample.blocks_in_window)} blocks sampled (${pct(S.sample.sample_rate,2)}) · generated ${S.generated_at}`;
+$('testgrid').innerHTML=S.tests.map(t=>`<div class="test"><span class="pill ${t.pass?'pass':'fail'}">${t.pass?'PASS':'FAIL'}</span><div class="id">${t.id}</div><div class="nm">${t.name}</div><div class="rule">${t.rule}</div><div class="val">${t.value}</div></div>`).join('');
+$('gen').textContent=S.generated_at;$('lim-rate').textContent=pct(S.sample.sample_rate,2);$('lim-win').textContent=S.window.start+' to '+S.window.end+' UTC';
+Chart.defaults.color='#8b98a9';Chart.defaults.borderColor='#243041';Chart.defaults.font.family='Inter,system-ui,sans-serif';Chart.defaults.plugins.legend.labels.boxWidth=12;
+const small=innerWidth<600;
+// 1
+new Chart($('c1'),{type:'bar',data:{labels:['Share of transfers','Share of volume'],datasets:C.map(c=>({label:N[c],data:[S.share_of_transfers[c]*100,S.share_of_volume[c]*100],backgroundColor:COL[c]}))},
+ options:{indexAxis:'y',maintainAspectRatio:false,scales:{x:{stacked:true,max:100,ticks:{callback:v=>v+'%'}},y:{stacked:true}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw.toFixed(1)+'%'}},legend:{position:small?'bottom':'top'}}}});
+$('t1').innerHTML=__T1__;
+// 2
+const W=D.weekly;
+new Chart($('c2'),{type:'bar',data:{labels:W.map(w=>w.week.slice(5)),datasets:C.map(c=>({label:N[c],data:W.map(w=>w['v_'+c]),backgroundColor:COL[c]}))},
+ options:{maintainAspectRatio:false,scales:{x:{stacked:true,title:{display:!small,text:'week starting (2026)'}},y:{stacked:true,ticks:{callback:v=>usd(v)}}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+usd(c.raw)}},legend:{position:small?'bottom':'top'}}}});
+$('t2').innerHTML=__T2__;
+// 3
+const tot=a=>a.reduce((x,y)=>x+y,0);
+new Chart($('c3'),{type:'bar',data:{labels:D.buckets,datasets:[['p2p','Wallet-to-wallet'],['dex','DEX']].map(([c,l])=>({label:l,data:D.size[c].map(v=>tot(D.size[c])?v/tot(D.size[c])*100:0),backgroundColor:COL[c]}))},
+ options:{maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>v+'%'}}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw.toFixed(1)+'%'}}}}});
+$('t3').innerHTML=__T3__;
+// 4
+const RC=C.filter(c=>S.round_dollar_share[c]!=null&&D.size[c]&&tot(D.size[c])>=30);
+new Chart($('c4'),{type:'bar',data:{labels:RC.map(c=>N[c]),datasets:[{label:'Round-dollar share',data:RC.map(c=>S.round_dollar_share[c]*100),backgroundColor:RC.map(c=>COL[c])}]},
+ options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:{ticks:{callback:v=>v+'%'}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw.toFixed(1)+'%'}}}}});
+$('t4').innerHTML=__T4__;
+// 5
+const Dy=D.daily, ma=(k)=>Dy.map((r,i)=>{const s=Dy.slice(Math.max(0,i-6),i+1);return s.reduce((a,b)=>a+b[k],0)/s.length});
+const trade=Dy.map(r=>r.n_dex+r.n_intents+r.n_defi);const tradeMa=trade.map((_,i)=>{const s=trade.slice(Math.max(0,i-6),i+1);return s.reduce((a,b)=>a+b,0)/s.length});
+const priceBy=Object.fromEntries(D.supply.map(s=>[s.day,s.near]));
+new Chart($('c5'),{type:'line',data:{labels:Dy.map(r=>r.day.slice(5)),datasets:[
+ {label:'Trading-venue transfers / day (7d avg)',data:tradeMa,borderColor:COL.dex,backgroundColor:COL.dex,pointRadius:0,tension:.3,yAxisID:'y'},
+ {label:'Wallet-to-wallet transfers / day (7d avg)',data:ma('n_p2p'),borderColor:COL.p2p,backgroundColor:COL.p2p,pointRadius:0,tension:.3,yAxisID:'y'},
+ {label:'NEAR price (USD)',data:Dy.map(r=>priceBy[r.day]??null),borderColor:'#c3ccd8',backgroundColor:'#c3ccd8',borderDash:[4,4],pointRadius:0,tension:.2,yAxisID:'y2'}]},
+ options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},scales:{y:{ticks:{callback:v=>fmt(v)}},y2:{position:'right',grid:{display:false},ticks:{callback:v=>'$'+v.toFixed(2)}}},plugins:{legend:{position:small?'bottom':'top'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+(c.dataset.yAxisID==='y2'?'$'+c.raw.toFixed(3):fmt(c.raw))}}}}});
+$('t5').innerHTML=__T5__;
+// 6
+const SP=D.supply.filter((s,i)=>s.total!=null);
+new Chart($('c6'),{type:'line',data:{labels:SP.map(s=>s.day),datasets:[
+ {label:'USDT',data:SP.map(s=>s.usdt),borderColor:'#26a17b',backgroundColor:'rgba(38,161,123,.35)',fill:true,pointRadius:0,stack:'s',yAxisID:'y'},
+ {label:'USDC',data:SP.map(s=>s.usdc),borderColor:'#2775ca',backgroundColor:'rgba(39,117,202,.35)',fill:true,pointRadius:0,stack:'s',yAxisID:'y'},
+ {label:'NEAR price',data:SP.map(s=>s.near??null),borderColor:'#c3ccd8',borderDash:[4,4],pointRadius:0,yAxisID:'y2'}]},
+ options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},scales:{x:{ticks:{maxTicksLimit:6,callback:function(v){return this.getLabelForValue(v).slice(0,7)}}},y:{stacked:true,ticks:{callback:v=>usd(v)}},y2:{position:'right',grid:{display:false},ticks:{callback:v=>'$'+v.toFixed(1)}}},plugins:{legend:{position:small?'bottom':'top'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+(c.dataset.yAxisID==='y2'?'$'+c.raw.toFixed(2):usd(c.raw))}}}}});
+$('t6').innerHTML=__T6__;
+// 7
+const TN={dex:'DEX',intents:'NEAR Intents',defi:'Lending/perps',bridge:'Bridge',cex:'Exchange',other_contract:'Contract',user:'Wallet'};
+$('toptable').innerHTML='<tr><th>Account</th><th>Type</th><th class="num">Share</th></tr>'+S.top_counterparties.slice(0,12).map(a=>`<tr><td class="acct"><a href="https://nearblocks.io/address/${a.account}">${a.account.length>28?a.account.slice(0,10)+'…'+a.account.slice(-6):a.account}</a></td><td><span class="tag">${TN[a.type]||a.type}</span></td><td class="num">${pct(a.share_of_transfers_volume,1)}</td></tr>`).join('');
+$('t7').innerHTML=__T7__;
+$('change').innerHTML=__CHANGE__;
+$('changelist').innerHTML=__CHANGELIST__;
+$('impl').innerHTML=__IMPL__;
+</script>
+</body></html>
