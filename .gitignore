@@ -4,3 +4,4 @@ data/raw/fetch.log
 dist/
 node_modules/
 .env
+SUBMISSION_DRAFT.md
