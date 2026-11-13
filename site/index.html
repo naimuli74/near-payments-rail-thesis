@@ -44,7 +44,7 @@ h2{font-size:24px;margin:0 0 6px;letter-spacing:-.3px}.sub{color:var(--mute);mar
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 18px 12px;min-width:0}
 .card.wide{grid-column:1/-1}
-.card h3{margin:0;font-size:16.5px}.card .take{color:#c3ccd8;margin:6px 0 12px;font-size:14px}
+.card h3{margin:0;font-size:16.5px}.tog{float:right;display:flex;gap:4px}.tog button{background:var(--panel2);color:var(--mute);border:1px solid var(--line);border-radius:8px;padding:3px 10px;font:inherit;font-size:12px;cursor:pointer}.tog button.on{color:var(--bg);background:var(--near);border-color:var(--near)}.card .take{color:#c3ccd8;margin:6px 0 12px;font-size:14px}
 .card .take b{color:var(--text)}
 .cv{position:relative;height:300px}.cv.tall{height:340px}
 .src{color:#6f7d8f;font-size:11.5px;margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
@@ -88,7 +88,7 @@ footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 0 40px;colo
   <div class="card wide"><h3>1. Who is on the other side of a NEAR stablecoin transfer?</h3><p class="take" id="t1"></p><div class="cv" style="height:220px"><canvas id="c1"></canvas></div>
   <div class="src">Source: NEP-141 <code>ft_transfer</code> events from sampled blocks (FASTNEAR neardata.xyz). Counterparty types: <a href="__REPO__/blob/main/labels/known_accounts.json">labels/known_accounts.json</a> + contract-code check via NEAR RPC. Script: <a href="__REPO__/blob/main/scripts/analyze.py">analyze.py</a></div></div>
 
-  <div class="card wide"><h3>2. Weekly stablecoin volume by counterparty</h3><p class="take" id="t2"></p><div class="cv tall"><canvas id="c2"></canvas></div>
+  <div class="card wide"><div class="tog" data-chart="c2"><button class="on" data-m="v">Volume</button><button data-m="n">Count</button></div><h3>2. Weekly stablecoin transfers by counterparty</h3><p class="take" id="t2"></p><div class="cv tall"><canvas id="c2"></canvas></div>
   <div class="src">Source: sampled blocks, expanded to full weeks; complete weeks only. Data: <a href="__REPO__/blob/main/data/processed/daily_estimates.csv">daily_estimates.csv</a></div></div>
 
   <div class="card"><h3>3. Transfer size: wallet-to-wallet vs DEX</h3><p class="take" id="t3"></p><div class="cv"><canvas id="c3"></canvas></div>
@@ -100,11 +100,23 @@ footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 0 40px;colo
   <div class="card wide"><h3>5. Daily transfers vs NEAR price</h3><p class="take" id="t5"></p><div class="cv tall"><canvas id="c5"></canvas></div>
   <div class="src">Transfers: sampled blocks, 7-day average. Price: <a href="https://www.coingecko.com/en/coins/near">CoinGecko</a> daily close (<code>/coins/near/market_chart</code>). Spearman correlations in summary.json.</div></div>
 
-  <div class="card"><h3>6. Stablecoins parked on NEAR keep growing</h3><p class="take" id="t6"></p><div class="cv"><canvas id="c6"></canvas></div>
+  <div class="card"><h3>6. Stablecoin supply on NEAR vs NEAR price</h3><p class="take" id="t6"></p><div class="cv"><canvas id="c6"></canvas></div>
   <div class="src">Source: <a href="https://defillama.com/stablecoins/Near">DefiLlama stablecoins API</a> (<code>/stablecoincharts/Near</code>), circulating USD, all stablecoins incl. bridged. Price: CoinGecko.</div></div>
 
   <div class="card"><h3>7. Biggest counterparties in the sample</h3><p class="take" id="t7"></p><div style="max-height:340px;overflow:auto"><table id="toptable"></table></div>
   <div class="src">Share = sampled volume sent or received by the account / total sampled volume (each transfer counted on both sides, so shares add to 200%).</div></div>
+</div></section>
+
+<section id="intents"><h2>Where the payment-like dollars may be going: NEAR Intents</h2>
+<p class="sub">Not pre-registered, so read it as exploration. Stablecoins from other chains (USDC on Base, USDT on Tron and Ethereum, and more) sit inside the NEAR Intents ledger as multi-token balances. Their moves never appear as USDC or USDT token transfers, so the tests above cannot see them. Here we read the Intents verifier's own events from the same sampled blocks.</p>
+<div class="kpis" id="ikpis"></div>
+<div class="grid">
+  <div class="card wide"><div class="tog" data-chart="c8"><button class="on" data-m="v">Volume</button><button data-m="n">Count</button></div><h3>8. Weekly stablecoin flow through NEAR Intents, by type</h3><p class="take" id="t8"></p><div class="cv tall"><canvas id="c8"></canvas></div>
+  <div class="src">Source: <code>intents.near</code> events in sampled blocks: <code>dip4 token_diff</code> (swaps), <code>dip4 transfer</code> (to solvers / peer), <code>nep245 mt_mint</code> / <code>mt_burn</code> (deposits / withdrawals). Stablecoin asset ids: <a href="__REPO__/blob/main/labels/intents_stablecoins.json">intents_stablecoins.json</a> from the NEAR Intents 1Click token list.</div></div>
+  <div class="card"><h3>9. Which chain's dollars move through Intents</h3><p class="take" id="t9"></p><div class="cv"><canvas id="c9"></canvas></div>
+  <div class="src">Share of sampled deposit, withdrawal and swap volume by the origin chain of the stablecoin. Source: same as chart 8.</div></div>
+  <div class="card"><h3>10. Peer transfers inside Intents</h3><p class="take" id="t10"></p><div class="cv"><canvas id="c10"></canvas></div>
+  <div class="src">Estimated daily count of Intents <code>transfer</code> events in stablecoins between non-solver accounts, 7-day average. Peers exclude infrastructure accounts: <code>solver-*</code> names, 5+ token_diff settlements without a referral tag, or 10+ sampled Intents events (market makers, 1Click hubs, venues).</div></div>
 </div></section>
 
 <section id="method"><div class="two">
@@ -131,7 +143,7 @@ footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 0 40px;colo
 <script src="/chart.js"></script>
 <script>
 const D=__DATA__;
-const S=D.summary, C=D.cats, N=D.cat_names;
+const S=D.summary, C=D.cats.filter(c=>S.share_of_transfers[c]>0||S.share_of_volume[c]>0), N=D.cat_names;
 const COL={dex:'#ff6b6b',intents:'#ffb547',defi:'#a78bfa',bridge:'#5aa9ff',cex:'#f472b6',other_contract:'#64748b',p2p:'#00ec97'};
 const fmt=(x,d=0)=>x==null?'n/a':x.toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d});
 const usd=x=>x>=1e9?'$'+fmt(x/1e9,2)+'B':x>=1e6?'$'+fmt(x/1e6,1)+'M':x>=1e3?'$'+fmt(x/1e3,1)+'K':'$'+fmt(x,2);
@@ -161,8 +173,8 @@ new Chart($('c1'),{type:'bar',data:{labels:['Share of transfers','Share of volum
 $('t1').innerHTML=__T1__;
 // 2
 const W=D.weekly;
-new Chart($('c2'),{type:'bar',data:{labels:W.map(w=>w.week.slice(5)),datasets:C.map(c=>({label:N[c],data:W.map(w=>w['v_'+c]),backgroundColor:COL[c]}))},
- options:{maintainAspectRatio:false,scales:{x:{stacked:true,title:{display:!small,text:'week starting (2026)'}},y:{stacked:true,ticks:{callback:v=>usd(v)}}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+usd(c.raw)}},legend:{position:small?'bottom':'top'}}}});
+const CH2=new Chart($('c2'),{type:'bar',data:{labels:W.map(w=>w.week.slice(5)),datasets:C.map(c=>({label:N[c],key:c,data:W.map(w=>w['v_'+c]),backgroundColor:COL[c]}))},
+ options:{maintainAspectRatio:false,scales:{x:{stacked:true,title:{display:!small,text:'week starting (2026)'}},y:{stacked:true,ticks:{callback:v=>CH2&&CH2.$m==='n'?fmt(v):usd(v)}}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+(CH2.$m==='n'?fmt(c.raw):usd(c.raw))}},legend:{position:small?'bottom':'top'}}}});CH2.$m='v';CH2.$rows=W;
 $('t2').innerHTML=__T2__;
 // 3
 const tot=a=>a.reduce((x,y)=>x+y,0);
@@ -196,6 +208,26 @@ $('t6').innerHTML=__T6__;
 const TN={dex:'DEX',intents:'NEAR Intents',defi:'Lending/perps',bridge:'Bridge',cex:'Exchange',other_contract:'Contract',user:'Wallet'};
 $('toptable').innerHTML='<tr><th>Account</th><th>Type</th><th class="num">Share</th></tr>'+S.top_counterparties.slice(0,12).map(a=>`<tr><td class="acct"><a href="https://nearblocks.io/address/${a.account}">${a.account.length>28?a.account.slice(0,10)+'…'+a.account.slice(-6):a.account}</a></td><td><span class="tag">${TN[a.type]||a.type}</span></td><td class="num">${pct(a.share_of_transfers_volume,1)}</td></tr>`).join('');
 $('t7').innerHTML=__T7__;
+const I=D.intents, IS=S.intents, ICOL={swap:'#ff6b6b',to_solver:'#ffb547',peer_transfer:'#00ec97',deposit:'#5aa9ff',withdrawal:'#a78bfa'};
+$('ikpis').innerHTML=[
+ [usd(IS.avg_daily_volume.deposit),'deposited into Intents per day (est.)',fmt(IS.avg_daily_count.deposit)+' deposits/day'],
+ [usd(IS.avg_daily_volume.withdrawal),'withdrawn per day (est.)',fmt(IS.avg_daily_count.withdrawal)+' withdrawals/day'],
+ [usd(IS.avg_daily_volume.swap),'swapped per day (stablecoin leg)',fmt(IS.avg_daily_count.swap)+' swap legs/day'],
+ [fmt(IS.avg_daily_count.peer_transfer),'peer transfers per day (est.)','median $'+fmt(IS.peer_median_usd,2)],
+ [Object.keys(IS.chain_volume_share).length+' chains','of stablecoins observed','top: '+Object.keys(IS.chain_volume_share)[0]]
+].map(k=>`<div class="kpi"><div class="v">${k[0]}</div><div class="k">${k[1]}</div><div class="ci">${k[2]}</div></div>`).join('');
+const CH8=new Chart($('c8'),{type:'bar',data:{labels:I.weekly.map(w=>w.week.slice(5)),datasets:I.types.map(t=>({label:I.names[t],key:t,data:I.weekly.map(w=>w['v_'+t]),backgroundColor:ICOL[t]}))},
+ options:{maintainAspectRatio:false,scales:{x:{stacked:true,title:{display:!small,text:'week starting (2026)'}},y:{stacked:true,ticks:{callback:v=>CH8&&CH8.$m==='n'?fmt(v):usd(v)}}},plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+(CH8.$m==='n'?fmt(c.raw):usd(c.raw))}},legend:{position:small?'bottom':'top'}}}});CH8.$m='v';CH8.$rows=I.weekly;
+const CHS={c2:CH2,c8:CH8};document.querySelectorAll('.tog').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{const ch=CHS[g.dataset.chart];ch.$m=b.dataset.m;g.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));ch.data.datasets.forEach(ds=>ds.data=ch.$rows.map(w=>w[ch.$m+'_'+ds.key]));ch.update();}));
+$('t8').innerHTML=__T8__;
+const CH=Object.entries(IS.chain_volume_share).slice(0,8);
+new Chart($('c9'),{type:'bar',data:{labels:CH.map(c=>c[0]),datasets:[{data:CH.map(c=>c[1]*100),backgroundColor:['#2775ca','#627eea','#9945ff','#ff060a','#f3ba2f','#8247e5','#28a0f0','#4da2ff']}]},
+ options:{indexAxis:'y',maintainAspectRatio:false,scales:{x:{ticks:{callback:v=>v+'%'}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw.toFixed(1)+'%'}}}}});
+$('t9').innerHTML=__T9__;
+const ID=I.daily,ima=k=>ID.map((r,i)=>{const s=ID.slice(Math.max(0,i-6),i+1);return s.reduce((a,b)=>a+b[k],0)/s.length});
+new Chart($('c10'),{type:'line',data:{labels:ID.map(r=>r.day.slice(5)),datasets:[{label:'Peer transfers / day (7d avg)',data:ima('n_peer_transfer'),borderColor:ICOL.peer_transfer,backgroundColor:'rgba(0,236,151,.15)',fill:true,pointRadius:0,tension:.3}]},
+ options:{maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>fmt(v)}}},plugins:{legend:{display:false}}}});
+$('t10').innerHTML=__T10__;
 $('change').innerHTML=__CHANGE__;
 $('changelist').innerHTML=__CHANGELIST__;
 $('impl').innerHTML=__IMPL__;

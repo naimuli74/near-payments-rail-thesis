@@ -1,0 +1,356 @@
+{
+ "source": "https://1click.chaindefuser.com/v0/tokens (NEAR Intents 1Click API token list, fetched 2026-11-13)",
+ "rule": "symbol (ignoring a '(DEPRECATED)' suffix) in USDC, USDT, USDT0, DAI, USD1, USDG, USDCx",
+ "tokens": [
+  {
+   "assetId": "nep141:17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1",
+   "symbol": "USDC",
+   "blockchain": "near",
+   "decimals": 6,
+   "contractAddress": "17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1"
+  },
+  {
+   "assetId": "nep141:eth-0xdac17f958d2ee523a2206206994597c13d831ec7.omft.near",
+   "symbol": "USDT",
+   "blockchain": "eth",
+   "decimals": 6,
+   "contractAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+  },
+  {
+   "assetId": "nep141:eth-0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.omft.near",
+   "symbol": "USDC",
+   "blockchain": "eth",
+   "decimals": 6,
+   "contractAddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+  },
+  {
+   "assetId": "nep141:eth-0x6b175474e89094c44da98b954eedeac495271d0f.omft.near",
+   "symbol": "DAI",
+   "blockchain": "eth",
+   "decimals": 18,
+   "contractAddress": "0x6b175474e89094c44da98b954eedeac495271d0f"
+  },
+  {
+   "assetId": "nep141:sol-0x936420c6ae310eb29511d139991654f922456fbe.omdep.near",
+   "symbol": "USD1",
+   "blockchain": "sol",
+   "decimals": 6,
+   "contractAddress": "USD1ttGY1N17NEEHLmELoaybftRBUSErhqYiQzvEmuB"
+  },
+  {
+   "assetId": "nep141:hood-0x5fc5360d0400a0fd4f2af552add042d716f1d168.omft.near",
+   "symbol": "USDG",
+   "blockchain": "hood",
+   "decimals": 6,
+   "contractAddress": "0x5fc5360d0400a0fd4f2af552add042d716f1d168"
+  },
+  {
+   "assetId": "nep141:tron-d28a265909efecdcee7c5028585214ea0b96f015.omft.near",
+   "symbol": "USDT",
+   "blockchain": "tron",
+   "decimals": 6,
+   "contractAddress": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
+  },
+  {
+   "assetId": "nep141:sol-c800a4bd850783ccb82c2b2c7e84175443606352.omft.near",
+   "symbol": "USDT",
+   "blockchain": "sol",
+   "decimals": 6,
+   "contractAddress": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"
+  },
+  {
+   "assetId": "nep141:usdt.tether-token.near",
+   "symbol": "USDT",
+   "blockchain": "near",
+   "decimals": 6,
+   "contractAddress": "usdt.tether-token.near"
+  },
+  {
+   "assetId": "nep141:arb-0xaf88d065e77c8cc2239327c5edb3a432268e5831.omft.near",
+   "symbol": "USDC",
+   "blockchain": "arb",
+   "decimals": 6,
+   "contractAddress": "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+  },
+  {
+   "assetId": "nep141:arb-0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9.omft.near",
+   "symbol": "USDT0",
+   "blockchain": "arb",
+   "decimals": 6,
+   "contractAddress": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9"
+  },
+  {
+   "assetId": "nep141:base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+   "symbol": "USDC",
+   "blockchain": "base",
+   "decimals": 6,
+   "contractAddress": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+  },
+  {
+   "assetId": "nep141:sol-5ce3bf3a31af18be40ba30f721101b4341690186.omft.near",
+   "symbol": "USDC",
+   "blockchain": "sol",
+   "decimals": 6,
+   "contractAddress": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+  },
+  {
+   "assetId": "nep141:gnosis-0x2a22f9c3b484c3629090feed35f17ff8f88f76f0.omft.near",
+   "symbol": "USDC",
+   "blockchain": "gnosis",
+   "decimals": 6,
+   "contractAddress": "0x2a22f9c3b484c3629090feed35f17ff8f88f76f0"
+  },
+  {
+   "assetId": "nep141:gnosis-0x4ecaba5870353805a9f068101a40e0f32ed605c6.omft.near",
+   "symbol": "USDT",
+   "blockchain": "gnosis",
+   "decimals": 6,
+   "contractAddress": "0x4ecaba5870353805a9f068101a40e0f32ed605c6"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:137_qiStmoQJDQPTebaPjgx5VBxZv6L",
+   "symbol": "USDC(DEPRECATED)",
+   "blockchain": "pol",
+   "decimals": 6,
+   "contractAddress": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359"
+  },
+  {
+   "assetId": "nep141:pol-0x3c499c542cef5e3811e1192ce70d8cc03d5c3359.omdep.near",
+   "symbol": "USDC",
+   "blockchain": "pol",
+   "decimals": 6,
+   "contractAddress": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:137_3hpYoaLtt8MP1Z2GH1U473DMRKgr",
+   "symbol": "USDT(DEPRECATED)",
+   "blockchain": "pol",
+   "decimals": 6,
+   "contractAddress": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f"
+  },
+  {
+   "assetId": "nep141:pol-0xc2132d05d31c914a87c6611c10748aeb04b58e8f.omdep.near",
+   "symbol": "USDT",
+   "blockchain": "pol",
+   "decimals": 6,
+   "contractAddress": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:56_2w93GqMcEmQFDru84j3HZZWt557r",
+   "symbol": "USDC(DEPRECATED)",
+   "blockchain": "bsc",
+   "decimals": 18,
+   "contractAddress": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d"
+  },
+  {
+   "assetId": "nep141:bnb-0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d.omdep.near",
+   "symbol": "USDC",
+   "blockchain": "bsc",
+   "decimals": 18,
+   "contractAddress": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:56_2CMMyVTGZkeyNZTSvS5sarzfir6g",
+   "symbol": "USDT(DEPRECATED)",
+   "blockchain": "bsc",
+   "decimals": 18,
+   "contractAddress": "0x55d398326f99059ff775485246999027b3197955"
+  },
+  {
+   "assetId": "nep141:bnb-0x55d398326f99059ff775485246999027b3197955.omdep.near",
+   "symbol": "USDT",
+   "blockchain": "bsc",
+   "decimals": 18,
+   "contractAddress": "0x55d398326f99059ff775485246999027b3197955"
+  },
+  {
+   "assetId": "nep141:aptos-88cb7619440a914fe6400149a12b443c3ac21d59.omft.near",
+   "symbol": "USDT",
+   "blockchain": "aptos",
+   "decimals": 6,
+   "contractAddress": "0x357b0b74bc833e95a115ad22604854d6b0fca151cecd94111770e5d6ffc9dc2b"
+  },
+  {
+   "assetId": "nep141:aptos-34ee497f210c5a511e8d5b53bc56d75b63612bb5.omft.near",
+   "symbol": "USDC",
+   "blockchain": "aptos",
+   "decimals": 6,
+   "contractAddress": "0xbae207659db88bea0cbead6da0ed00aac12edcdda169e591cd41c94180b46f3b"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:10_359RPSJVdTxwTJT9TyGssr2rFoWo",
+   "symbol": "USDT",
+   "blockchain": "op",
+   "decimals": 6,
+   "contractAddress": "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:10_2R1RXDBxCyJTeMEsdXydh7xsHmz",
+   "symbol": "USDT0",
+   "blockchain": "op",
+   "decimals": 6,
+   "contractAddress": "0x01bff41798a0bcf287b996046ca68b395dbc1071"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:10_A2ewyUyDp6qsue1jqZsGypkCxRJ",
+   "symbol": "USDC",
+   "blockchain": "op",
+   "decimals": 6,
+   "contractAddress": "0x0b2c639c533813f4aa9d7837caf62653d097ff85"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:43114_372BeH7ENZieCaabwkbWkBiTTgXp",
+   "symbol": "USDT(DEPRECATED)",
+   "blockchain": "avax",
+   "decimals": 6,
+   "contractAddress": "0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7"
+  },
+  {
+   "assetId": "nep141:avax-0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7.omdep.near",
+   "symbol": "USDT",
+   "blockchain": "avax",
+   "decimals": 6,
+   "contractAddress": "0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:43114_3atVJH3r5c4GqiSYmg9fECvjc47o",
+   "symbol": "USDC(DEPRECATED)",
+   "blockchain": "avax",
+   "decimals": 6,
+   "contractAddress": "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e"
+  },
+  {
+   "assetId": "nep141:avax-0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e.omdep.near",
+   "symbol": "USDC",
+   "blockchain": "avax",
+   "decimals": 6,
+   "contractAddress": "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:1117_3tsdfyziyc7EJbP2aULWSKU4toBaAcN4FdTgfm5W1mC4ouR",
+   "symbol": "USDT",
+   "blockchain": "ton",
+   "decimals": 6,
+   "contractAddress": "EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs"
+  },
+  {
+   "assetId": "nep141:sui-c1b81ecaf27933252d31a963bc5e9458f13c18ce.omft.near",
+   "symbol": "USDC",
+   "blockchain": "sui",
+   "decimals": 6,
+   "contractAddress": "0xdba34672e30cb065b1f93e3ab55318768fd6fef66c15942c9f7cb846e2f900e7::usdc::USDC"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:1100_111bzQBB65GxAPAVoxqmMcgYo5oS3txhqs1Uh1cgahKQUeTUq1TJu",
+   "symbol": "USDC",
+   "blockchain": "stellar",
+   "decimals": 7,
+   "contractAddress": "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:143_4EJiJxSALvGoTZbnc8K7Ft9533et",
+   "symbol": "USDT0",
+   "blockchain": "monad",
+   "decimals": 6,
+   "contractAddress": "0xe7cd86e13ac4309349f30b3435a9d337750fc82d"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:143_2dmLwYWkCQKyTjeUPAsGJuiVLbFx",
+   "symbol": "USDC",
+   "blockchain": "monad",
+   "decimals": 6,
+   "contractAddress": "0x754704bc059f8c67012fed69bc8a327a5aafb603"
+  },
+  {
+   "assetId": "nep141:bera-0x779ded0c9e1022225f8e0630b35a9b54be713736.omft.near",
+   "symbol": "USDT0",
+   "blockchain": "bera",
+   "decimals": 6,
+   "contractAddress": "0x779ded0c9e1022225f8e0630b35a9b54be713736"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:196_2fezDCvVYRsG8wrK6deJ2VRPiAS1",
+   "symbol": "USDT0",
+   "blockchain": "xlayer",
+   "decimals": 6,
+   "contractAddress": "0x779ded0c9e1022225f8e0630b35a9b54be713736"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:196_2dK9kLNR7Ekq7su8FxNGiUW3djTw",
+   "symbol": "USDC",
+   "blockchain": "xlayer",
+   "decimals": 6,
+   "contractAddress": "0x74b7f16337b8972027f6196a17a631ac6de26d22"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:9745_3aL9skCy1yhPoDB8oKMmRHRN7SJW",
+   "symbol": "USDT0(DEPRECATED)",
+   "blockchain": "plasma",
+   "decimals": 6,
+   "contractAddress": "0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb"
+  },
+  {
+   "assetId": "nep141:plasma-0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb.omft.near",
+   "symbol": "USDT0",
+   "blockchain": "plasma",
+   "decimals": 6,
+   "contractAddress": "0xb8ce59fc3717ada4c02eadf9682a9e934f625ebb"
+  },
+  {
+   "assetId": "nep141:aleo-usdcx.omft.near",
+   "symbol": "USDCx",
+   "blockchain": "aleo",
+   "decimals": 6,
+   "contractAddress": "usdcx"
+  },
+  {
+   "assetId": "nep245:v2_1.omni.hot.tg:534352_4RG3Q2wFsMQmd45m5m89RjsLfupA",
+   "symbol": "USDT",
+   "blockchain": "scroll",
+   "decimals": 6,
+   "contractAddress": "0xf55bec9cafdbe8730f096aa55dad6d22d44099df"
+  },
+  {
+   "assetId": "nep141:eth-0x8d0d000ee44948fc98c9b98a4fa4921476f08b0d.omft.near",
+   "symbol": "USD1",
+   "blockchain": "eth",
+   "decimals": 18,
+   "contractAddress": "0x8d0d000ee44948fc98c9b98a4fa4921476f08b0d"
+  },
+  {
+   "assetId": "nep141:movement-6f9a70ef4605e7d9174f1abf8d8d3c15012f48f3.omft.near",
+   "symbol": "USDCx",
+   "blockchain": "movement",
+   "decimals": 6,
+   "contractAddress": "0xba11833544a2f99eec743f41a228ca6ffa7f13c3b6b04681d5a79a8b75ff225e"
+  },
+  {
+   "assetId": "nep141:miden-0x5cb79d29507d3ad17bb6dc60279e89.omft.near",
+   "symbol": "USDT",
+   "blockchain": "miden",
+   "decimals": 6,
+   "contractAddress": "0x5cb79d29507d3ad17bb6dc60279e89"
+  },
+  {
+   "assetId": "nep141:miden-0xe69e6ca6e39df1b10c1e5399399feb.omft.near",
+   "symbol": "USDCX",
+   "blockchain": "miden",
+   "decimals": 6,
+   "contractAddress": "0xe69e6ca6e39df1b10c1e5399399feb"
+  },
+  {
+   "assetId": "1cs_v1:hypercore:hip1:0x6d1e7cde53ba9467b783cb7c530ce054",
+   "symbol": "USDC",
+   "blockchain": "hypercore",
+   "decimals": 8,
+   "contractAddress": "0x6d1e7cde53ba9467b783cb7c530ce054"
+  },
+  {
+   "assetId": "1cs_v1:hypercore:erc20:0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+   "symbol": "USDC",
+   "blockchain": "hypercore",
+   "decimals": 6,
+   "contractAddress": "0xb88339CB7199b77E23DB6E890353E22632Ba630f"
+  }
+ ]
+}

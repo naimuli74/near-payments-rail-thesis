@@ -31,6 +31,12 @@ const T = {
   T6: `Stablecoins on NEAR went from <b>${usd(sup.start)}</b> to <b>${usd(sup.end)}</b> over the window while NEAR moved from $${S.price.start.toFixed(2)} to $${S.price.end.toFixed(2)}. Each dollar turns over about <b>${(S.velocity_daily * 100).toFixed(1)}%</b> a day.`,
   T7: `The top counterparty, <span class="acct">${S.top_counterparties[0].account}</span>, is on one side of <b>${pct(S.top_counterparties[0].share_of_transfers_volume)}</b> of sampled volume. The largest 1% of transfers carry <b>${pct(S.top1pct_transfer_volume_share)}</b> of all dollars.`,
 };
+const IS = S.intents;
+const iv = IS.avg_daily_volume, ic = IS.avg_daily_count;
+const topChain = Object.entries(IS.chain_volume_share)[0] || ['n/a', 0];
+T.T8 = `About <b>${usd(iv.deposit)}</b> a day of stablecoins enters Intents and <b>${usd(iv.withdrawal)}</b> leaves, against <b>${usd(iv.swap)}</b> of swap flow. Most stablecoin activity at NEAR's edge is cross-chain movement, not native-token trading.`;
+T.T9 = `<b>${pct(topChain[1])}</b> of the sampled stablecoin flow is ${topChain[0]} dollars. NEAR is settling other chains' stablecoins, which is a different role from issuing its own.`;
+T.T10 = `An estimated <b>${fmt(ic.peer_transfer)}</b> stablecoin peer transfers a day happen inside Intents (median $${fmt(IS.peer_median_usd ?? 0, 2)}, ${pct(IS.peer_under_100_share ?? 0)} under $100). Small, but this is the payment-shaped flow to watch.`;
 const change = `We would call NEAR a payments rail when these move, measured with the same script:`;
 const changelist = [
   `Wallet-to-wallet share of volume rises from ${pct(sv.p2p, 1)} to above 25% for a full quarter.`,
@@ -50,6 +56,7 @@ for (const [k, v] of Object.entries(T)) html = html.replace(`__${k}__`, () => JS
 html = html.replace('__DATA__', () => JSON.stringify(D));
 fs.mkdirSync('dist', { recursive: true });
 fs.writeFileSync('dist/index.html', html);
+fs.writeFileSync('dist/chart.js', fs.readFileSync('site/vendor/chart.umd.min.js'));
 fs.writeFileSync('site/narrative.json', JSON.stringify({ verdict, vsub, ...T, changelist, impl }, null, 1));
 const chart = fs.readFileSync('site/vendor/chart.umd.min.js', 'utf8');
 const worker = `const HTML=${JSON.stringify(html)};const CHART=${JSON.stringify(chart)};const DATA=${JSON.stringify(JSON.stringify(D))};

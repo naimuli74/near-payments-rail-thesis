@@ -48,6 +48,96 @@ def spearman(a, b):
     return pearson(rank(a), rank(b))
 
 
+def analyze_intents(days, span, sampled, bday, w):
+    """Exploratory (not pre-registered): stablecoin flows inside the NEAR Intents ledger."""
+    meta = json.load(open(os.path.join(ROOT, "labels", "intents_stablecoins.json")))["tokens"]
+    dec = {t["assetId"]: t["decimals"] for t in meta}
+    chain = {t["assetId"]: t["blockchain"] for t in meta}
+    recs, seen = [], set()
+    for r in load_jsonl(os.path.join(RAW, "intents_events.jsonl")):
+        if (r["h"], r["rid"]) in seen or bday.get(r["h"]) not in span: continue
+        seen.add((r["h"], r["rid"])); r["day"] = bday[r["h"]]; recs.append(r)
+    amt = lambda tid, a: abs(int(a)) / 10 ** dec[tid]
+    # solver heuristic: named solver-* accounts, or accounts that settle token_diff without a referral >= 5 times
+    nonref = Counter()
+    for r in recs:
+        for e in r["events"]:
+            if e.get("standard") == "dip4" and e.get("event") == "token_diff":
+                for d in e["data"]:
+                    if "referral" not in d: nonref[d["account_id"]] += 1
+    solvers = {a for a, k in nonref.items() if k >= 5} | {a for a in nonref if a.startswith("solver")}
+    # hubs: accounts seen in >= 10 sampled Intents stablecoin events (~3,000+ events over the window at
+    # this sample rate). Solvers, market makers, 1Click deposit hubs and trading venues, not people.
+    seen_n = Counter()
+    for r in recs:
+        for e in r["events"]:
+            if e.get("standard") == "dip4" and e.get("event") in ("transfer", "token_diff"):
+                for d in e["data"]:
+                    seen_n[d.get("account_id")] += 1
+                    if d.get("receiver_id"): seen_n[d["receiver_id"]] += 1
+    solvers |= {a for a, k in seen_n.items() if k >= 10}
+    is_solver = lambda a: a in solvers or (a or "").startswith("solver")
+    flows = []  # (day, type, usd, chain, extra)
+    for r in recs:
+        for e in r["events"]:
+            st, ev = e.get("standard"), e.get("event")
+            data = e.get("data") if isinstance(e.get("data"), list) else []
+            if st == "dip4" and ev == "token_diff":
+                for d in data:
+                    pos = sum(amt(t, a) for t, a in d.get("diff", {}).items() if t in dec and int(a) > 0)
+                    neg = sum(amt(t, a) for t, a in d.get("diff", {}).items() if t in dec and int(a) < 0)
+                    ch = next((chain[t] for t in d.get("diff", {}) if t in dec), None)
+                    if max(pos, neg): flows.append((r["day"], "swap", max(pos, neg) / 2, ch, r["h"]))
+            elif st == "dip4" and ev == "transfer":
+                for d in data:
+                    for t, a in d.get("tokens", {}).items():
+                        if t not in dec: continue
+                        kind = "to_solver" if is_solver(d.get("receiver_id")) or is_solver(d.get("account_id")) else "peer_transfer"
+                        flows.append((r["day"], kind, amt(t, a), chain[t], r["h"], d.get("account_id"), d.get("receiver_id"), int(a) % 10 ** dec[t] == 0))
+            elif st == "nep245" and ev in ("mt_mint", "mt_burn"):
+                for d in data:
+                    for t, a in zip(d.get("token_ids", []), d.get("amounts", [])):
+                        if t in dec:
+                            flows.append((r["day"], "deposit" if ev == "mt_mint" else "withdrawal", amt(t, a), chain[t], r["h"]))
+    types = ["swap", "to_solver", "peer_transfer", "deposit", "withdrawal"]
+    names = {"swap": "Swaps (stablecoin leg)", "to_solver": "Transfers to solvers / market makers", "peer_transfer": "Peer transfers",
+             "deposit": "Deposits into Intents", "withdrawal": "Withdrawals out of Intents"}
+    daily = []
+    for d in days:
+        row = {"day": d}
+        for t in types:
+            xs = [f for f in flows if f[0] == d and f[1] == t]
+            row["n_" + t] = len(xs) * w[d]; row["v_" + t] = sum(f[2] for f in xs) * w[d]
+        daily.append(row)
+    weekly = defaultdict(lambda: defaultdict(float))
+    for r in daily:
+        dd = dt.date.fromisoformat(r["day"]); wk = (dd - dt.timedelta(days=dd.weekday())).isoformat()
+        for t in types: weekly[wk]["v_" + t] += r["v_" + t]; weekly[wk]["n_" + t] += r["n_" + t]
+        weekly[wk]["days"] += 1
+    weekly = [{"week": k, **v} for k, v in sorted(weekly.items()) if v["days"] == 7]
+    tot = {t: sum(f[2] for f in flows if f[1] == t) for t in types}
+    cnt = {t: sum(1 for f in flows if f[1] == t) for t in types}
+    chains = Counter()
+    for f in flows:
+        if f[1] in ("deposit", "withdrawal", "swap"): chains[f[3]] += f[2]
+    peers = [f for f in flows if f[1] == "peer_transfer"]
+    pamts = sorted(f[2] for f in peers)
+    avgd = lambda k: statistics.fmean(r[k] for r in daily)
+    out = {
+        "types": types, "names": names, "daily": daily, "weekly": weekly,
+        "receipts_observed": len(recs), "flows_observed": cnt, "volume_share": {t: tot[t] / sum(tot.values()) for t in types} if sum(tot.values()) else {},
+        "avg_daily_volume": {t: avgd("v_" + t) for t in types}, "avg_daily_count": {t: avgd("n_" + t) for t in types},
+        "chain_volume_share": {k: v / sum(chains.values()) for k, v in chains.most_common()} if chains else {},
+        "peer_median_usd": statistics.median(pamts) if pamts else None,
+        "peer_under_100_share": sum(1 for a in pamts if a < 100) / len(pamts) if pamts else None,
+        "peer_round_share": (sum(1 for f in peers if f[7] and f[2] >= 1) / sum(1 for f in peers if f[2] >= 1)) if any(f[2] >= 1 for f in peers) else None,
+        "peer_unique_senders": len({f[5] for f in peers}), "peer_unique_receivers": len({f[6] for f in peers}),
+        "solver_accounts_detected": len(solvers), "hub_rule": "solver-* name, 5+ token_diff without referral, or 10+ sampled Intents stablecoin events",
+        "corr_vs_abs_return": None,
+    }
+    return out
+
+
 def main():
     labels_doc = json.load(open(os.path.join(ROOT, "labels", "known_accounts.json")))
     exact = {a["account"]: a["category"] for a in labels_doc["accounts"] if "account" in a}
@@ -61,8 +151,14 @@ def main():
         if code.get(a) == "contract": return "other_contract"
         return "user"
 
-    blocks = load_jsonl(os.path.join(RAW, "sampled_blocks.jsonl"))
-    events = load_jsonl(os.path.join(RAW, "events.jsonl"))
+    blocks = list({b["h"]: b for b in load_jsonl(os.path.join(RAW, "sampled_blocks.jsonl"))}.values())
+    seen, events = set(), []
+    for e in load_jsonl(os.path.join(RAW, "events.jsonl")):  # dedupe (resumed runs)
+        k = (e["h"], e["rid"], e["ev"], e["from"], e["to"], e["amt"])
+        if k not in seen:
+            seen.add(k); events.append(e)
+    fetched = {b["h"] for b in blocks}
+    events = [e for e in events if e["h"] in fetched]
     heights = json.load(open(os.path.join(RAW, "day_heights.json")))
     hk = sorted(heights)
     span = {hk[i]: heights[hk[i + 1]] - heights[hk[i]] for i in range(len(hk) - 1)}
@@ -206,6 +302,18 @@ def main():
     tok = Counter(); tokv = Counter()
     for t in tx: tok[TOKENS[t["token"]]["symbol"]] += 1; tokv[TOKENS[t["token"]]["symbol"]] += t["usd"]
 
+    # ---- sensitivity (not a pre-registered test): drop wallets seen in >= 10 sampled transfers
+    wcount = Counter()
+    for t in tx:
+        for a, ca in ((t["from"], t["cf"]), (t["to"], t["ct"])):
+            if ca == "user": wcount[a] += 1
+    hubs = {a for a, k in wcount.items() if k >= 10}
+    p2p_strict = [t for t in tx if t["cat"] == "p2p" and t["from"] not in hubs and t["to"] not in hubs]
+    sensitivity = {"high_frequency_wallets": len(hubs),
+                   "p2p_strict_share_of_transfers": len(p2p_strict) / n,
+                   "p2p_strict_share_of_volume": sum(t["usd"] for t in p2p_strict) / tot_vol,
+                   "rule": "wallet-to-wallet transfers where neither wallet appears in 10+ sampled transfers"}
+
     # ---- pre-registered tests (thresholds fixed in THESIS.md before the data was pulled)
     trading_v = sum(share_v[c] for c in TRADING)
     tests = [
@@ -247,9 +355,20 @@ def main():
                    "latest": sup_series[-1] if sup_series else None},
         "price": {"start": price.get(days[0]), "end": price.get(days[-1])},
         "velocity_daily": avg("v_all") / statistics.fmean(win_sup) if win_sup else None,
-        "tests": tests, "passed": sum(t["pass"] for t in tests),
+        "tests": tests, "passed": sum(t["pass"] for t in tests), "sensitivity": sensitivity,
     }
+    intents = analyze_intents(days, span, sampled, bday, w)
+    xs = [r for r in intents["daily"] if r["day"] in absret]
+    if xs:
+        tot_i = lambda r: sum(r["v_" + t] for t in intents["types"])
+        intents["corr_vs_abs_return"] = {
+            "all": spearman([tot_i(r) for r in xs], [absret[r["day"]] for r in xs]),
+            "peer_transfer": spearman([r["v_peer_transfer"] for r in xs], [absret[r["day"]] for r in xs]),
+            "swap": spearman([r["v_swap"] for r in xs], [absret[r["day"]] for r in xs])}
+    summary["intents"] = {k: v for k, v in intents.items() if k not in ("daily", "weekly")}
     os.makedirs(PROC, exist_ok=True)
+    with open(os.path.join(PROC, "intents_daily_estimates.csv"), "w", newline="") as f:
+        wr = csv.DictWriter(f, fieldnames=list(intents["daily"][0].keys())); wr.writeheader(); wr.writerows(intents["daily"])
     with open(os.path.join(PROC, "daily_estimates.csv"), "w", newline="") as f:
         wr = csv.DictWriter(f, fieldnames=list(daily[0].keys()) + ["near_usd"]); wr.writeheader()
         for r in daily: wr.writerow({**r, "near_usd": price.get(r["day"])})
@@ -258,9 +377,9 @@ def main():
         for t in tx: wr.writerow([t["h"], t["day"], TOKENS[t["token"]]["symbol"], t["from"], t["to"], round(t["usd"], 6), t["cat"], "|".join(t["methods"]), t["tx"]])
     json.dump(summary, open(os.path.join(PROC, "summary.json"), "w"), indent=1)
     site = {"summary": summary, "daily": daily, "weekly": weekly, "supply": sup_series, "cats": CATS, "cat_names": CAT_NAMES,
-            "buckets": [b[2] for b in BUCKETS], "size": size, "size_volume": sizev, "labels_source": "labels/known_accounts.json"}
+            "buckets": [b[2] for b in BUCKETS], "intents": intents, "size": size, "size_volume": sizev, "labels_source": "labels/known_accounts.json"}
     json.dump(site, open(os.path.join(ROOT, "site", "data.json"), "w"), separators=(",", ":"))
-    print(json.dumps({k: summary[k] for k in ["window", "sample", "estimates", "share_of_transfers", "share_of_volume", "median_transfer_usd", "passed"]}, indent=1))
+    print(json.dumps({k: summary[k] for k in ["window", "sample", "estimates", "share_of_transfers", "share_of_volume", "median_transfer_usd", "passed", "intents"]}, indent=1))
     for t in tests: print(t["id"], t["pass"], t["value"])
 
 

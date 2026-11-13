@@ -1,0 +1,13 @@
+{
+  "name": "near-payments-rail-thesis",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Is NEAR already a payments rail? Evidence-first investment thesis built at NEAR HACKATHON.",
+  "license": "MIT",
+  "scripts": {
+    "build-data": "python3 scripts/fetch_blocks.py --days 90 --per-day 480 --end 2026-11-13 && python3 scripts/fetch_market.py && python3 scripts/label_accounts.py && npm run quick",
+    "quick": "python3 scripts/analyze.py && node scripts/build_site.mjs && python3 scripts/render_docs.py",
+    "spot-check": "python3 scripts/spot_check.py 5",
+    "serve": "python3 -m http.server -d dist 8000"
+  }
+}
