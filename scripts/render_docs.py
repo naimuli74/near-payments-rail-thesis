@@ -61,9 +61,9 @@ All numbers are produced by `scripts/analyze.py` and stored in [`data/processed/
 2. **Rebuild every number from the committed snapshot, offline, in seconds:**
    ```sh
    git clone {REPO} && cd near-payments-rail-thesis
-   make quick            # python3 scripts/analyze.py && node scripts/build_site.mjs
+   npm run quick         # = python3 scripts/analyze.py && node scripts/build_site.mjs && python3 scripts/render_docs.py  (or: make quick)
    ```
-   You see the six test results printed (for example `T2 False {S['tests'][1]['value']}`), the same values as the dashboard. `dist/index.html` is the dashboard; serve it with `python3 -m http.server -d dist 8000` and open http://localhost:8000.
+   You see the six test results printed (for example `T2 False {S['tests'][1]['value']}`), the same values as the dashboard. `dist/index.html` is the dashboard; serve it with `npm run serve` and open http://localhost:8000.
 3. **Check that the sample is real chain data:**
    ```sh
    python3 scripts/spot_check.py 5
@@ -72,7 +72,7 @@ All numbers are produced by `scripts/analyze.py` and stored in [`data/processed/
 4. **Re-pull everything from the chain** (no API keys, Python standard library only):
    ```sh
    rm -rf data/raw/*.jsonl data/raw/account_code.json   # optional: start clean
-   make all
+   npm run build-data    # or: make all
    ```
    You see the sampler fetch the same seeded block heights from neardata.xyz. The full plan (480 blocks a day for 90 days) takes about 4.5 hours at the free rate limit of 180 requests a minute. For a 25-minute run, use `python3 scripts/fetch_blocks.py --per-day 40` and expect the shares to land inside the 95% intervals above.
 
@@ -186,7 +186,7 @@ Practical read: treat NEAR today as a **cross-chain settlement and trading venue
 
 ## 7. Reproducibility
 
-Everything above comes from `make all` (or `make quick` from the committed snapshot). The block sample is seeded, the label lists cite their sources, and `scripts/spot_check.py` re-verifies random sampled transfers against an archival node. See the README for steps and limitations.
+Everything above comes from `npm run build-data` (or `npm run quick` from the committed snapshot; `make all` / `make quick` do the same). The block sample is seeded, the label lists cite their sources, and `scripts/spot_check.py` re-verifies random sampled transfers against an archival node. See the README for steps and limitations.
 """
 
 open(os.path.join(ROOT, "README.md"), "w").write(readme)

@@ -56,6 +56,22 @@ class Bucket:
             time.sleep(wait)
 
 
+def fetch_block(url, retries=6):
+    """curl with a hard --max-time: some long-lived HTTPS connections stall mid-body and Python's
+    per-recv socket timeout never fires, so each block is fetched by a fresh curl process."""
+    import subprocess
+    delay = 2
+    for attempt in range(retries):
+        p = subprocess.run(["curl", "-sL", "--compressed", "--max-time", "40", "-A", "near-payments-rail-thesis",
+                            "-w", "\n%{http_code}", url], capture_output=True, text=True)
+        body, _, code = p.stdout.rpartition("\n")
+        if p.returncode == 0 and code == "200":
+            return json.loads(body)
+        print("retry", code or p.returncode, url[-12:], flush=True)
+        time.sleep(delay); delay = min(delay * 2, 60)
+    raise RuntimeError("failed " + url)
+
+
 def extract_intents(height, ts, o):
     """Keep intents.near receipts whose events mention a stablecoin asset id."""
     oc = o["execution_outcome"]["outcome"]
@@ -179,7 +195,7 @@ def main():
     def work(job):
         day, h = job
         bucket.take()
-        blk = http_json(f"{base}/v0/block/{h}", timeout=30)
+        blk = fetch_block(f"{base}/v0/block/{h}")
         if blk is None:
             rec, evs, ins = {"h": h, "day": day, "missing": True, "v": VERSION}, [], []
         else:
@@ -196,7 +212,7 @@ def main():
             if stats["n"] % 200 == 0:
                 print(time.strftime("%H:%M:%S"), stats, flush=True)
 
-    with ThreadPoolExecutor(max_workers=6) as ex:
+    with ThreadPoolExecutor(max_workers=24) as ex:
         for f in [ex.submit(work, j) for j in jobs]:
             try:
                 f.result()

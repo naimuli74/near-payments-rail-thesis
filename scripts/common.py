@@ -1,5 +1,5 @@
 """Shared helpers. Standard library only so anyone can re-run with plain python3."""
-import json, time, urllib.request, urllib.error, os
+import json, time, urllib.request, urllib.error, os, gzip
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UA = {"User-Agent": "near-payments-rail-thesis/1.0 (+https://github.com/naimuli74/near-payments-rail-thesis)"}
@@ -18,7 +18,7 @@ NEARDATA = os.environ.get("NEARDATA", "https://mainnet.neardata.xyz")
 
 def http_json(url, data=None, retries=6, timeout=60):
     body = json.dumps(data).encode() if data is not None else None
-    headers = dict(UA)
+    headers = dict(UA, **{"Accept-Encoding": "gzip"})
     if body is not None:
         headers["Content-Type"] = "application/json"
     delay = 2
@@ -26,12 +26,19 @@ def http_json(url, data=None, retries=6, timeout=60):
         try:
             req = urllib.request.Request(url, data=body, headers=headers)
             with urllib.request.urlopen(req, timeout=timeout) as r:
-                return json.loads(r.read().decode())
+                raw = r.read()
+                if r.headers.get("Content-Encoding") == "gzip":
+                    raw = gzip.decompress(raw)
+                return json.loads(raw.decode())
         except urllib.error.HTTPError as e:
+            if os.environ.get("VERBOSE_HTTP"):
+                print("http", e.code, url[-40:], "retry-after", e.headers.get("retry-after"), flush=True)
             if e.code in (429, 500, 502, 503, 504) and attempt < retries - 1:
                 time.sleep(delay); delay = min(delay * 2, 60); continue
             raise
-        except (urllib.error.URLError, TimeoutError, ConnectionError):
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+            if os.environ.get("VERBOSE_HTTP"):
+                print("neterr", type(e).__name__, str(e)[:80], url[-40:], flush=True)
             if attempt < retries - 1:
                 time.sleep(delay); delay = min(delay * 2, 60); continue
             raise

@@ -1,0 +1,16 @@
+{
+ "verdict": "Not yet. NEAR stablecoins mostly move like a trading venue, not a payments network.",
+ "vsub": "1 of 6 tests pass. 22% of stablecoin volume touches a DEX, NEAR Intents or a lending market, while wallet-to-wallet transfers are 2% of transfers and 5.4% of volume. Failed: small tickets, wallet-to-wallet use, decoupled from volatility, broad-based value, steady flow.",
+ "T1": "<b>93%</b> of transfers and <b>17%</b> of volume involve a DEX. Wallet-to-wallet is <b>2%</b> of transfers but only <b>5.4%</b> of the dollars.",
+ "T2": "Volume is estimated at <b>$78.1M</b> a day on average (95% CI $16.9M to $244.5M). The red band, DEX flow, is most of every week.",
+ "T3": "Wallet-to-wallet transfers have a median of <b>$50.32</b>, and <b>56%</b> are under $100. That is what consumer payments look like. 4% of DEX legs are $1K or more.",
+ "T4": "<b>32%</b> of wallet-to-wallet transfers are whole-dollar amounts, against <b>2.6%</b> for DEX legs. Humans paying humans leave a different fingerprint than bots.",
+ "T5": "Spearman correlation with NEAR's absolute daily return: all volume <b>0.31</b>, DEX volume <b>0.34</b>, wallet-to-wallet volume <b>0.10</b>. With price level: wallet-to-wallet count <b>0.17</b>.",
+ "T6": "Stablecoins on NEAR went from <b>$126.2M</b> to <b>$129.4M</b> over the window while NEAR moved from $1.64 to $5.29. Each dollar turns over about <b>77.7%</b> a day.",
+ "T7": "The top counterparty, <span class=\"acct\">4a432082cc1cd551b14d6f075e9345087d64f57c2660400ef33cac5a0bb263b0</span>, is on one side of <b>73%</b> of sampled volume. The largest 1% of transfers carry <b>86%</b> of all dollars.",
+ "T8": "About <b>$68.2M</b> a day of stablecoins enters Intents and <b>$48.1M</b> leaves, against <b>$50.2M</b> of swap flow. Most stablecoin activity at NEAR's edge is cross-chain movement, not native-token trading.",
+ "T9": "<b>47%</b> of the sampled stablecoin flow is eth dollars. NEAR is settling other chains' stablecoins, which is a different role from issuing its own.",
+ "T10": "An estimated <b>3,669</b> stablecoin peer transfers a day happen inside Intents (median $7.55, 71% under $100). Small, but this is the payment-shaped flow to watch.",
+ "changelist": "<li>Wallet-to-wallet share of volume rises from 5.4% to above 25% for a full quarter.</li><li>DEX + Intents + lending share of volume falls from 22% to below 50%.</li><li>Daily stablecoin volume stops tracking NEAR volatility (|rho| below 0.3; now 0.31).</li><li>Round-dollar transfers (invoices, payroll) grow as a share of all transfers (now 3.7%).</li>",
+ "impl": "Do not underwrite NEAR as a payments network today. The data shows a trading venue with a small but real payments layer: $4.2M a day of wallet-to-wallet stablecoin flow with consumer-sized tickets, sitting on a growing stablecoin base ($129.4M). The long-term bet is optionality: if that layer's share of volume grows, the thesis flips. This dashboard is the tripwire, and anyone can re-run it."
+}
