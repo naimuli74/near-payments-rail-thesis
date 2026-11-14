@@ -5,6 +5,7 @@ An evidence-first investment thesis for NEAR, built at **NEAR HACKATHON** (Inves
 - **Live site:** https://near.darkhouse.online (mirror: https://near-payments-rail.tasnovanaime.workers.dev)
 - **X Article:** [Is NEAR Already a Payments Rail? Not Yet](https://x.com/naimulislam/status/2121545725289046115)
 - **Demo video:** https://x.com/naimulislam/status/2121505068319158428
+- **Related (NEAR HACKATHON, Unstoppable DeFi track):** https://github.com/naimuli74/near-dca-vault
 
 ## Thesis and verdict
 
