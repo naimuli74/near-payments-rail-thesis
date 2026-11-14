@@ -164,11 +164,21 @@ footer{margin-top:72px;border-top:1px solid var(--line);background:linear-gradie
 footer .wrap{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:28px;padding-top:36px;padding-bottom:48px}
 footer .built{font-size:16px;font-weight:600;color:var(--text);margin:0 0 8px;line-height:1.5}
 footer p{margin:6px 0;color:var(--mute);font-size:13.5px}
-footer .fl{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start;justify-content:flex-end}
+footer .flink{position:static;transform:none;left:auto;right:auto;padding:0;display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start;justify-content:flex-end}
+
+/* read / watch */
+.readwatch{margin-top:22px}
+.rw-label{margin:0 0 10px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.rw-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rw{display:flex;flex-direction:column;gap:4px;padding:16px 18px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--text);min-width:0;transition:border-color .15s,background .15s,transform .15s}
+.rw:hover{text-decoration:none;border-color:rgba(0,236,151,.45);background:rgba(0,236,151,.05)}
+.rw-k{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--near)}
+.rw-t{font-size:15.5px;font-weight:650;letter-spacing:-.015em;line-height:1.3}
+.rw-d{font-size:13px;color:var(--mute);line-height:1.45}
 /* v3: motion + polish */
 html.js .rv{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1),border-color .25s ease,box-shadow .25s ease;transition-delay:var(--d,0s)}
 html.js .rv.in{opacity:1;transform:none;transition-delay:var(--d,0s),var(--d,0s),0s,0s}
-.hero{position:relative;isolation:isolate}
+.hero{position:relative;isolation:isolate;overflow:hidden}
 .hero::before{content:"";position:absolute;z-index:-1;top:-64px;bottom:-40px;left:50%;width:100vw;transform:translateX(-50%);background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:56px 56px;background-position:center -1px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000 25%,transparent 78%);mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000 25%,transparent 78%);pointer-events:none}
 .mesh{position:absolute;z-index:-2;top:-64px;left:50%;width:100vw;height:760px;transform:translateX(-50%);overflow:hidden;pointer-events:none}
 .mesh i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:drift 22s ease-in-out infinite alternate}
@@ -271,10 +281,10 @@ footer .tm{font-size:12px;color:var(--dim)}
 /* responsive */
 @media (max-width:1020px){.tests,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}nav.links{display:none}.subnav{display:flex}html{scroll-padding-top:120px}}
 @media (max-width:860px){.verdict{grid-template-columns:minmax(0,1fr)}.score{flex-direction:row;justify-content:flex-start;text-align:left;gap:20px}.score .meta{display:flex;flex-direction:column;gap:10px;align-items:flex-start}.dots{justify-content:start}.gauge{width:200px;flex:none}
- .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid,.two{grid-template-columns:1fr}footer .wrap{grid-template-columns:1fr}footer .fl{justify-content:flex-start}}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid,.two{grid-template-columns:1fr}footer .wrap{grid-template-columns:1fr}footer .flink{justify-content:flex-start}}
 @media (max-width:600px){.brandrow{gap:14px}.nearlogo img{height:21px}.vsep{display:none}.score{flex-direction:column;align-items:center;text-align:center}.score .meta{align-items:center}.dots{justify-content:center}.flow{grid-template-columns:minmax(0,1fr) 168px}.fsrc{display:none}.fl{font-size:12.5px;padding-left:10px;gap:7px}.fl b{font-size:13px}.mesh{height:620px}.gauge{width:180px}.gauge .n{font-size:34px}.wrap{padding:0 16px}.eyebrow{font-size:11px;letter-spacing:.04em}body{font-size:15px}.hero{padding-top:40px}.tests,.steps{grid-template-columns:1fr}.vcard{padding:22px 20px}.kpi{padding:16px}.kpi .v{font-size:26px}.kpi .k{font-size:11px}.kpi .d{font-size:13px}
- .card{padding:18px 14px 14px}.cv{height:270px}.cv.tall{height:320px}.prose{padding:20px}.brand em{display:none}section{padding-top:44px}.hero-cta .btn{flex:1 1 auto;justify-content:center}.score{padding:20px}.ch{flex-direction:column}}
-@media (max-width:380px){.kpis{grid-template-columns:1fr}}
+ .card{padding:18px 14px 14px}.cv{height:270px}.cv.tall{height:320px}.prose{padding:20px}.brand em{display:none}section{padding-top:44px}.hero-cta .btn{flex:1 1 auto;justify-content:center}.score{padding:20px}.ch{flex-direction:column}.readwatch .rw-row{grid-template-columns:1fr}.tablewrap{-webkit-overflow-scrolling:touch}.bar{display:none}th,td{padding:8px 8px}table{font-size:12.5px}th{letter-spacing:.04em}#toptable th:nth-child(3),#toptable td:nth-child(3){display:none}table .acct{white-space:nowrap;word-break:normal}.lblock{padding:8px 8px;margin:0 10px 8px;gap:4px}.lblock strong{font-size:12.5px;white-space:normal}.lhd,.lnote,.lfoot{padding-left:12px;padding-right:12px}.flow{grid-template-columns:minmax(0,1fr) minmax(196px,58%)}.fl .nm{white-space:normal;line-height:1.3}pre{white-space:pre-wrap;word-break:break-word}.kpis{grid-template-columns:1fr}}
+@media (max-width:1359px){footer .wrap{padding-bottom:96px}}
 </style>
 </head>
 <body>
@@ -310,6 +320,21 @@ footer .tm{font-size:12px;color:var(--dim)}
  </div>
  <div class="kpis" id="kpis"></div>
  <div class="asof rv" id="asof"></div>
+ <div class="readwatch rv" aria-label="Read and watch">
+  <p class="rw-label">Read / Watch</p>
+  <div class="rw-row">
+   <a class="rw" href="https://x.com/naimulislam/status/2121545725289046115" rel="noopener">
+    <span class="rw-k">Read</span>
+    <span class="rw-t">Is NEAR Already a Payments Rail? Not Yet</span>
+    <span class="rw-d">The X Article: six tests, the verdict, and what Intents changes about the bet.</span>
+   </a>
+   <a class="rw" href="https://x.com/naimulislam/status/2121505068319158428" rel="noopener">
+    <span class="rw-k">Watch</span>
+    <span class="rw-t">Demo walkthrough</span>
+    <span class="rw-d">A short video of the dashboard, the six tests, and how to re-run them.</span>
+   </a>
+  </div>
+ </div>
 </div>
 
 <section id="flow" aria-labelledby="fl-h">
@@ -428,8 +453,9 @@ npm run quick</pre><div class="see"><b>You see</b>The six test results printed (
   <p>Code, data snapshot and THESIS.md: <a href="__REPO__">__REPO_SHORT__</a>. Data generated <span id="gen"></span>. MIT licensed. Chart.js (MIT), Inter (OFL). Not investment advice.</p>
   <p class="tm">NEAR and the NEAR logo are trademarks of NEAR Foundation. Independent analysis, not affiliated.</p>
  </div>
- <div class="fl">
+ <div class="flink">
   <a class="btn" href="__REPO__" rel="noopener">GitHub repo</a>
+  <a class="btn" href="https://x.com/naimulislam/status/2121545725289046115" rel="noopener">Article on X</a>
   <a class="btn" href="https://x.com/naimulislam/status/2121505068319158428" rel="noopener">Demo post on X</a>
   <a class="btn" href="/data.json">data.json</a>
  </div>
