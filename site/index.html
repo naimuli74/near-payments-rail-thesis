@@ -25,6 +25,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/chart.js" as="script">
+<script>document.documentElement.classList.add("js")</script>
 <style>
 @font-face{font-family:"Inter";src:url(/fonts/inter-var.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
 :root{
@@ -36,7 +37,7 @@
  --mono:ui-monospace,SFMono-Regular,"JetBrains Mono",Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{margin:0;background:var(--bg);color:var(--text);font:15.5px/1.6 var(--sans);font-feature-settings:"cv11","ss01";-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
@@ -73,9 +74,6 @@ h1 .g{background:linear-gradient(92deg,var(--near) 0%,var(--teal) 60%,#7fe3ff 10
 .vcard .line{font-size:clamp(17px,2vw,21px);font-weight:600;color:var(--text);margin:0 0 10px;letter-spacing:-.01em;max-width:680px}
 .vcard p.sub2{margin:0;color:var(--soft);max-width:720px}
 .score{border-radius:22px;padding:26px 24px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px}
-.ring{position:relative;width:148px;height:148px}.ring svg{transform:rotate(-90deg)}
-.ring .n{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:800;letter-spacing:-.04em}
-.ring .n small{font-size:22px;color:var(--mute);font-weight:600;margin-left:2px}
 .score .t{color:var(--mute);font-size:13.5px;line-height:1.4}
 .dots{display:grid;grid-template-columns:repeat(3,auto);gap:6px;justify-content:center}
 .dot{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;font-variant-numeric:tabular-nums}
@@ -167,11 +165,108 @@ footer .wrap{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);ga
 footer .built{font-size:16px;font-weight:600;color:var(--text);margin:0 0 8px;line-height:1.5}
 footer p{margin:6px 0;color:var(--mute);font-size:13.5px}
 footer .fl{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start;justify-content:flex-end}
+/* v3: motion + polish */
+html.js .rv{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1),border-color .25s ease,box-shadow .25s ease;transition-delay:var(--d,0s)}
+html.js .rv.in{opacity:1;transform:none;transition-delay:var(--d,0s),var(--d,0s),0s,0s}
+.hero{position:relative;isolation:isolate}
+.hero::before{content:"";position:absolute;z-index:-1;top:-64px;bottom:-40px;left:50%;width:100vw;transform:translateX(-50%);background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:56px 56px;background-position:center -1px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000 25%,transparent 78%);mask-image:radial-gradient(ellipse 70% 60% at 50% 18%,#000 25%,transparent 78%);pointer-events:none}
+.mesh{position:absolute;z-index:-2;top:-64px;left:50%;width:100vw;height:760px;transform:translateX(-50%);overflow:hidden;pointer-events:none}
+.mesh i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:drift 22s ease-in-out infinite alternate}
+.mesh i:nth-child(1){width:520px;height:420px;left:58%;top:-120px;background:radial-gradient(circle,rgba(0,236,151,.45),transparent 65%)}
+.mesh i:nth-child(2){width:460px;height:380px;left:8%;top:80px;background:radial-gradient(circle,rgba(23,214,200,.28),transparent 65%);animation-duration:28s;animation-delay:-6s}
+.mesh i:nth-child(3){width:420px;height:360px;left:72%;top:300px;background:radial-gradient(circle,rgba(90,169,255,.18),transparent 65%);animation-duration:32s;animation-delay:-12s}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-40px,30px) scale(1.08)}100%{transform:translate(30px,-20px) scale(.96)}}
+@media (hover:hover){.kpi.in:hover,.test.in:hover,.step.in:hover{transform:translateY(-3px);border-color:var(--line2);box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 26px 50px -24px rgba(0,0,0,.75)}
+ .card:hover,.prose:hover{border-color:var(--line2)}.test.p:hover{border-color:rgba(0,236,151,.55)}.test.f:hover{border-color:rgba(255,107,107,.4)}}
+.btn{transition:border-color .15s,background .15s,transform .15s,box-shadow .2s}.btn:active{transform:scale(.97)}
+.btn.pri:hover{box-shadow:0 8px 28px -8px rgba(0,236,151,.55)}
+.tog button{transition:background .2s,color .2s}
+/* gauge */
+.gauge{position:relative;width:240px;max-width:100%}
+.gauge svg{display:block;width:100%;height:auto;overflow:visible}
+.gauge .seg{fill:none;stroke-width:18;stroke:#1d2834;transition:stroke .5s ease;transition-delay:var(--d,0s)}
+.gauge.in .seg.on{stroke:url(#gg)}
+.gauge .needle{transform-origin:120px 120px;transform:rotate(-90deg);transition:transform 1.6s cubic-bezier(.2,.9,.25,1.15) .25s}
+.gauge .gl{fill:#64717f;font:600 10px var(--sans);letter-spacing:.06em;text-transform:uppercase}
+.gauge .n{position:relative;margin-top:8px;text-align:center;font-size:40px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.gauge .n small{font-size:19px;color:var(--mute);font-weight:600;margin-left:2px}
+.score .ttl{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+/* scroll-spy nav */
+nav.links a.on{color:var(--text);background:rgba(0,236,151,.1);box-shadow:inset 0 0 0 1px rgba(0,236,151,.3)}
+.subnav{display:none;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 16px 10px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent);mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)}
+.subnav::-webkit-scrollbar{display:none}
+.subnav a{flex:none;font-size:13px;font-weight:600;color:var(--mute);padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+.subnav a:hover{text-decoration:none;color:var(--text)}
+.subnav a.on{color:#00140c;background:var(--near);border-color:var(--near)}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--near),var(--teal))}
+/* flow diagram */
+.flow{position:relative;display:grid;grid-template-columns:170px minmax(0,1fr) 250px;align-items:stretch}
+.fsrc{display:flex;flex-direction:column;justify-content:center;padding-right:14px}
+.fsrc .big{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.fsrc span{color:var(--mute);font-size:13px;line-height:1.4;margin-top:6px}
+#flowsvg{width:100%;display:block}
+#flowsvg path{opacity:.55;transition:opacity .25s ease}
+#flowsvg path:hover,#flowsvg path.hl{opacity:.95}
+html.js .flowcard:not(.in) #flowsvg path{opacity:0}
+.ftg{position:relative}
+.fl{position:absolute;left:0;right:0;display:flex;align-items:center;gap:10px;padding-left:14px;transform:translateY(-50%);font-size:14px;cursor:default}
+.fl i{flex:none;width:10px;height:10px;border-radius:3px}
+.fl .nm{color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.fl b{margin-left:auto;font-variant-numeric:tabular-nums;font-size:15px}
+.fl:hover .nm{color:var(--text)}
+/* table polish */
+.tablewrap{max-height:380px}
+tbody tr:nth-child(even){background:rgba(255,255,255,.015)}
+td.rk{color:var(--dim);font-variant-numeric:tabular-nums;width:28px;padding-right:0}
+/* live panel */
+.shell{position:relative}
+.live{display:flex;flex-direction:column;background:rgba(10,16,23,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.lhd{display:flex;align-items:center;gap:10px;padding:16px 16px 4px}
+.lhd b{font-size:15px;letter-spacing:-.01em}
+.ldot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--near);box-shadow:0 0 0 0 rgba(0,236,151,.6);animation:pulse 1.8s ease-out infinite}
+.live.err .ldot,.livefab.err .ldot{background:var(--amber);animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,236,151,.55)}100%{box-shadow:0 0 0 10px rgba(0,236,151,0)}}
+.lst{margin-left:auto;font-size:11.5px;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+.lclose{display:none;margin-left:6px;background:none;border:1px solid var(--line2);color:var(--soft);border-radius:8px;width:30px;height:30px;font:600 18px/1 var(--sans);cursor:pointer}
+.lnote{margin:2px 16px 10px;font-size:11.5px;color:var(--amber);opacity:.9}
+.lblock{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:0 16px 10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}
+.lblock div{min-width:0}.lblock span{display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:700}
+.lblock strong{font-size:13.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lfeed{list-style:none;margin:0;padding:0 8px 8px;overflow-y:auto;flex:1;min-height:120px;scrollbar-width:thin;scrollbar-color:#2a3846 transparent}
+.lfeed li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.04);border-radius:10px;transition:background .3s}
+.lfeed li:hover{background:rgba(255,255,255,.03)}
+.lfeed li.new{animation:flash 1.6s ease-out}
+@keyframes flash{0%{background:rgba(0,236,151,.16);transform:translateY(-6px);opacity:.2}30%{transform:none;opacity:1}100%{background:transparent}}
+.lamt{font-weight:700;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lamt em{font-style:normal;font-size:10.5px;font-weight:700;color:var(--mute);border:1px solid var(--line2);border-radius:5px;padding:0 4px;margin-left:6px;vertical-align:2px}
+.llab{justify-self:end;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:999px;white-space:nowrap;align-self:center}
+.llab.dex{color:#ff8f8f;background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.3)}
+.llab.p2p{color:var(--near);background:rgba(0,236,151,.1);border:1px solid rgba(0,236,151,.35)}
+.llab.other{color:var(--soft);background:rgba(255,255,255,.04);border:1px solid var(--line2)}
+.lft2{font-family:var(--mono);font-size:11.5px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.lago{justify-self:end;font-size:11.5px;color:var(--dim);white-space:nowrap}.lago a{color:var(--dim)}.lago a:hover{color:var(--near)}
+.lempty{padding:18px 10px;color:var(--dim);font-size:13px;text-align:center}
+.lfoot{padding:10px 16px 14px;border-top:1px solid var(--line);font-size:11px;line-height:1.45;color:var(--dim)}
+.lfoot a{color:#8fcab4}
+.livefab{position:fixed;right:16px;bottom:16px;z-index:30;display:none;align-items:center;gap:9px;padding:11px 16px;border-radius:999px;border:1px solid rgba(0,236,151,.4);background:rgba(10,16,23,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--text);font:600 13.5px var(--sans);cursor:pointer;box-shadow:0 12px 30px -10px rgba(0,0,0,.7)}
+.livefab .cnt{font-variant-numeric:tabular-nums;color:var(--near)}
+@media (min-width:1360px){
+ header.top .wrap,footer .wrap{max-width:1640px}
+ .shell{display:grid;grid-template-columns:minmax(0,1fr) 340px;max-width:1640px;margin:0 auto;padding-right:24px;gap:8px}
+ .live{position:sticky;top:80px;margin-top:24px;height:calc(100vh - 100px);max-height:900px}
+}
+@media (max-width:1359px){
+ .livefab{display:inline-flex}
+ .live{position:fixed;z-index:40;left:auto;right:16px;bottom:16px;width:min(380px,calc(100vw - 32px));height:min(620px,calc(100vh - 100px));transform:translateY(calc(100% + 40px));opacity:0;visibility:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s,visibility 0s .35s}
+ .live.open{transform:none;opacity:1;visibility:visible;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s}
+ .lclose{display:inline-block}
+}
+@media (max-width:600px){.live{right:8px;left:8px;bottom:8px;width:auto;height:min(78vh,620px)}.livefab{right:12px;bottom:12px}}
 /* responsive */
-@media (max-width:1020px){.tests,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}nav.links{display:none}}
-@media (max-width:860px){.verdict{grid-template-columns:1fr}.score{flex-direction:row;justify-content:flex-start;text-align:left;gap:20px}.score .meta{display:flex;flex-direction:column;gap:10px;align-items:flex-start}.dots{justify-content:start}.ring{width:112px;height:112px}.ring svg{width:112px;height:112px}.ring .n{font-size:36px}.ring .n small{font-size:18px}
+@media (max-width:1020px){.tests,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}nav.links{display:none}.subnav{display:flex}html{scroll-padding-top:120px}}
+@media (max-width:860px){.verdict{grid-template-columns:minmax(0,1fr)}.score{flex-direction:row;justify-content:flex-start;text-align:left;gap:20px}.score .meta{display:flex;flex-direction:column;gap:10px;align-items:flex-start}.dots{justify-content:start}.gauge{width:200px;flex:none}
  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid,.two{grid-template-columns:1fr}footer .wrap{grid-template-columns:1fr}footer .fl{justify-content:flex-start}}
-@media (max-width:600px){.eyebrow{font-size:11px;letter-spacing:.04em}.wrap{padding:0 16px}body{font-size:15px}.hero{padding-top:40px}.tests,.steps{grid-template-columns:1fr}.vcard{padding:22px 20px}.kpi{padding:16px}.kpi .v{font-size:26px}.kpi .k{font-size:11px}.kpi .d{font-size:13px}
+@media (max-width:600px){.score{flex-direction:column;align-items:center;text-align:center}.score .meta{align-items:center}.dots{justify-content:center}.flow{grid-template-columns:minmax(0,1fr) 168px}.fsrc{display:none}.fl{font-size:12.5px;padding-left:10px;gap:7px}.fl b{font-size:13px}.mesh{height:620px}.gauge{width:180px}.gauge .n{font-size:34px}.wrap{padding:0 16px}.eyebrow{font-size:11px;letter-spacing:.04em}body{font-size:15px}.hero{padding-top:40px}.tests,.steps{grid-template-columns:1fr}.vcard{padding:22px 20px}.kpi{padding:16px}.kpi .v{font-size:26px}.kpi .k{font-size:11px}.kpi .d{font-size:13px}
  .card{padding:18px 14px 14px}.cv{height:270px}.cv.tall{height:320px}.prose{padding:20px}.brand em{display:none}section{padding-top:44px}.hero-cta .btn{flex:1 1 auto;justify-content:center}.score{padding:20px}.ch{flex-direction:column}}
 @media (max-width:380px){.kpis{grid-template-columns:1fr}}
 </style>
@@ -180,102 +275,115 @@ footer .fl{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start;justify
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap">
  <a class="brand" href="#top" aria-label="NEAR Payments Rail Thesis, back to top"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#00ec97"/><path d="M9 23V9h2.6l7.6 10.4V9H23v14h-2.6L12.8 12.6V23z" fill="#00140c"/></svg><span>Payments Rail <em>Thesis</em></span></a>
- <nav class="links" aria-label="Sections"><a href="#tests">Tests</a><a href="#evidence">Evidence</a><a href="#intents">Intents</a><a href="#thesis">Thesis</a><a href="#method">Method</a><a href="#reproduce">Reproduce</a></nav>
+ <nav class="links" aria-label="Sections"><a href="#flow">Flow</a><a href="#tests">Tests</a><a href="#evidence">Evidence</a><a href="#intents">Intents</a><a href="#thesis">Thesis</a><a href="#method">Method</a><a href="#reproduce">Reproduce</a></nav>
  <a class="btn" href="__REPO__" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.67.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0z"/></svg>GitHub</a>
-</div></header>
+</div><nav class="subnav" aria-label="Sections (compact)"><a href="#flow">Flow</a><a href="#tests">Tests</a><a href="#evidence">Evidence</a><a href="#intents">Intents</a><a href="#thesis">Thesis</a><a href="#method">Method</a><a href="#reproduce">Reproduce</a></nav><div class="progress" id="progress" aria-hidden="true"></div></header>
 
+<div class="shell">
 <main id="main">
 <div class="wrap" id="top">
 <div class="hero">
+ <div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
  <span class="eyebrow"><i></i>NEAR HACKATHON · Investment Thesis</span>
  <h1>Is NEAR already a <span class="g">payments rail?</span></h1>
  <p class="lede">If NEAR is becoming money infrastructure, its stablecoins should move like payments: many small transfers between ordinary wallets, a steady daily rhythm, and no dependence on NEAR's price swings. If it is mostly a trading venue, the flow runs through DEXs and bots and follows volatility. We pulled <b id="h-n"></b> USDC and USDT transfers straight from NEAR mainnet blocks over <b id="h-days"></b> days and checked them against six tests written down first.</p>
  <div class="hero-cta"><a class="btn pri" href="#tests">See the six tests</a><a class="btn" href="#reproduce">Reproduce in one command</a></div>
 
  <div class="verdict" id="verdict-box">
-  <div class="vcard" role="region" aria-label="Verdict">
+  <div class="vcard rv" role="region" aria-label="Verdict">
    <div class="lab"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>Verdict</div>
    <div class="big" id="v-head"></div>
    <p class="line" id="v-rest"></p>
    <p class="sub2" id="verdict-sub"></p>
   </div>
-  <div class="score">
-   <div class="ring" role="img" id="ring-wrap"><svg width="148" height="148" viewBox="0 0 148 148" aria-hidden="true"><circle cx="74" cy="74" r="62" fill="none" stroke="#1d2834" stroke-width="12"/><circle id="ring" cx="74" cy="74" r="62" fill="none" stroke="#00ec97" stroke-width="12" stroke-linecap="round" stroke-dasharray="0 999"/></svg><div class="n" id="score"></div></div>
+  <div class="score rv" style="--d:.12s">
+   <div class="ttl">Payments-rail meter</div>
+   <div class="gauge" id="gauge" role="img"><svg viewBox="0 0 240 134" aria-hidden="true"><defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#17d6c8"/><stop offset="1" stop-color="#00ec97"/></linearGradient></defs><g id="segs"></g><g class="needle" id="needle"><line x1="120" y1="120" x2="120" y2="40" stroke="#eaf0f5" stroke-width="3" stroke-linecap="round"/><circle cx="120" cy="120" r="7" fill="#eaf0f5"/><circle cx="120" cy="120" r="3" fill="#070b10"/></g><text class="gl" x="12" y="133">Trading venue</text><text class="gl" x="228" y="133" text-anchor="end">Payments rail</text></svg><div class="n" id="score"></div></div>
    <div class="meta"><div class="t">pre-registered tests passed</div><div class="dots" id="dots"></div></div>
   </div>
  </div>
  <div class="kpis" id="kpis"></div>
- <div class="asof" id="asof"></div>
+ <div class="asof rv" id="asof"></div>
 </div>
 
+<section id="flow" aria-labelledby="fl-h">
+ <div class="sh rv"><div><div class="num">01 · Where the money goes</div><h2 id="fl-h">Where NEAR's stablecoins go</h2>
+ <p class="sub">Every sampled USDC/USDT transfer on NEAR, split by who is on the other side. Band width is the share.</p></div>
+ <div class="tog" data-flow role="group" aria-label="Flow measure"><button aria-pressed="true" data-m="n">Count</button><button aria-pressed="false" data-m="v">Volume</button></div></div>
+ <div class="card flowcard rv" id="flowcard"><div class="flow"><div class="fsrc"><div class="big">100%</div><span id="flow-l"></span></div><svg id="flowsvg" preserveAspectRatio="none" role="img" aria-label="Flow diagram of stablecoin transfers by counterparty type"></svg><div class="ftg" id="flowtg"></div></div>
+ <p class="take" id="flownote" style="margin-bottom:0"></p>
+ <div class="src"><span>Same data as chart 1: <code>ft_transfer</code> events from sampled blocks, counterparty labels from <a href="__REPO__/blob/main/labels/known_accounts.json">known_accounts.json</a> + contract-code check. Values from <a href="__REPO__/blob/main/data/processed/summary.json">summary.json</a>.</span></div></div>
+</section>
+
+
 <section id="tests" aria-labelledby="tests-h">
- <div class="sh"><div><div class="num">01 · Pre-registered tests</div><h2 id="tests-h">Six yes-or-no tests, fixed before the data was pulled</h2>
+ <div class="sh rv"><div><div class="num">02 · Pre-registered tests</div><h2 id="tests-h">Six yes-or-no tests, fixed before the data was pulled</h2>
  <p class="sub">If NEAR's stablecoin flow were a payments network, all six should pass. The thresholds live in <a href="__REPO__/blob/main/PREREGISTRATION.md">PREREGISTRATION.md</a> and <a href="__REPO__/blob/main/THESIS.md">THESIS.md</a>; the code that scores them is <a href="__REPO__/blob/main/scripts/analyze.py">scripts/analyze.py</a>.</p></div></div>
  <div class="tests" id="testgrid"></div>
- <div class="callout" role="note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg><div id="sens"></div></div>
+ <div class="callout rv" role="note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg><div id="sens"></div></div>
 </section>
 
 <section id="evidence" aria-labelledby="ev-h">
- <div class="sh"><div><div class="num">02 · Evidence</div><h2 id="ev-h">What the chain shows</h2>
+ <div class="sh rv"><div><div class="num">03 · Evidence</div><h2 id="ev-h">What the chain shows</h2>
  <p class="sub">Every number is an estimate from a seeded random sample of whole mainnet blocks, scaled up by the number of blocks in each day. 95% intervals come from resampling blocks. Hover or tap any chart for exact values.</p></div></div>
  <div class="grid">
-  <div class="card wide"><div class="ch"><h3><span class="i">1</span>Who is on the other side of a NEAR stablecoin transfer?</h3></div><p class="take" id="t1"></p><div class="cv short"><canvas id="c1" role="img" aria-label="Stacked bar: share of transfers and share of volume by counterparty type"></canvas></div>
+  <div class="card wide rv"><div class="ch"><h3><span class="i">1</span>Who is on the other side of a NEAR stablecoin transfer?</h3></div><p class="take" id="t1"></p><div class="cv short"><canvas id="c1" role="img" aria-label="Stacked bar: share of transfers and share of volume by counterparty type"></canvas></div>
   <div class="src"><span>NEP-141 <code>ft_transfer</code> events from sampled blocks (FASTNEAR neardata.xyz). Counterparty types: <a href="__REPO__/blob/main/labels/known_accounts.json">labels/known_accounts.json</a> + contract-code check via NEAR RPC. Script: <a href="__REPO__/blob/main/scripts/analyze.py">analyze.py</a></span></div></div>
 
-  <div class="card wide"><div class="ch"><h3><span class="i">2</span>Weekly stablecoin transfers by counterparty</h3><div class="tog" data-chart="c2" role="group" aria-label="Chart 2 measure"><button aria-pressed="true" data-m="n">Count</button><button aria-pressed="false" data-m="v">Volume</button></div></div><p class="take" id="t2"></p><div class="cv tall"><canvas id="c2" role="img" aria-label="Stacked weekly bars of stablecoin transfers by counterparty type"></canvas></div>
+  <div class="card wide rv"><div class="ch"><h3><span class="i">2</span>Weekly stablecoin transfers by counterparty</h3><div class="tog" data-chart="c2" role="group" aria-label="Chart 2 measure"><button aria-pressed="true" data-m="n">Count</button><button aria-pressed="false" data-m="v">Volume</button></div></div><p class="take" id="t2"></p><div class="cv tall"><canvas id="c2" role="img" aria-label="Stacked weekly bars of stablecoin transfers by counterparty type"></canvas></div>
   <div class="src"><span>Sampled blocks, expanded to full weeks; complete weeks only. Data: <a href="__REPO__/blob/main/data/processed/daily_estimates.csv">daily_estimates.csv</a></span></div></div>
 
-  <div class="card"><div class="ch"><h3><span class="i">3</span>Transfer size: wallet-to-wallet vs DEX</h3></div><p class="take" id="t3"></p><div class="cv"><canvas id="c3" role="img" aria-label="Bar chart of transfer size buckets for wallet-to-wallet and DEX transfers"></canvas></div>
+  <div class="card rv"><div class="ch"><h3><span class="i">3</span>Transfer size: wallet-to-wallet vs DEX</h3></div><p class="take" id="t3"></p><div class="cv"><canvas id="c3" role="img" aria-label="Bar chart of transfer size buckets for wallet-to-wallet and DEX transfers"></canvas></div>
   <div class="src"><span>Sampled <code>ft_transfer</code> events, share of transfer count per size bucket. Script: <a href="__REPO__/blob/main/scripts/analyze.py">analyze.py</a></span></div></div>
 
-  <div class="card"><div class="ch"><h3><span class="i">4</span>Payments fingerprint: round-dollar amounts</h3></div><p class="take" id="t4"></p><div class="cv"><canvas id="c4" role="img" aria-label="Bar chart of round-dollar share by counterparty type"></canvas></div>
+  <div class="card rv"><div class="ch"><h3><span class="i">4</span>Payments fingerprint: round-dollar amounts</h3></div><p class="take" id="t4"></p><div class="cv"><canvas id="c4" role="img" aria-label="Bar chart of round-dollar share by counterparty type"></canvas></div>
   <div class="src"><span>Share of transfers of $1 or more whose amount is a whole dollar (no cents). Invoices, payroll and remittances tend to be round; swap legs almost never are.</span></div></div>
 
-  <div class="card wide"><div class="ch"><h3><span class="i">5</span>Daily transfers vs NEAR price</h3></div><p class="take" id="t5"></p><div class="cv tall"><canvas id="c5" role="img" aria-label="Line chart of daily trading-venue and wallet-to-wallet transfers against NEAR price"></canvas></div>
+  <div class="card wide rv"><div class="ch"><h3><span class="i">5</span>Daily transfers vs NEAR price</h3></div><p class="take" id="t5"></p><div class="cv tall"><canvas id="c5" role="img" aria-label="Line chart of daily trading-venue and wallet-to-wallet transfers against NEAR price"></canvas></div>
   <div class="src"><span>Transfers: sampled blocks, 7-day average. Price: <a href="https://www.coingecko.com/en/coins/near">CoinGecko</a> daily close (<code>/coins/near/market_chart</code>). Spearman correlations in <a href="__REPO__/blob/main/data/processed/summary.json">summary.json</a>.</span></div></div>
 
-  <div class="card"><div class="ch"><h3><span class="i">6</span>Stablecoin supply on NEAR vs NEAR price</h3></div><p class="take" id="t6"></p><div class="cv"><canvas id="c6" role="img" aria-label="Stacked area of USDT and USDC supply on NEAR with NEAR price line"></canvas></div>
+  <div class="card rv"><div class="ch"><h3><span class="i">6</span>Stablecoin supply on NEAR vs NEAR price</h3></div><p class="take" id="t6"></p><div class="cv"><canvas id="c6" role="img" aria-label="Stacked area of USDT and USDC supply on NEAR with NEAR price line"></canvas></div>
   <div class="src"><span><a href="https://defillama.com/stablecoins/Near">DefiLlama stablecoins API</a> (<code>/stablecoincharts/Near</code>), circulating USD, all stablecoins incl. bridged. Price: CoinGecko.</span></div></div>
 
-  <div class="card"><div class="ch"><h3><span class="i">7</span>Biggest counterparties in the sample</h3></div><p class="take" id="t7"></p><div class="tablewrap" tabindex="0" aria-label="Top counterparties table"><table id="toptable"></table></div>
+  <div class="card rv"><div class="ch"><h3><span class="i">7</span>Biggest counterparties in the sample</h3></div><p class="take" id="t7"></p><div class="tablewrap" tabindex="0" aria-label="Top counterparties table"><table id="toptable"></table></div>
   <div class="src"><span>Share = sampled volume sent or received by the account / total sampled volume (each transfer counted on both sides, so shares add to 200%).</span></div></div>
  </div>
 </section>
 
 <section id="intents" aria-labelledby="in-h">
- <div class="sh"><div><div class="num">03 · NEAR Intents</div><h2 id="in-h">Where the payment-like dollars may be going</h2>
+ <div class="sh rv"><div><div class="num">04 · NEAR Intents</div><h2 id="in-h">Where the payment-like dollars may be going</h2>
  <p class="sub">Stablecoins from other chains (USDC on Base, USDT on Tron and Ethereum, and more) sit inside the NEAR Intents ledger as multi-token balances. Their moves never appear as USDC or USDT token transfers, so the tests above cannot see them. Here we read the Intents verifier's own events from the same sampled blocks.</p></div>
  <span class="badge">Exploratory · not pre-registered</span></div>
  <div class="kpis" id="ikpis" style="margin:0 0 16px"></div>
  <div class="grid">
-  <div class="card wide"><div class="ch"><h3><span class="i">8</span>Weekly stablecoin flow through NEAR Intents, by type</h3><div class="tog" data-chart="c8" role="group" aria-label="Chart 8 measure"><button aria-pressed="true" data-m="v">Volume</button><button aria-pressed="false" data-m="n">Count</button></div></div><p class="take" id="t8"></p><div class="cv tall"><canvas id="c8" role="img" aria-label="Stacked weekly bars of NEAR Intents stablecoin flow by type"></canvas></div>
+  <div class="card wide rv"><div class="ch"><h3><span class="i">8</span>Weekly stablecoin flow through NEAR Intents, by type</h3><div class="tog" data-chart="c8" role="group" aria-label="Chart 8 measure"><button aria-pressed="true" data-m="v">Volume</button><button aria-pressed="false" data-m="n">Count</button></div></div><p class="take" id="t8"></p><div class="cv tall"><canvas id="c8" role="img" aria-label="Stacked weekly bars of NEAR Intents stablecoin flow by type"></canvas></div>
   <div class="src"><span><code>intents.near</code> events in sampled blocks: <code>dip4 token_diff</code> (swaps), <code>dip4 transfer</code> (to solvers / peer), <code>nep245 mt_mint</code> / <code>mt_burn</code> (deposits / withdrawals). Stablecoin asset ids: <a href="__REPO__/blob/main/labels/intents_stablecoins.json">intents_stablecoins.json</a> from the NEAR Intents 1Click token list.</span></div></div>
-  <div class="card"><div class="ch"><h3><span class="i">9</span>Which chain's dollars move through Intents</h3></div><p class="take" id="t9"></p><div class="cv"><canvas id="c9" role="img" aria-label="Horizontal bar chart of stablecoin volume share by origin chain"></canvas></div>
+  <div class="card rv"><div class="ch"><h3><span class="i">9</span>Which chain's dollars move through Intents</h3></div><p class="take" id="t9"></p><div class="cv"><canvas id="c9" role="img" aria-label="Horizontal bar chart of stablecoin volume share by origin chain"></canvas></div>
   <div class="src"><span>Share of sampled deposit, withdrawal and swap volume by the origin chain of the stablecoin. Same source as chart 8.</span></div></div>
-  <div class="card"><div class="ch"><h3><span class="i">10</span>Peer transfers inside Intents</h3></div><p class="take" id="t10"></p><div class="cv"><canvas id="c10" role="img" aria-label="Line chart of estimated daily peer transfers inside NEAR Intents"></canvas></div>
+  <div class="card rv"><div class="ch"><h3><span class="i">10</span>Peer transfers inside Intents</h3></div><p class="take" id="t10"></p><div class="cv"><canvas id="c10" role="img" aria-label="Line chart of estimated daily peer transfers inside NEAR Intents"></canvas></div>
   <div class="src"><span>Estimated daily count of Intents <code>transfer</code> events in stablecoins between non-solver accounts, 7-day average. Peers exclude infrastructure accounts: <code>solver-*</code> names, 5+ token_diff settlements without a referral tag, or 10+ sampled Intents events (market makers, 1Click hubs, venues).</span></div></div>
  </div>
 </section>
 
 <section id="thesis" aria-labelledby="th-h">
- <div class="sh"><div><div class="num">04 · Thesis</div><h2 id="th-h">What it means for an investor</h2></div></div>
+ <div class="sh rv"><div><div class="num">05 · Thesis</div><h2 id="th-h">What it means for an investor</h2></div></div>
  <div class="two">
-  <div class="prose impl"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M14 7h7v7"/></svg>Investment implication</h3><p id="impl"></p></div>
-  <div class="prose"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>What would make this a payments rail</h3><p id="change"></p><ul id="changelist"></ul></div>
+  <div class="prose impl rv"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M14 7h7v7"/></svg>Investment implication</h3><p id="impl"></p></div>
+  <div class="prose rv"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>What would make this a payments rail</h3><p id="change"></p><ul id="changelist"></ul></div>
  </div>
 </section>
 
 <section id="method" aria-labelledby="me-h">
- <div class="sh"><div><div class="num">05 · Method</div><h2 id="me-h">How the numbers were made</h2></div></div>
+ <div class="sh rv"><div><div class="num">06 · Method</div><h2 id="me-h">How the numbers were made</h2></div></div>
  <div class="two">
-  <div class="prose"><h3>Method</h3><ul>
+  <div class="prose rv"><h3>Method</h3><ul>
    <li>Tokens: native USDC (<span class="acct">17208628…33a1</span>, Circle), native USDT (<span class="acct">usdt.tether-token.near</span>, Tether) and the Rainbow Bridge versions USDC.e / USDT.e.</li>
    <li>Sample: for each UTC day we draw a fixed number of block heights at random (seed 20261114) and download the full block from <a href="https://github.com/fastnear/neardata-server">neardata.xyz</a>. Every successful NEP-141 transfer, mint and burn from these contracts is kept.</li>
    <li>Estimates: day total = sample total × blocks in day ÷ sampled blocks. 95% intervals: 300 block-level bootstrap resamples.</li>
    <li>Counterparty type: documented labels first, then a code check (does the account have a contract deployed?). Wallet-to-wallet means neither side has code.</li>
    <li>Rebuild everything: <code>make all</code> (Python 3 standard library only, no API keys).</li>
   </ul></div>
-  <div class="prose"><h3>Limitations</h3><ul>
+  <div class="prose rv"><h3>Limitations</h3><ul>
    <li>It is a sample (<span id="lim-rate"></span> of blocks), not a census. Unique-user counts are not estimated because a block sample cannot measure them.</li>
    <li>Exchange hot wallets are not labeled unless documented; they show up as wallets or contracts. A wallet-to-wallet transfer can still be a trader moving funds.</li>
    <li>Transfers into NEAR Intents can be cross-chain payments, not only swaps. We count them as trading-venue flow, which is the conservative choice for this thesis.</li>
@@ -285,19 +393,28 @@ footer .fl{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start;justify
 </section>
 
 <section id="reproduce" aria-labelledby="re-h">
- <div class="sh"><div><div class="num">06 · Reproduce</div><h2 id="re-h">Do this, see that</h2>
+ <div class="sh rv"><div><div class="num">07 · Reproduce</div><h2 id="re-h">Do this, see that</h2>
  <p class="sub">No API keys, no paid data. Python 3 standard library and Node. Full instructions in the <a href="__REPO__#try-it-do-x-see-y">README</a>.</p></div></div>
  <div class="steps">
-  <div class="step"><span class="sn">1</span><h3>Rebuild every number offline</h3><pre><span class="c"># from the committed snapshot, in seconds</span>
+  <div class="step rv"><span class="sn">1</span><h3>Rebuild every number offline</h3><pre><span class="c"># from the committed snapshot, in seconds</span>
 git clone __REPO__
 cd near-payments-rail-thesis
 npm run quick</pre><div class="see"><b>You see</b>The six test results printed (for example <code id="ex-t2"></code>), the same values as this page. <code>dist/index.html</code> is this dashboard.</div></div>
-  <div class="step"><span class="sn">2</span><h3>Check the sample is real chain data</h3><pre>python3 scripts/spot_check.py 5</pre><div class="see"><b>You see</b>5 random sampled transfers re-fetched from a NEAR archival RPC node, each marked <code>OK</code> with a NearBlocks link showing the same sender, receiver and amount.</div></div>
-  <div class="step"><span class="sn">3</span><h3>Re-pull everything from the chain</h3><pre>npm run build-data   <span class="c"># or: make all</span></pre><div class="see"><b>You see</b>The sampler fetch the same seeded block heights from neardata.xyz. For a 25-minute run use <code>--per-day 40</code> and expect the shares inside the 95% intervals.</div></div>
+  <div class="step rv"><span class="sn">2</span><h3>Check the sample is real chain data</h3><pre>python3 scripts/spot_check.py 5</pre><div class="see"><b>You see</b>5 random sampled transfers re-fetched from a NEAR archival RPC node, each marked <code>OK</code> with a NearBlocks link showing the same sender, receiver and amount.</div></div>
+  <div class="step rv"><span class="sn">3</span><h3>Re-pull everything from the chain</h3><pre>npm run build-data   <span class="c"># or: make all</span></pre><div class="see"><b>You see</b>The sampler fetch the same seeded block heights from neardata.xyz. For a 25-minute run use <code>--per-day 40</code> and expect the shares inside the 95% intervals.</div></div>
  </div>
 </section>
 </div>
 </main>
+<aside class="live" id="live" aria-label="Live NEAR stablecoin transfers">
+ <div class="lhd"><span class="ldot" aria-hidden="true"></span><b>Live on NEAR</b><span class="lst" id="lst">connecting…</span><button class="lclose" id="lclose" aria-label="Close live feed">×</button></div>
+ <p class="lnote">Live feed, not part of the pre-registered sample.</p>
+ <div class="lblock" aria-label="Latest final block"><div><span>Block</span><strong id="lbh">…</strong></div><div><span>Txs in block</span><strong id="lbt">…</strong></div><div><span>Seen here</span><strong id="lbn">0</strong></div></div>
+ <ul class="lfeed" id="lfeed"><li class="lempty">Waiting for the next USDC/USDT transfer…</li></ul>
+ <div class="lfoot">USDC + USDT <code>ft_transfer</code> events in the latest final blocks from <a href="https://github.com/fastnear/neardata-server">FASTNEAR neardata</a>, polled every few seconds. Labels: <a href="__REPO__/blob/main/labels/known_accounts.json">known_accounts.json</a>, then a contract-code check. Code: <a href="__REPO__/blob/main/scripts/live_api.js">live_api.js</a>.</div>
+</aside>
+<button class="livefab" id="livefab" aria-controls="live" aria-expanded="false"><span class="ldot" aria-hidden="true"></span>Live transfers <span class="cnt" id="lfabn"></span></button>
+</div>
 
 <footer><div class="wrap">
  <div>
@@ -327,12 +444,14 @@ $('h-n').textContent=fmt(S.sample.transfers_observed);$('h-days').textContent=S.
 const V=__VERDICT__, vi=V.indexOf('. ');
 $('v-head').textContent=vi>0?V.slice(0,vi+1):V;$('v-rest').textContent=vi>0?V.slice(vi+2):'';
 $('verdict-sub').textContent=__VERDICT_SUB__;
-$('score').innerHTML=S.passed+'<small>/'+S.tests.length+'</small>';
-$('ring-wrap').setAttribute('aria-label',S.passed+' of '+S.tests.length+' tests passed');
-{const L=2*Math.PI*62, f=S.passed/S.tests.length;$('ring').setAttribute('stroke-dasharray',(L*f).toFixed(1)+' '+L.toFixed(1));}
+$('score').innerHTML='<span id="scoreN">'+S.passed+'</span><small>/'+S.tests.length+'</small>';
+$('gauge').setAttribute('aria-label','Payments-rail meter: '+S.passed+' of '+S.tests.length+' pre-registered tests passed');
+{const n=S.tests.length,r=96,cx=120,cy=120,gap=2.2,pt=a=>[cx+r*Math.cos(a*Math.PI/180),cy+r*Math.sin(a*Math.PI/180)];
+ $('segs').innerHTML=S.tests.map((t,i)=>{const a0=180+i*180/n+gap,a1=180+(i+1)*180/n-gap,[x0,y0]=pt(a0),[x1,y1]=pt(a1);return `<path class="seg${i<S.passed?' on':''}" style="--d:${(.35+i*.18).toFixed(2)}s" d="M${x0.toFixed(1)} ${y0.toFixed(1)} A${r} ${r} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)}"/>`}).join('');
+ $('needle').dataset.to=(-90+180*S.passed/n).toFixed(1);}
 $('dots').innerHTML=S.tests.map(t=>`<span class="dot ${t.pass?'p':'f'}" title="${esc(t.name)}: ${t.pass?'pass':'fail'}">${t.id} ${t.pass?'✓':'✗'}</span>`).join('');
 // KPIs
-const kpi=(k,acc)=>`<div class="kpi" style="--acc:${acc}"><div class="k">${k[1]}</div><div class="v">${k[0]}</div><div class="d">${k[2]}</div>${k[3]?`<div class="ci">${k[3]}</div>`:''}</div>`;
+let KI=0;const kpi=(k,acc)=>`<div class="kpi rv" style="--acc:${acc};--d:${((KI++%3)*.08).toFixed(2)}s"><div class="k">${k[1]}</div><div class="v" data-count>${k[0]}</div><div class="d">${k[2]}</div>${k[3]?`<div class="ci">${k[3]}</div>`:''}</div>`;
 $('kpis').innerHTML=[
  [[pct(S.share_of_transfers.dex),'Through a DEX','of USDC/USDT transfers on NEAR involve a DEX','trading venues: '+pct(tradeShare)+' of volume ('+pct(S.sensitivity.largest.trading_share_excl_largest)+' ex. largest)'],COL.dex],
  [[pct(S.share_of_transfers.p2p,1),'Wallet-to-wallet','of transfers have no contract on either side',pct(S.share_of_volume.p2p,1)+' of volume'],COL.p2p],
@@ -354,7 +473,7 @@ $('sens').innerHTML=__SENS__;$('change').innerHTML=__CHANGE__;$('changelist').in
 const TN={dex:'DEX',intents:'NEAR Intents',defi:'Lending/perps',bridge:'Bridge',cex:'Exchange',other_contract:'Contract',user:'Wallet'};
 const TC={dex:COL.dex,intents:COL.intents,defi:COL.defi,bridge:COL.bridge,cex:COL.cex,other_contract:COL.other_contract,user:COL.p2p};
 const TOP=S.top_counterparties.slice(0,12), mx=Math.max(...TOP.map(a=>a.share_of_transfers_volume));
-$('toptable').innerHTML='<thead><tr><th scope="col">Account</th><th scope="col">Type</th><th scope="col" class="n">Share of volume</th></tr></thead><tbody>'+TOP.map(a=>`<tr><td class="acct"><a href="https://nearblocks.io/address/${encodeURIComponent(a.account)}" title="${esc(a.account)}">${esc(a.account.length>28?a.account.slice(0,10)+'…'+a.account.slice(-6):a.account)}</a></td><td><span class="tag"><i style="background:${TC[a.type]||'#64748b'}"></i>${TN[a.type]||esc(a.type)}</span></td><td class="n"><span class="bar" style="width:${Math.max(3,Math.round(a.share_of_transfers_volume/mx*48))}px"></span>${pct(a.share_of_transfers_volume,1)}</td></tr>`).join('')+'</tbody>';
+$('toptable').innerHTML='<thead><tr><th scope="col">#</th><th scope="col">Account</th><th scope="col">Type</th><th scope="col" class="n">Share of volume</th></tr></thead><tbody>'+TOP.map((a,i)=>`<tr><td class="rk">${i+1}</td><td class="acct"><a href="https://nearblocks.io/address/${encodeURIComponent(a.account)}" title="${esc(a.account)}">${esc(a.account.length>28?a.account.slice(0,10)+'…'+a.account.slice(-6):a.account)}</a></td><td><span class="tag"><i style="background:${TC[a.type]||'#64748b'}"></i>${TN[a.type]||esc(a.type)}</span></td><td class="n"><span class="bar" style="width:${Math.max(3,Math.round(a.share_of_transfers_volume/mx*48))}px"></span>${pct(a.share_of_transfers_volume,1)}</td></tr>`).join('')+'</tbody>';
 $('ikpis').innerHTML=[
  [[usd(IS.avg_daily_volume.deposit),'Deposited / day','stablecoins into Intents (est.)',fmt(IS.avg_daily_count.deposit)+' deposits per day'],COL.intents],
  [[usd(IS.avg_daily_volume.withdrawal),'Withdrawn / day','stablecoins out of Intents (est.)',fmt(IS.avg_daily_count.withdrawal)+' withdrawals per day'],'#a78bfa'],
@@ -364,9 +483,114 @@ $('ikpis').innerHTML=[
  [[usd(IS.defillama_avg_daily_volume),'All-asset volume / day','DefiLlama cross-check, same days','every asset, not only stablecoins'],'#17d6c8']
 ].map(([k,a])=>kpi(k,a)).join('');
 
+// v3: motion, gauge, flow diagram, scroll-spy
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(el){const t=el.dataset.final||el.textContent;el.dataset.final=t;const m=t.match(/\d[\d,]*(\.\d+)?/);if(!m||RM)return;const str=m[0],dec=(m[1]||'').length-(m[1]?1:0),n=parseFloat(str.replace(/,/g,'')),grp=str.includes(','),pre=t.slice(0,m.index),suf=t.slice(m.index+str.length),t0=performance.now(),dur=1200;
+ const step=now=>{const p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=p<1?pre+(n*e).toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec,useGrouping:grp})+suf:t;if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
+function onIn(el){el.classList.add('in');el.querySelectorAll('[data-count]').forEach(countUp);
+ if(el.classList.contains('score')){const g=$('gauge');g.classList.add('in');$('needle').style.transform='rotate('+$('needle').dataset.to+'deg)';countUp($('scoreN'))}}
+const rvs=[...document.querySelectorAll('.rv')];
+if('IntersectionObserver' in window&&!RM){const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){ro.unobserve(e.target);onIn(e.target)}}),{threshold:.12,rootMargin:'0px 0px -4% 0px'});rvs.forEach(el=>ro.observe(el))}
+else rvs.forEach(onIn);
+// flow diagram (shares straight from summary.json)
+const FO=C.slice().sort((a,b)=>S.share_of_transfers[b]-S.share_of_transfers[a]);
+function drawFlow(m){
+ const sh=m==='n'?S.share_of_transfers:S.share_of_volume, small=innerWidth<600, K=FO.length, gap=small?8:12, avail=small?240:300, LH=small?30:34;
+ const hs=FO.map(c=>Math.max(3,sh[c]*avail)), sumh=hs.reduce((a,b)=>a+b,0);
+ const rc=[];let y=0;hs.forEach(h=>{rc.push(y+h/2);y+=h+gap});
+ const ly=[];rc.forEach((c,i)=>ly.push(Math.max(c,i?ly[i-1]+LH:LH/2)));
+ const H=Math.ceil(Math.max(y-gap,ly[K-1]+Math.max(LH/2,hs[K-1]/2)));
+ const off=(H-sumh)/2;let ly0=off;
+ const svg=$('flowsvg');svg.setAttribute('viewBox',`0 0 1000 ${H}`);svg.setAttribute('height',H);svg.style.height=H+'px';
+ let out='';
+ FO.forEach((c,i)=>{const h=hs[i],a0=ly0,a1=ly0+h,b0=ly[i]-h/2,b1=ly[i]+h/2;ly0=a1;
+  out+=`<path data-c="${c}" style="--d:${(i*.08).toFixed(2)}s" fill="${COL[c]}" d="M14 ${a0.toFixed(1)} C500 ${a0.toFixed(1)} 500 ${b0.toFixed(1)} 986 ${b0.toFixed(1)} L986 ${b1.toFixed(1)} C500 ${b1.toFixed(1)} 500 ${a1.toFixed(1)} 14 ${a1.toFixed(1)} Z"><title>${esc(N[c])}: ${pct(sh[c],1)}</title></path>`;
+  out+=`<rect x="986" y="${b0.toFixed(1)}" width="14" height="${h.toFixed(1)}" rx="2" fill="${COL[c]}"/>`});
+ out=`<rect x="0" y="${off.toFixed(1)}" width="14" height="${sumh.toFixed(1)}" rx="3" fill="#2a3846"/>`+out;
+ svg.innerHTML=out;
+ $('flowtg').style.height=H+'px';
+ $('flowtg').innerHTML=FO.map((c,i)=>`<div class="fl" data-c="${c}" style="top:${ly[i].toFixed(1)}px"><i style="background:${COL[c]}"></i><span class="nm">${esc(N[c])}</span><b>${pct(sh[c],1)}</b></div>`).join('');
+ $('flow-l').textContent=m==='n'?'of sampled USDC/USDT transfers':'of sampled USDC/USDT dollars';
+ const SB=S.sensitivity.largest;
+ $('flownote').innerHTML=m==='n'?`Counted by transfers, <b>${pct(sh.dex)}</b> touch a DEX and only <b>${pct(sh.p2p,1)}</b> go wallet-to-wallet. Switch to Volume to weigh by dollars.`
+  :`By dollars: DEX <b>${pct(sh.dex)}</b>, wallet-to-wallet <b>${pct(sh.p2p,1)}</b>. One ${usd(SB.largest_transfer_usd)} transfer is <b>${pct(SB.largest_transfer_share_of_sampled_volume)}</b> of sampled dollars, so volume shares are fragile (see the robustness check below the tests).`;
+ document.querySelectorAll('#flowtg .fl').forEach(l=>{const pth=svg.querySelector(`path[data-c="${l.dataset.c}"]`);l.onmouseenter=()=>pth.classList.add('hl');l.onmouseleave=()=>pth.classList.remove('hl')});
+}
+let FM='n';drawFlow(FM);
+document.querySelectorAll('.tog[data-flow] button').forEach(b=>b.onclick=()=>{FM=b.dataset.m;b.parentNode.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));drawFlow(FM)});
+let rzT;addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>drawFlow(FM),150)});
+// scroll-spy + progress
+const SECS=['flow','tests','evidence','intents','thesis','method','reproduce'].map($).filter(Boolean);
+const navAs=[...document.querySelectorAll('nav.links a, .subnav a')];
+function spy(id){navAs.forEach(a=>{const on=a.getAttribute('href')==='#'+id;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');if(on&&a.parentNode.classList.contains('subnav')){const sn=a.parentNode;sn.scrollTo({left:a.offsetLeft-sn.clientWidth/2+a.offsetWidth/2,behavior:RM?'auto':'smooth'})}})}
+if('IntersectionObserver' in window){const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)spy(e.target.id)}),{rootMargin:'-35% 0px -60% 0px'});SECS.forEach(x=>so.observe(x))}
+let pq=false;const prog=$('progress');addEventListener('scroll',()=>{if(pq)return;pq=true;requestAnimationFrame(()=>{pq=false;const h=document.documentElement.scrollHeight-innerHeight;prog.style.transform='scaleX('+(h>0?Math.min(1,scrollY/h):0)+')'})},{passive:true});
+
+// live panel: latest USDC/USDT transfers (not part of the sample)
+(function(){
+ const L=$('live'),F=$('lfeed'),fab=$('livefab'),seen=new Map();let items=[],fails=0,timer=null,lastOk=0,shown=0,lastH=0;
+ const LAB={dex:'DEX',p2p:'Wallet-to-wallet',other:'Other'};
+ // Direct mode: each visitor reads FASTNEAR neardata + RPC itself (CORS-enabled), so the free rate limit is per visitor.
+ // Fallback: the Worker's /api/live (shared, cached). Same parsing and labeling rules in both (scripts/live_api.js).
+ const KNOWN=__LABELS__, ND='https://mainnet.neardata.xyz/v0', RPC='https://rpc.mainnet.fastnear.com';
+ const TOK={'17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1':'USDC','usdt.tether-token.near':'USDT'};
+ const EX=Object.fromEntries(KNOWN.accounts.filter(a=>a.account).map(a=>[a.account,a.category])), SUF=KNOWN.accounts.filter(a=>a.suffix).map(a=>[a.suffix,a.category]);
+ const code=new Map();let direct=true,directFails=0;
+ const kcat=a=>{if(EX[a])return EX[a];for(const [x,c] of SUF)if(a.endsWith(x))return c;return null};
+ const getJ=async u=>{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw new Error('neardata '+r.status);const t=await r.text();return t&&t!=='null'?JSON.parse(t):null};
+ async function codeKind(a){if(code.has(a))return;if(/^[0-9a-f]{64}$/.test(a)||/^0x[0-9a-f]{40}$/.test(a)){code.set(a,'account');return}
+  try{const r=await fetch(RPC,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'query',params:{request_type:'view_account',finality:'final',account_id:a}})});const j=await r.json();if(j.result)code.set(a,j.result.code_hash!=='11111111111111111111111111111111'?'contract':'account')}catch(e){}}
+ function extract(b){const out=[];let txs=0;const h=b.block.header.height,ts=Math.floor(Number(b.block.header.timestamp_nanosec)/1e6);
+  for(const sh of b.shards||[]){txs+=sh.chunk&&sh.chunk.transactions?sh.chunk.transactions.length:0;
+   for(const ro of sh.receipt_execution_outcomes||[]){const oc=ro.execution_outcome.outcome,tok=TOK[oc.executor_id];if(!tok||(oc.status&&'Failure' in oc.status))continue;
+    oc.logs.forEach((log,li)=>{if(!log.startsWith('EVENT_JSON:'))return;let ev;try{ev=JSON.parse(log.slice(11))}catch(e){return}
+     if(ev.standard!=='nep141'||ev.event!=='ft_transfer')return;(ev.data||[]).forEach((d,di)=>out.push({id:ro.execution_outcome.id+':'+li+':'+di,h,ts,tx:ro.tx_hash,token:tok,usd:Number(d.amount)/1e6,from:d.old_owner_id,to:d.new_owner_id}))})}}
+  return {out,txs,h,ts}}
+ function label(t){const c=[t.from,t.to].map(a=>kcat(a)||(code.get(a)==='account'?'user':code.get(a)==='contract'?'other_contract':'unknown'));t.cats=c;t.label=c.includes('dex')?'dex':(c[0]==='user'&&c[1]==='user')?'p2p':'other';return t}
+ async function viaDirect(init){const tip=await getJ(ND+'/last_block/final');const H=tip.block.header.height,want=[];
+  if(init)for(let i=1;i<=3;i++)want.push(H-i);else if(lastH)for(let h=H-1;h>lastH&&want.length<1;h--)want.push(h);
+  const more=await Promise.all(want.map(h=>getJ(ND+'/block/'+h).catch(()=>null)));
+  const t0=extract(tip);let tr=[t0];more.filter(Boolean).forEach(b=>tr.push(extract(b)));let list=tr.flatMap(x=>x.out);
+  const need=[...new Set(list.flatMap(t=>[t.from,t.to]).filter(a=>!kcat(a)&&!code.has(a)))].slice(0,10);await Promise.all(need.map(codeKind));
+  return {ok:true,block:{height:H,txs:t0.txs,ts:t0.ts},transfers:list.map(label)}}
+ async function viaWorker(init){const r=await fetch('/api/live'+(init?'?init=1':''),{cache:'no-store'});const j=await r.json();if(!j.ok)throw new Error(j.error||'error');return j}
+ const short=a=>a.length>22?a.slice(0,8)+'…'+a.slice(-6):a;
+ const money=x=>'$'+x.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+ const ago=ts=>{const s=Math.max(0,Math.round((Date.now()-ts)/1000));return s<60?s+'s ago':s<3600?Math.floor(s/60)+'m ago':Math.floor(s/3600)+'h ago'};
+ const docked=()=>matchMedia('(min-width:1360px)').matches, isOpen=()=>docked()||L.classList.contains('open');
+ function render(newIds){
+  if(!items.length){F.innerHTML='<li class="lempty">Waiting for the next USDC/USDT transfer… blocks are still streaming above.</li>';return}
+  F.innerHTML=items.map(t=>`<li class="${newIds&&newIds.has(t.id)&&!RM?'new':''}" title="${esc(t.from)} → ${esc(t.to)}"><span class="lamt">${money(t.usd)}<em>${t.token}</em></span><span class="llab ${t.label}" title="${esc((t.cats||[]).join(' → '))}">${LAB[t.label]||'Other'}</span><span class="lft2">${esc(short(t.from))} → ${esc(short(t.to))}</span><span class="lago"><a href="https://nearblocks.io/txns/${encodeURIComponent(t.tx)}" target="_blank" rel="noopener" data-ts="${t.ts}">${ago(t.ts)}</a></span></li>`).join('');
+ }
+ function tick(){F.querySelectorAll('a[data-ts]').forEach(a=>a.textContent=ago(+a.dataset.ts));if(lastOk){const s=Math.round((Date.now()-lastOk)/1000);$('lst').textContent=fails?'reconnecting…':(s<3?'updated just now':'updated '+s+'s ago')}}
+ async function poll(init){
+  try{
+   let j;
+   if(direct){try{j=await viaDirect(init);directFails=0}catch(e){if(++directFails>=2)direct=false}}
+   if(!j)j=await viaWorker(init);
+   if(!direct&&Math.random()<.1)direct=true;
+   fails=0;lastOk=Date.now();L.classList.remove('err');fab.classList.remove('err');
+   if(j.block.height>=lastH){lastH=j.block.height;$('lbh').textContent='#'+j.block.height.toLocaleString('en-US');$('lbt').textContent=j.block.txs.toLocaleString('en-US');}
+   const fresh=new Set();
+   for(const t of j.transfers){if(!seen.has(t.id)){seen.set(t.id,1);fresh.add(t.id);items.push(t)}}
+   if(fresh.size){items.sort((a,b)=>b.ts-a.ts);items=items.slice(0,30);shown+=fresh.size;$('lbn').textContent=shown;if(!docked()&&!L.classList.contains('open'))$('lfabn').textContent='+'+shown;render(init?null:fresh)}
+   else if(init)render();
+  }catch(e){fails++;L.classList.add('err');fab.classList.add('err');$('lst').textContent='reconnecting…';if(init&&!items.length)F.innerHTML='<li class="lempty">Live data is unavailable right now. Retrying…</li>'}
+  schedule();
+ }
+ function schedule(){clearTimeout(timer);if(document.hidden)return;const base=isOpen()?5000:15000;timer=setTimeout(()=>poll(false),fails?Math.min(30000,base*2**fails):base)}
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll(false);else clearTimeout(timer)});
+ const setOpen=o=>{L.classList.toggle('open',o);fab.setAttribute('aria-expanded',o);if(o){$('lfabn').textContent='';$('lclose').focus();poll(false)}else fab.focus()};
+ fab.onclick=()=>setOpen(!L.classList.contains('open'));$('lclose').onclick=()=>setOpen(false);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&L.classList.contains('open'))setOpen(false)});
+ setInterval(tick,1000);poll(true);
+})();
+
 // charts
 function charts(){
-const small=innerWidth<600, MODE={c2:'n',c8:'v'};
+const small=innerWidth<600, MODE={c2:'n',c8:'v'}, LZ={};
+const lazy=(id,cfg)=>{const h={id,cfg,ch:null};LZ[id]=h;return h};
+if(RM)Chart.defaults.animation=false;else Object.assign(Chart.defaults.animation,{duration:1000,easing:'easeOutQuart'});
 const G='rgba(255,255,255,.055)';
 Object.assign(Chart.defaults,{color:'#8996a6',borderColor:G,maintainAspectRatio:false});
 Chart.defaults.font.family='Inter,system-ui,sans-serif';Chart.defaults.font.size=small?11:12;
@@ -378,50 +602,52 @@ const AT=t=>({display:true,text:t,color:'#64717f',font:{size:11,weight:'600'}});
 const legend={position:small?'bottom':'top',align:small?'start':'end'};
 const grad=(ctx,c)=>{const {chartArea:a,ctx:g}=ctx.chart;if(!a)return c+'33';const x=g.createLinearGradient(0,a.top,0,a.bottom);x.addColorStop(0,c+'55');x.addColorStop(1,c+'00');return x};
 // 1
-new Chart($('c1'),{type:'bar',data:{labels:['Share of transfers','Share of volume'],datasets:C.map(c=>({label:N[c],data:[S.share_of_transfers[c]*100,S.share_of_volume[c]*100],backgroundColor:COL[c],borderRadius:0,barPercentage:.72}))},
+lazy('c1',{type:'bar',data:{labels:['Share of transfers','Share of volume'],datasets:C.map(c=>({label:N[c],data:[S.share_of_transfers[c]*100,S.share_of_volume[c]*100],backgroundColor:COL[c],borderRadius:0,barPercentage:.72}))},
  options:{indexAxis:'y',scales:{x:{stacked:true,max:100,ticks:{callback:v=>v+'%'},title:AT('share of sampled USDC/USDT transfers (%)')},y:{stacked:true,grid:{display:false}}},plugins:{tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toFixed(1)+'%'}},legend}}});
 // 2
 const W=D.weekly;
-const CH2=new Chart($('c2'),{type:'bar',data:{labels:W.map(w=>w.week.slice(5)),datasets:C.map(c=>({label:N[c],key:c,data:W.map(w=>w['n_'+c]),backgroundColor:COL[c],borderRadius:0}))},
+const CH2=lazy('c2',{type:'bar',data:{labels:W.map(w=>w.week.slice(5)),datasets:C.map(c=>({label:N[c],key:c,data:W.map(w=>w['n_'+c]),backgroundColor:COL[c],borderRadius:0}))},
  options:{interaction:{mode:'index',intersect:false},scales:{x:{stacked:true,grid:{display:false},title:AT('week starting (2026)')},y:{stacked:true,title:AT('transfers per week (est.)'),ticks:{callback:v=>MODE.c2==='n'?fmt(v):usd(v)}}},plugins:{tooltip:{itemSort:(a,b)=>b.raw-a.raw,callbacks:{title:i=>'Week of '+W[i[0].dataIndex].week,label:c=>' '+c.dataset.label+': '+(MODE.c2==='n'?fmt(c.raw):usd(c.raw))}},legend}}});CH2.$m='n';CH2.$rows=W;CH2.$yt=['transfers per week (est.)','USD volume per week (est.)'];
 // 3
 const tot=a=>a.reduce((x,y)=>x+y,0);
-new Chart($('c3'),{type:'bar',data:{labels:D.buckets,datasets:[['p2p','Wallet-to-wallet'],['dex','DEX']].map(([c,l])=>({label:l,data:D.size[c].map(v=>tot(D.size[c])?v/tot(D.size[c])*100:0),backgroundColor:COL[c],barPercentage:.85,categoryPercentage:.7}))},
+lazy('c3',{type:'bar',data:{labels:D.buckets,datasets:[['p2p','Wallet-to-wallet'],['dex','DEX']].map(([c,l])=>({label:l,data:D.size[c].map(v=>tot(D.size[c])?v/tot(D.size[c])*100:0),backgroundColor:COL[c],barPercentage:.85,categoryPercentage:.7}))},
  options:{interaction:{mode:'index',intersect:false},scales:{x:{grid:{display:false},title:AT('transfer size (USD)')},y:{ticks:{callback:v=>v+'%'},title:AT('share of transfers')}},plugins:{legend,tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toFixed(1)+'%'}}}}});
 // 4
 const RC=C.filter(c=>S.round_dollar_share[c]!=null&&D.size[c]&&tot(D.size[c])>=30);
-new Chart($('c4'),{type:'bar',data:{labels:RC.map(c=>N[c]),datasets:[{label:'Round-dollar share',data:RC.map(c=>S.round_dollar_share[c]*100),backgroundColor:RC.map(c=>COL[c]),barPercentage:.6}]},
+lazy('c4',{type:'bar',data:{labels:RC.map(c=>N[c]),datasets:[{label:'Round-dollar share',data:RC.map(c=>S.round_dollar_share[c]*100),backgroundColor:RC.map(c=>COL[c]),barPercentage:.6}]},
  options:{indexAxis:'y',scales:{x:{ticks:{callback:v=>v+'%'},title:AT('transfers that are a whole-dollar amount (%)')},y:{grid:{display:false}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' Round-dollar share: '+c.raw.toFixed(1)+'%'}}}}});
 // 5
 const Dy=D.daily, ma=k=>Dy.map((r,i)=>{const s=Dy.slice(Math.max(0,i-6),i+1);return s.reduce((a,b)=>a+b[k],0)/s.length});
 const trade=Dy.map(r=>r.n_dex+r.n_intents+r.n_defi);const tradeMa=trade.map((_,i)=>{const s=trade.slice(Math.max(0,i-6),i+1);return s.reduce((a,b)=>a+b,0)/s.length});
 const priceBy=Object.fromEntries(D.supply.map(s=>[s.day,s.near]));
-new Chart($('c5'),{type:'line',data:{labels:Dy.map(r=>r.day.slice(5)),datasets:[
+lazy('c5',{type:'line',data:{labels:Dy.map(r=>r.day.slice(5)),datasets:[
  {label:'Trading-venue transfers / day (7d avg)',data:tradeMa,borderColor:COL.dex,backgroundColor:c=>grad(c,COL.dex),fill:true,pointRadius:0,pointHoverRadius:4,tension:.35,yAxisID:'y'},
  {label:'Wallet-to-wallet transfers / day (7d avg)',data:ma('n_p2p'),borderColor:COL.p2p,backgroundColor:c=>grad(c,COL.p2p),fill:true,pointRadius:0,pointHoverRadius:4,tension:.35,yAxisID:'y'},
  {label:'NEAR price (USD)',data:Dy.map(r=>priceBy[r.day]??null),borderColor:'#c2ccd7',backgroundColor:'#c2ccd7',borderDash:[5,4],borderWidth:1.6,pointRadius:0,pointHoverRadius:4,tension:.2,yAxisID:'y2'}]},
  options:{interaction:{mode:'index',intersect:false},scales:{x:{grid:{display:false},ticks:{maxTicksLimit:small?4:12,maxRotation:0,autoSkipPadding:12},title:AT('day (2026, UTC)')},y:{ticks:{callback:v=>fmt(v)},title:AT('transfers per day')},y2:{position:'right',grid:{display:false},ticks:{callback:v=>'$'+v.toFixed(2)},title:AT('NEAR price (USD)')}},plugins:{legend,tooltip:{callbacks:{title:i=>Dy[i[0].dataIndex].day,label:c=>' '+c.dataset.label+': '+(c.dataset.yAxisID==='y2'?'$'+c.raw.toFixed(3):fmt(c.raw))}}}}});
 // 6
 const SP=D.supply.filter(s=>s.total!=null);
-new Chart($('c6'),{type:'line',data:{labels:SP.map(s=>s.day),datasets:[
+lazy('c6',{type:'line',data:{labels:SP.map(s=>s.day),datasets:[
  {label:'USDT',data:SP.map(s=>s.usdt),borderColor:'#26a17b',backgroundColor:'rgba(38,161,123,.38)',fill:true,pointRadius:0,pointHoverRadius:3,stack:'s',yAxisID:'y'},
  {label:'USDC',data:SP.map(s=>s.usdc),borderColor:'#2775ca',backgroundColor:'rgba(39,117,202,.38)',fill:true,pointRadius:0,pointHoverRadius:3,stack:'s',yAxisID:'y'},
  {label:'NEAR price',data:SP.map(s=>s.near??null),borderColor:'#c2ccd7',borderDash:[5,4],borderWidth:1.6,pointRadius:0,pointHoverRadius:3,yAxisID:'y2'}]},
  options:{interaction:{mode:'index',intersect:false},scales:{x:{grid:{display:false},ticks:{maxTicksLimit:small?3:6,maxRotation:0,autoSkipPadding:12,callback:function(v){return this.getLabelForValue(v).slice(0,7)}}},y:{stacked:true,ticks:{callback:v=>usd(v)},title:AT('stablecoin supply (USD)')},y2:{position:'right',grid:{display:false},ticks:{callback:v=>'$'+v.toFixed(1)},title:AT('NEAR price')}},plugins:{legend,tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+(c.dataset.yAxisID==='y2'?'$'+c.raw.toFixed(2):usd(c.raw))}}}}});
 // 8
 const ICOL={swap:'#ff6b6b',to_solver:'#ffb547',peer_transfer:'#00ec97',deposit:'#5aa9ff',withdrawal:'#a78bfa'};
-const CH8=new Chart($('c8'),{type:'bar',data:{labels:I.weekly.map(w=>w.week.slice(5)),datasets:I.types.map(t=>({label:I.names[t],key:t,data:I.weekly.map(w=>w['v_'+t]),backgroundColor:ICOL[t],borderRadius:0}))},
+const CH8=lazy('c8',{type:'bar',data:{labels:I.weekly.map(w=>w.week.slice(5)),datasets:I.types.map(t=>({label:I.names[t],key:t,data:I.weekly.map(w=>w['v_'+t]),backgroundColor:ICOL[t],borderRadius:0}))},
  options:{interaction:{mode:'index',intersect:false},scales:{x:{stacked:true,grid:{display:false},title:AT('week starting (2026)')},y:{stacked:true,title:AT('USD volume per week (est.)'),ticks:{callback:v=>MODE.c8==='n'?fmt(v):usd(v)}}},plugins:{tooltip:{itemSort:(a,b)=>b.raw-a.raw,callbacks:{title:i=>'Week of '+I.weekly[i[0].dataIndex].week,label:c=>' '+c.dataset.label+': '+(MODE.c8==='n'?fmt(c.raw):usd(c.raw))}},legend}}});CH8.$m='v';CH8.$rows=I.weekly;CH8.$yt=['events per week (est.)','USD volume per week (est.)'];
 const CHS={c2:CH2,c8:CH8};
-document.querySelectorAll('.tog').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{const id=g.dataset.chart,ch=CHS[id];ch.$m=b.dataset.m;MODE[id]=b.dataset.m;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));ch.data.datasets.forEach(ds=>ds.data=ch.$rows.map(w=>w[ch.$m+'_'+ds.key]));ch.options.scales.y.title.text=ch.$yt[ch.$m==='n'?0:1];ch.update();}));
+document.querySelectorAll('.tog[data-chart]').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{const id=g.dataset.chart,h=CHS[id];h.$m=b.dataset.m;MODE[id]=b.dataset.m;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));const tgt=h.ch||h.cfg;tgt.data.datasets.forEach(ds=>ds.data=h.$rows.map(w=>w[h.$m+'_'+ds.key]));(h.ch?h.ch.options:h.cfg.options).scales.y.title.text=h.$yt[h.$m==='n'?0:1];if(h.ch)h.ch.update();}));
 // 9
 const CHN=Object.entries(IS.chain_volume_share).slice(0,8);
-new Chart($('c9'),{type:'bar',data:{labels:CHN.map(c=>c[0]),datasets:[{data:CHN.map(c=>c[1]*100),backgroundColor:['#2775ca','#627eea','#9945ff','#ff060a','#f3ba2f','#8247e5','#28a0f0','#4da2ff'],barPercentage:.7}]},
+lazy('c9',{type:'bar',data:{labels:CHN.map(c=>c[0]),datasets:[{data:CHN.map(c=>c[1]*100),backgroundColor:['#2775ca','#627eea','#9945ff','#ff060a','#f3ba2f','#8247e5','#28a0f0','#4da2ff'],barPercentage:.7}]},
  options:{indexAxis:'y',scales:{x:{ticks:{callback:v=>v+'%'},title:AT('share of sampled Intents stablecoin volume (%)')},y:{grid:{display:false},title:AT('origin chain')}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw.toFixed(1)+'% of volume'}}}}});
 // 10
 const ID=I.daily,ima=k=>ID.map((r,i)=>{const s=ID.slice(Math.max(0,i-6),i+1);return s.reduce((a,b)=>a+b[k],0)/s.length});
-new Chart($('c10'),{type:'line',data:{labels:ID.map(r=>r.day.slice(5)),datasets:[{label:'Peer transfers / day (7d avg)',data:ima('n_peer_transfer'),borderColor:ICOL.peer_transfer,backgroundColor:c=>grad(c,'#00ec97'),fill:true,pointRadius:0,pointHoverRadius:4,tension:.35}]},
+lazy('c10',{type:'line',data:{labels:ID.map(r=>r.day.slice(5)),datasets:[{label:'Peer transfers / day (7d avg)',data:ima('n_peer_transfer'),borderColor:ICOL.peer_transfer,backgroundColor:c=>grad(c,'#00ec97'),fill:true,pointRadius:0,pointHoverRadius:4,tension:.35}]},
  options:{interaction:{mode:'index',intersect:false},scales:{x:{grid:{display:false},ticks:{maxTicksLimit:small?4:8,maxRotation:0,autoSkipPadding:12},title:AT('day (2026, UTC)')},y:{ticks:{callback:v=>fmt(v)},title:AT('peer transfers per day')}},plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>ID[i[0].dataIndex].day,label:c=>' Peer transfers / day (7d avg): '+fmt(c.raw)}}}}});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const h=LZ[e.target.id];if(h&&!h.ch)h.ch=new Chart(e.target,h.cfg);}),{rootMargin:'0px 0px -8% 0px'});
+Object.keys(LZ).forEach(id=>io.observe($(id)));
 }
 if(window.Chart){(document.fonts&&document.fonts.ready?Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,1500))]):Promise.resolve()).then(charts);}
 </script>

@@ -55,6 +55,7 @@ let html = fs.readFileSync('site/index.html', 'utf8')
   .replace('__VERDICT__', () => JSON.stringify(verdict)).replace('__VERDICT_SUB__', () => JSON.stringify(vsub))
   .replace('__CHANGE__', () => JSON.stringify(change)).replace('__CHANGELIST__', () => JSON.stringify(changelist)).replace('__IMPL__', () => JSON.stringify(impl));
 for (const [k, v] of Object.entries(T)) html = html.replace(`__${k}__`, () => JSON.stringify(v));
+html = html.replace('__LABELS__', () => JSON.stringify(JSON.parse(fs.readFileSync('labels/known_accounts.json', 'utf8'))));
 html = html.replace('__DATA__', () => JSON.stringify(D));
 fs.mkdirSync('dist', { recursive: true });
 fs.writeFileSync('dist/index.html', html);
@@ -71,11 +72,13 @@ for (const [path, [file, type]] of Object.entries(ASSETS)) {
 }
 fs.writeFileSync('site/narrative.json', JSON.stringify({ verdict, vsub, ...T, changelist, impl }, null, 1));
 const chart = fs.readFileSync('site/vendor/chart.umd.min.js', 'utf8');
-const worker = `const HTML=${JSON.stringify(html)};const CHART=${JSON.stringify(chart)};const DATA=${JSON.stringify(JSON.stringify(D))};
+const LIVE = fs.readFileSync('scripts/live_api.js', 'utf8').replace('__LABELS__', () => fs.readFileSync('labels/known_accounts.json', 'utf8').trim());
+const worker = LIVE + `\nconst HTML=${JSON.stringify(html)};const CHART=${JSON.stringify(chart)};const DATA=${JSON.stringify(JSON.stringify(D))};
 const FAV=${JSON.stringify(FAVICON)};const BIN=${JSON.stringify(BIN)};const B={};for(const k in BIN){const s=atob(BIN[k][0]);const a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);B[k]=[a,BIN[k][1]];}
 export default{async fetch(req){const u=new URL(req.url);const h={'x-content-type-options':'nosniff','cache-control':'public, max-age=300','referrer-policy':'strict-origin-when-cross-origin'};
 if(B[u.pathname])return new Response(B[u.pathname][0],{headers:{...h,'content-type':B[u.pathname][1],'cache-control':'public, max-age=86400','access-control-allow-origin':'*'}});
 if(u.pathname==='/favicon.svg'||u.pathname==='/favicon.ico')return new Response(FAV,{headers:{...h,'content-type':'image/svg+xml','cache-control':'public, max-age=86400'}});
+if(u.pathname==='/api/live')return liveApi(req);
 if(u.pathname==='/robots.txt')return new Response('User-agent: *\\nAllow: /\\n',{headers:{...h,'content-type':'text/plain'}});
 if(u.pathname==='/chart.js')return new Response(CHART,{headers:{...h,'content-type':'application/javascript; charset=utf-8','cache-control':'public, max-age=86400'}});
 if(u.pathname==='/data.json')return new Response(DATA,{headers:{...h,'content-type':'application/json','access-control-allow-origin':'*'}});

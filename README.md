@@ -94,7 +94,7 @@ site/                       dashboard template, Chart.js (MIT), Inter font (OFL)
 
 ## Hackathon disclosure
 
-All code in this repository was written during NEAR HACKATHON (November 2026). Third-party code: Chart.js 4.4.6 (MIT), vendored in `site/vendor/`; Inter font (SIL OFL 1.1, latin subset), in `site/fonts/`. AI coding assistants were used. The dashboard is hosted on Cloudflare Workers and will stay up through at least 2026-11-25.
+All code in this repository was written during NEAR HACKATHON (November 2026). Third-party code: Chart.js 4.4.6 (MIT), vendored in `site/vendor/`; Inter font (SIL OFL 1.1, latin subset), in `site/fonts/`. AI coding assistants were used. The dashboard's live panel (`/api/live`, `scripts/live_api.js`) shows the latest USDC/USDT transfers from neardata.xyz final blocks; it is a live feed, not part of the pre-registered sample. The dashboard is hosted on Cloudflare Workers and will stay up through at least 2026-11-25.
 
 ## License
 
