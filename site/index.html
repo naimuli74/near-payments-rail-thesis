@@ -262,11 +262,17 @@ td.rk{color:var(--dim);font-variant-numeric:tabular-nums;width:28px;padding-righ
  .lclose{display:inline-block}
 }
 @media (max-width:600px){.live{right:8px;left:8px;bottom:8px;width:auto;height:min(78vh,620px)}.livefab{right:12px;bottom:12px}}
+/* NEAR logo (official file, unmodified; white reversed variant on dark) */
+.brandrow{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.nearlogo{display:inline-flex;padding:6px 0;line-height:0}.nearlogo img{height:25px;width:auto;display:block}
+.nearlogo:hover{opacity:.85}
+.vsep{width:1px;height:24px;background:var(--line2)}
+footer .tm{font-size:12px;color:var(--dim)}
 /* responsive */
 @media (max-width:1020px){.tests,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}nav.links{display:none}.subnav{display:flex}html{scroll-padding-top:120px}}
 @media (max-width:860px){.verdict{grid-template-columns:minmax(0,1fr)}.score{flex-direction:row;justify-content:flex-start;text-align:left;gap:20px}.score .meta{display:flex;flex-direction:column;gap:10px;align-items:flex-start}.dots{justify-content:start}.gauge{width:200px;flex:none}
  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid,.two{grid-template-columns:1fr}footer .wrap{grid-template-columns:1fr}footer .fl{justify-content:flex-start}}
-@media (max-width:600px){.score{flex-direction:column;align-items:center;text-align:center}.score .meta{align-items:center}.dots{justify-content:center}.flow{grid-template-columns:minmax(0,1fr) 168px}.fsrc{display:none}.fl{font-size:12.5px;padding-left:10px;gap:7px}.fl b{font-size:13px}.mesh{height:620px}.gauge{width:180px}.gauge .n{font-size:34px}.wrap{padding:0 16px}.eyebrow{font-size:11px;letter-spacing:.04em}body{font-size:15px}.hero{padding-top:40px}.tests,.steps{grid-template-columns:1fr}.vcard{padding:22px 20px}.kpi{padding:16px}.kpi .v{font-size:26px}.kpi .k{font-size:11px}.kpi .d{font-size:13px}
+@media (max-width:600px){.brandrow{gap:14px}.nearlogo img{height:21px}.vsep{display:none}.score{flex-direction:column;align-items:center;text-align:center}.score .meta{align-items:center}.dots{justify-content:center}.flow{grid-template-columns:minmax(0,1fr) 168px}.fsrc{display:none}.fl{font-size:12.5px;padding-left:10px;gap:7px}.fl b{font-size:13px}.mesh{height:620px}.gauge{width:180px}.gauge .n{font-size:34px}.wrap{padding:0 16px}.eyebrow{font-size:11px;letter-spacing:.04em}body{font-size:15px}.hero{padding-top:40px}.tests,.steps{grid-template-columns:1fr}.vcard{padding:22px 20px}.kpi{padding:16px}.kpi .v{font-size:26px}.kpi .k{font-size:11px}.kpi .d{font-size:13px}
  .card{padding:18px 14px 14px}.cv{height:270px}.cv.tall{height:320px}.prose{padding:20px}.brand em{display:none}section{padding-top:44px}.hero-cta .btn{flex:1 1 auto;justify-content:center}.score{padding:20px}.ch{flex-direction:column}}
 @media (max-width:380px){.kpis{grid-template-columns:1fr}}
 </style>
@@ -274,7 +280,7 @@ td.rk{color:var(--dim);font-variant-numeric:tabular-nums;width:28px;padding-righ
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap">
- <a class="brand" href="#top" aria-label="NEAR Payments Rail Thesis, back to top"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#00ec97"/><path d="M9 23V9h2.6l7.6 10.4V9H23v14h-2.6L12.8 12.6V23z" fill="#00140c"/></svg><span>Payments Rail <em>Thesis</em></span></a>
+ <a class="brand" href="#top" aria-label="NEAR Payments Rail Thesis, back to top"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#00ec97"/><path d="M8 12.5h16M8 19.5h16M11.5 9v14M16 9v14M20.5 9v14" stroke="#00140c" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg><span>Payments Rail <em>Thesis</em></span></a>
  <nav class="links" aria-label="Sections"><a href="#flow">Flow</a><a href="#tests">Tests</a><a href="#evidence">Evidence</a><a href="#intents">Intents</a><a href="#thesis">Thesis</a><a href="#method">Method</a><a href="#reproduce">Reproduce</a></nav>
  <a class="btn" href="__REPO__" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.67.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0z"/></svg>GitHub</a>
 </div><nav class="subnav" aria-label="Sections (compact)"><a href="#flow">Flow</a><a href="#tests">Tests</a><a href="#evidence">Evidence</a><a href="#intents">Intents</a><a href="#thesis">Thesis</a><a href="#method">Method</a><a href="#reproduce">Reproduce</a></nav><div class="progress" id="progress" aria-hidden="true"></div></header>
@@ -284,7 +290,7 @@ td.rk{color:var(--dim);font-variant-numeric:tabular-nums;width:28px;padding-righ
 <div class="wrap" id="top">
 <div class="hero">
  <div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
- <span class="eyebrow"><i></i>NEAR HACKATHON · Investment Thesis</span>
+ <div class="brandrow"><a class="nearlogo" href="https://near.org" rel="noopener" title="NEAR Protocol (near.org)"><img src="/brand/near-logo-rev.svg" alt="NEAR" width="102" height="25"></a><span class="vsep" aria-hidden="true"></span><span class="eyebrow"><i></i>NEAR HACKATHON · Investment Thesis</span></div>
  <h1>Is NEAR already a <span class="g">payments rail?</span></h1>
  <p class="lede">If NEAR is becoming money infrastructure, its stablecoins should move like payments: many small transfers between ordinary wallets, a steady daily rhythm, and no dependence on NEAR's price swings. If it is mostly a trading venue, the flow runs through DEXs and bots and follows volatility. We pulled <b id="h-n"></b> USDC and USDT transfers straight from NEAR mainnet blocks over <b id="h-days"></b> days and checked them against six tests written down first.</p>
  <div class="hero-cta"><a class="btn pri" href="#tests">See the six tests</a><a class="btn" href="#reproduce">Reproduce in one command</a></div>
@@ -420,6 +426,7 @@ npm run quick</pre><div class="see"><b>You see</b>The six test results printed (
  <div>
   <p class="built">Built at NEAR HACKATHON, Investment Thesis track, by Naimul Islam (<a href="https://x.com/naimulislam">@naimulislam</a>).</p>
   <p>Code, data snapshot and THESIS.md: <a href="__REPO__">__REPO_SHORT__</a>. Data generated <span id="gen"></span>. MIT licensed. Chart.js (MIT), Inter (OFL). Not investment advice.</p>
+  <p class="tm">NEAR and the NEAR logo are trademarks of NEAR Foundation. Independent analysis, not affiliated.</p>
  </div>
  <div class="fl">
   <a class="btn" href="__REPO__" rel="noopener">GitHub repo</a>

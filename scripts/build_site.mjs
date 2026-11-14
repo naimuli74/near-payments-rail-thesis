@@ -61,9 +61,9 @@ fs.mkdirSync('dist', { recursive: true });
 fs.writeFileSync('dist/index.html', html);
 fs.writeFileSync('dist/chart.js', fs.readFileSync('site/vendor/chart.umd.min.js'));
 // Static assets: self-hosted Inter (OFL), favicon and the Open Graph image (scripts/make_og.py).
-const FAVICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#00ec97"/><path d="M9 23V9h2.6l7.6 10.4V9H23v14h-2.6L12.8 12.6V23z" fill="#00140c"/></svg>';
-const ASSETS = { '/fonts/inter-var.woff2': ['site/fonts/inter-var.woff2', 'font/woff2'], '/og.png': ['site/og.png', 'image/png'] };
-fs.mkdirSync('dist/fonts', { recursive: true });
+const FAVICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#00ec97"/><path d="M8 12.5h16M8 19.5h16M11.5 9v14M16 9v14M20.5 9v14" stroke="#00140c" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>';
+const ASSETS = { '/fonts/inter-var.woff2': ['site/fonts/inter-var.woff2', 'font/woff2'], '/og.png': ['site/og.png', 'image/png'], '/brand/near-logo-rev.svg': ['site/brand/near-logo-rev.svg', 'image/svg+xml'] };
+fs.mkdirSync('dist/fonts', { recursive: true }); fs.mkdirSync('dist/brand', { recursive: true });
 fs.writeFileSync('dist/favicon.svg', FAVICON);
 const BIN = {};
 for (const [path, [file, type]] of Object.entries(ASSETS)) {
