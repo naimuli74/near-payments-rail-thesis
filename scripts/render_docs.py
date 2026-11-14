@@ -123,12 +123,12 @@ scripts/spot_check.py       re-verify random sampled transfers on chain
 labels/                     documented account labels and stablecoin asset ids, with sources
 data/raw/                   snapshot: sampled blocks, events, market data (generated {S['generated_at']})
 data/processed/             summary.json, daily_estimates.csv, intents_daily_estimates.csv, transfers_sample.csv
-site/                       dashboard template and Chart.js (MIT)
+site/                       dashboard template, Chart.js (MIT), Inter font (OFL), og.png (scripts/make_og.py)
 ```
 
 ## Hackathon disclosure
 
-All code in this repository was written during NEAR HACKATHON (November 2026). Third-party code: Chart.js 4.4.6 (MIT), vendored in `site/vendor/`. AI coding assistants were used. The dashboard is hosted on Cloudflare Workers and will stay up through at least 2026-11-25.
+All code in this repository was written during NEAR HACKATHON (November 2026). Third-party code: Chart.js 4.4.6 (MIT), vendored in `site/vendor/`; Inter font (SIL OFL 1.1, latin subset), in `site/fonts/`. AI coding assistants were used. The dashboard is hosted on Cloudflare Workers and will stay up through at least 2026-11-25.
 
 ## License
 

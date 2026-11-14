@@ -59,10 +59,24 @@ html = html.replace('__DATA__', () => JSON.stringify(D));
 fs.mkdirSync('dist', { recursive: true });
 fs.writeFileSync('dist/index.html', html);
 fs.writeFileSync('dist/chart.js', fs.readFileSync('site/vendor/chart.umd.min.js'));
+// Static assets: self-hosted Inter (OFL), favicon and the Open Graph image (scripts/make_og.py).
+const FAVICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#00ec97"/><path d="M9 23V9h2.6l7.6 10.4V9H23v14h-2.6L12.8 12.6V23z" fill="#00140c"/></svg>';
+const ASSETS = { '/fonts/inter-var.woff2': ['site/fonts/inter-var.woff2', 'font/woff2'], '/og.png': ['site/og.png', 'image/png'] };
+fs.mkdirSync('dist/fonts', { recursive: true });
+fs.writeFileSync('dist/favicon.svg', FAVICON);
+const BIN = {};
+for (const [path, [file, type]] of Object.entries(ASSETS)) {
+  if (!fs.existsSync(file)) { console.warn('missing asset', file); continue; }
+  const buf = fs.readFileSync(file); fs.writeFileSync('dist' + path, buf); BIN[path] = [buf.toString('base64'), type];
+}
 fs.writeFileSync('site/narrative.json', JSON.stringify({ verdict, vsub, ...T, changelist, impl }, null, 1));
 const chart = fs.readFileSync('site/vendor/chart.umd.min.js', 'utf8');
 const worker = `const HTML=${JSON.stringify(html)};const CHART=${JSON.stringify(chart)};const DATA=${JSON.stringify(JSON.stringify(D))};
-export default{async fetch(req){const u=new URL(req.url);const h={'x-content-type-options':'nosniff','cache-control':'public, max-age=300'};
+const FAV=${JSON.stringify(FAVICON)};const BIN=${JSON.stringify(BIN)};const B={};for(const k in BIN){const s=atob(BIN[k][0]);const a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);B[k]=[a,BIN[k][1]];}
+export default{async fetch(req){const u=new URL(req.url);const h={'x-content-type-options':'nosniff','cache-control':'public, max-age=300','referrer-policy':'strict-origin-when-cross-origin'};
+if(B[u.pathname])return new Response(B[u.pathname][0],{headers:{...h,'content-type':B[u.pathname][1],'cache-control':'public, max-age=86400','access-control-allow-origin':'*'}});
+if(u.pathname==='/favicon.svg'||u.pathname==='/favicon.ico')return new Response(FAV,{headers:{...h,'content-type':'image/svg+xml','cache-control':'public, max-age=86400'}});
+if(u.pathname==='/robots.txt')return new Response('User-agent: *\\nAllow: /\\n',{headers:{...h,'content-type':'text/plain'}});
 if(u.pathname==='/chart.js')return new Response(CHART,{headers:{...h,'content-type':'application/javascript; charset=utf-8','cache-control':'public, max-age=86400'}});
 if(u.pathname==='/data.json')return new Response(DATA,{headers:{...h,'content-type':'application/json','access-control-allow-origin':'*'}});
 if(u.pathname==='/'||u.pathname==='/index.html')return new Response(HTML,{headers:{...h,'content-type':'text/html; charset=utf-8'}});
