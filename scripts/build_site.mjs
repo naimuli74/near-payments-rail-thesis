@@ -61,8 +61,8 @@ fs.mkdirSync('dist', { recursive: true });
 fs.writeFileSync('dist/index.html', html);
 fs.writeFileSync('dist/chart.js', fs.readFileSync('site/vendor/chart.umd.min.js'));
 // Static assets: self-hosted Inter, Instrument Serif and JetBrains Mono (all OFL), favicon and the Open Graph image (scripts/make_og.py).
-const FAVICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#00ec97"/><path d="M8 12.5h16M8 19.5h16M11.5 9v14M16 9v14M20.5 9v14" stroke="#00140c" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>';
-const ASSETS = { '/fonts/inter-var.woff2': ['site/fonts/inter-var.woff2', 'font/woff2'], '/fonts/instrument-serif.woff2': ['site/fonts/instrument-serif.woff2', 'font/woff2'], '/fonts/instrument-serif-italic.woff2': ['site/fonts/instrument-serif-italic.woff2', 'font/woff2'], '/fonts/jetbrains-mono-var.woff2': ['site/fonts/jetbrains-mono-var.woff2', 'font/woff2'], '/og.png': ['site/og.png', 'image/png'], '/brand/near-logo-rev.svg': ['site/brand/near-logo-rev.svg', 'image/svg+xml'] };
+const FAVICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#00ec97"/><path d="M7.5 24V9.5L20.5 23V8.5M16 12.5l4.5-4.5 4.5 4.5" stroke="#05140d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>';
+const ASSETS = { '/fonts/inter-var.woff2': ['site/fonts/inter-var.woff2', 'font/woff2'], '/fonts/instrument-serif.woff2': ['site/fonts/instrument-serif.woff2', 'font/woff2'], '/fonts/instrument-serif-italic.woff2': ['site/fonts/instrument-serif-italic.woff2', 'font/woff2'], '/fonts/jetbrains-mono-var.woff2': ['site/fonts/jetbrains-mono-var.woff2', 'font/woff2'], '/og.png': ['site/og.png', 'image/png'], '/brand/near-logo-rev.svg': ['site/brand/near-logo-rev.svg', 'image/svg+xml'], '/apple-touch-icon.png': ['site/brand/apple-touch-icon.png', 'image/png'], '/brand/payments-rail-logo.svg': ['site/brand/payments-rail-logo.svg', 'image/svg+xml'] };
 fs.mkdirSync('dist/fonts', { recursive: true }); fs.mkdirSync('dist/brand', { recursive: true });
 fs.writeFileSync('dist/favicon.svg', FAVICON);
 const BIN = {};
