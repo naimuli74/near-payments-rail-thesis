@@ -42,7 +42,7 @@ T.SENS = `<b>Robustness check (not a test):</b> one sampled transfer, <a href="h
 const change = `We would call NEAR a payments rail when these move, measured with the same script:`;
 const changelist = [
   `Wallet-to-wallet share of volume rises from ${pct(sv.p2p, 1)} to above 25% for a full quarter.`,
-  `DEX + Intents + lending share of volume falls from ${pct(S.trading_share_of_volume)} to below 50%.`,
+  (S.trading_share_of_volume < 0.5 ? `DEX + Intents + lending share of volume falls below 50% even with the single largest transfer set aside (now ${pct(S.trading_share_of_volume)} overall, ${pct(S.sensitivity.largest.trading_share_excl_largest)} without it).` : `DEX + Intents + lending share of volume falls from ${pct(S.trading_share_of_volume)} to below 50%.`),
   `Daily stablecoin volume stops tracking NEAR volatility (|rho| below 0.3; now ${Math.abs(c.v_all.vs_abs_return).toFixed(2)}).`,
   `Round-dollar transfers (invoices, payroll) grow as a share of all transfers (now ${pct(rd.all, 1)}).`,
 ].map(x => `<li>${x}</li>`).join('');
