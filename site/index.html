@@ -166,6 +166,15 @@ footer .built{font-size:16px;font-weight:600;color:var(--text);margin:0 0 8px;li
 footer p{margin:6px 0;color:var(--mute);font-size:13.5px}
 footer .flink{position:static;transform:none;left:auto;right:auto;padding:0;display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start;justify-content:flex-end}
 
+
+/* how to rerun */
+.rerun{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px 26px;box-shadow:var(--shadow);margin-top:16px;min-width:0;max-width:100%}
+.rerun-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.rerun h3{margin:0;font-size:18px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.rerun h3 svg{color:var(--near);flex:none}
+.rerun p{color:var(--soft);margin:8px 0 14px;font-size:14.5px;line-height:1.55}
+.rerun pre{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.rerun .more{margin:14px 0 0;font-size:13.5px;color:var(--mute)}
 /* read / watch */
 .readwatch{margin-top:22px}
 .rw-label{margin:0 0 10px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
@@ -283,7 +292,7 @@ footer .tm{font-size:12px;color:var(--dim)}
 @media (max-width:860px){.verdict{grid-template-columns:minmax(0,1fr)}.score{flex-direction:row;justify-content:flex-start;text-align:left;gap:20px}.score .meta{display:flex;flex-direction:column;gap:10px;align-items:flex-start}.dots{justify-content:start}.gauge{width:200px;flex:none}
  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid,.two{grid-template-columns:1fr}footer .wrap{grid-template-columns:1fr}footer .flink{justify-content:flex-start}}
 @media (max-width:600px){.brandrow{gap:14px}.nearlogo img{height:21px}.vsep{display:none}.score{flex-direction:column;align-items:center;text-align:center}.score .meta{align-items:center}.dots{justify-content:center}.flow{grid-template-columns:minmax(0,1fr) 168px}.fsrc{display:none}.fl{font-size:12.5px;padding-left:10px;gap:7px}.fl b{font-size:13px}.mesh{height:620px}.gauge{width:180px}.gauge .n{font-size:34px}.wrap{padding:0 16px}.eyebrow{font-size:11px;letter-spacing:.04em}body{font-size:15px}.hero{padding-top:40px}.tests,.steps{grid-template-columns:1fr}.vcard{padding:22px 20px}.kpi{padding:16px}.kpi .v{font-size:26px}.kpi .k{font-size:11px}.kpi .d{font-size:13px}
- .card{padding:18px 14px 14px}.cv{height:270px}.cv.tall{height:320px}.prose{padding:20px}.brand em{display:none}section{padding-top:44px}.hero-cta .btn{flex:1 1 auto;justify-content:center}.score{padding:20px}.ch{flex-direction:column}.readwatch .rw-row{grid-template-columns:1fr}.tablewrap{-webkit-overflow-scrolling:touch}.bar{display:none}th,td{padding:8px 8px}table{font-size:12.5px}th{letter-spacing:.04em}#toptable th:nth-child(3),#toptable td:nth-child(3){display:none}table .acct{white-space:nowrap;word-break:normal}.lblock{padding:8px 8px;margin:0 10px 8px;gap:4px}.lblock strong{font-size:12.5px;white-space:normal}.lhd,.lnote,.lfoot{padding-left:12px;padding-right:12px}.flow{grid-template-columns:minmax(0,1fr) minmax(196px,58%)}.fl .nm{white-space:normal;line-height:1.3}pre{white-space:pre-wrap;word-break:break-word}.kpis{grid-template-columns:1fr}}
+ .card{padding:18px 14px 14px}.cv{height:270px}.cv.tall{height:320px}.prose{padding:20px}.rerun{padding:20px 16px}.brand em{display:none}section{padding-top:44px}.hero-cta .btn{flex:1 1 auto;justify-content:center}.score{padding:20px}.ch{flex-direction:column}.readwatch .rw-row{grid-template-columns:1fr}.tablewrap{-webkit-overflow-scrolling:touch}.bar{display:none}th,td{padding:8px 8px}table{font-size:12.5px}th{letter-spacing:.04em}#toptable th:nth-child(3),#toptable td:nth-child(3){display:none}table .acct{white-space:nowrap;word-break:normal}.lblock{padding:8px 8px;margin:0 10px 8px;gap:4px}.lblock strong{font-size:12.5px;white-space:normal}.lhd,.lnote,.lfoot{padding-left:12px;padding-right:12px}.flow{grid-template-columns:minmax(0,1fr) minmax(196px,58%)}.fl .nm{white-space:normal;line-height:1.3}pre{white-space:pre-wrap;word-break:break-word}.kpis{grid-template-columns:1fr}}
 @media (max-width:1359px){footer .wrap{padding-bottom:96px}}
 </style>
 </head>
@@ -420,6 +429,19 @@ footer .tm{font-size:12px;color:var(--dim)}
    <li>Transfers into NEAR Intents can be cross-chain payments, not only swaps. We count them as trading-venue flow, which is the conservative choice for this thesis.</li>
    <li>Amounts are taken at $1 per token. Window: <span id="lim-win"></span>.</li>
   </ul></div>
+ </div>
+
+ <div class="rerun rv" id="rerun">
+  <div class="rerun-hd">
+   <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M7 11l5 5 5-5M12 4v12"/></svg>How to rerun</h3>
+   <a class="btn" href="__REPO__" rel="noopener">GitHub repo</a>
+  </div>
+  <p>From the committed snapshot, offline, in seconds. No API keys. Python 3 standard library and Node. This rebuilds every number on this page.</p>
+  <pre><span class="c"># clone and rebuild from the snapshot</span>
+git clone https://github.com/naimuli74/near-payments-rail-thesis
+cd near-payments-rail-thesis
+npm run quick</pre>
+  <p class="more">Then <code>python3 scripts/spot_check.py 5</code> re-checks random sampled transfers against an archival node. To re-pull the sample from the chain, <code>npm run build-data</code> (or <code>make all</code>). Serve the rebuilt dashboard with <code>npm run serve</code>.</p>
  </div>
 </section>
 

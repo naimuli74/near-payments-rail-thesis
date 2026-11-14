@@ -43,7 +43,9 @@ readme = f"""# Is NEAR already a payments rail?
 
 An evidence-first investment thesis for NEAR, built at **NEAR HACKATHON** (Investment Thesis track, `thesis`).
 
-**Live dashboard:** {LIVE} (mirror: {MIRROR})
+- **Live site:** {LIVE} (mirror: {MIRROR})
+- **X Article:** [Is NEAR Already a Payments Rail? Not Yet](https://x.com/naimulislam/status/2121545725289046115)
+- **Demo video:** https://x.com/naimulislam/status/2121505068319158428
 
 ## Thesis and verdict
 
